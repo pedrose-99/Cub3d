@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/07/28 12:01:37 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:22:11 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_texture{
 }	t_texture;
 
 typedef struct s_color{
-	int	id;
-	int	rgb[3];
+	int		id;
+	int		rgb[3];
 }	t_color;
 
 typedef struct s_cube3d{
@@ -47,5 +47,11 @@ typedef struct s_cube3d{
 	t_color		colors[2];
 	char		**map;
 }	t_cube3d;
+
+
+char	**realloc_matrix(char **matrix, int len);
+char	**init_matrix(char **matrix, int len);
+char	**new_map(int fd);
+void	print_map(char **map);
 
 #endif
