@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/07/31 14:58:25 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:11:08 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,7 +332,7 @@ int	main(void)
 	//t_cube3d	cub;
 
 	atexit(&leaks);
-	fd = open("map.ber", O_RDONLY);
+	fd = open("map2.ber", O_RDONLY);
 	int	i = 0;
 
 	while (i < 8)
