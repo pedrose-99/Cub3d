@@ -6,9 +6,11 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/07/31 12:00:16 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/01 09:46:41 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//eeee
 
 #include "cub3d.h"
 
