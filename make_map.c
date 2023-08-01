@@ -70,7 +70,7 @@ void	print_map(char **map)
 	i = 0;
 	while (map[i])
 	{
-		printf("%s\n", map[i]);
+		printf("%s$\n", map[i]);
 		i++;
 	}
 }
