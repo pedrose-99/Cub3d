@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 09:51:35 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/01 10:56:33 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 char	**realloc_matrix(char **matrix, int len)
 {
@@ -97,9 +96,6 @@ int	char_alone_f(char **map, int i, int j)
 {
 	if (map[i][j] == ' ')
 		return (1);
-	if (map[i][j] == '0' || map[i][j] == 'W' || map[i][j] == 'E'
-		|| map[i][j] == 'S' || map[i][j] == 'N')
-		return (0);
 	else
 	{
 		if (map[i][j] == '1')
@@ -109,12 +105,17 @@ int	char_alone_f(char **map, int i, int j)
 				if (map[i + 1][j] == ' ' && map[i][j + 1] == ' ')
 					return (0);
 			}
-		}
-		else
-		{
-			if (map[i + 1][j] == ' ' && map[i][j + 1] == ' '
-				&& map[i][j - 1] == ' ')
-				return (0);
+			else
+			{
+				if (j == (int)ft_strlen(map[i]) - 1)
+				{
+					if (map[i][j - 1] == ' ' && map[i][j - 1] != 1)
+						return (0);
+				}
+				if (map[i + 1][j] == ' ' && map[i][j + 1] == ' '
+					&& map[i][j - 1] == ' ')
+					return (0);
+			}
 		}
 	}
 	return (1);
@@ -135,7 +136,6 @@ int	char_alone_l(char **map, int i, int j)
 	return (1);
 }
 
-//Checkear la 1 linea y la ultima
 int	not_char_alone(char **map, int i, int j)
 {
 	if (i == 0)
@@ -153,9 +153,18 @@ int	not_char_alone(char **map, int i, int j)
 	}
 	else
 	{
-		if (map[i + 1][j] == ' ' && map[i - 1][j] == ' '
-			&& map[i][j + 1] == ' ' && map[i][j - 1] == ' ')
-			return (0);
+		if (j == 0)
+		{
+			if (map[i + 1][j] == ' ' && map[i - 1][j] == ' '
+			&& map[i][j + 1] == ' ')
+				return (0);
+		}	
+		else
+		{
+			if (map[i + 1][j] == ' ' && map[i - 1][j] == ' '
+				&& map[i][j + 1] == ' ' && map[i][j - 1] == ' ')
+				return (0);
+		}
 	}
 	return (1);
 }
