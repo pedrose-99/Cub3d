@@ -61,7 +61,7 @@ int	main(void)
 {
 	char		**matrix;
 	int			fd;
-	t_cube3d	*cub;
+	t_cub3d	*cub;
 	char	**data_dict;
 	int		*array_check;
 
@@ -77,17 +77,24 @@ int	main(void)
 		printf("Datos están mal\n");
 		return (1);
 	}
-	cub = (t_cube3d *)malloc(sizeof(t_cube3d));
+	cub = (t_cub3d *)malloc(sizeof(t_cub3d));
 	set_textures_colors(cub, matrix, data_dict);
 	printf("Termina texturas y colores\n");
 	free(data_dict);
 	free(array_check);
-	free_matrix((void**)matrix);
-	int i = -1;
-	while (i++ < 4)
+	
+	int i = 0;
+	while (i < 4)
+	{
 		free(cub->textures[i].file);
+		i++;
+	}
 	free(cub);
 	printf("Libera bien\n");
+	char **normalized = normalize_map(matrix);
+	print_map(normalized);
+	free_matrix((void**)matrix);
+	free_matrix((void**)normalized);
 	atexit(&leaks);
 	return (0);
 }
