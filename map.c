@@ -6,11 +6,12 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 09:12:33 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/01 09:49:51 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 char	**realloc_matrix(char **matrix, int len)
 {
