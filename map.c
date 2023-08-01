@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/07/31 15:11:08 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/01 09:12:33 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,43 @@ void	leaks(void)
 	system("leaks -q cub3d");
 }
 
-int	char_alone_fl(char **map, int i, int j)
+int	char_alone_f(char **map, int i, int j)
 {
 	if (map[i][j] == ' ')
 		return (1);
-	if (i == 0)
-	{
-		if (map[i][j] == '0' || map[i][j] == 'W' || map[i][j] == 'E'
+	if (map[i][j] == '0' || map[i][j] == 'W' || map[i][j] == 'E'
 		|| map[i][j] == 'S' || map[i][j] == 'N')
+		return (0);
+	else
+	{
+		if (map[i][j] == '1')
 		{
-			if (map[i + 1][j] == ' ' || map[i][j + 1] == ' '
-				|| map[i][j - 1] == ' ')
+			if (j == 0)
+			{
+				if (map[i + 1][j] == ' ' && map[i][j + 1] == ' ')
+					return (0);
+			}
+		}
+		else
+		{
+			if (map[i + 1][j] == ' ' && map[i][j + 1] == ' '
+				&& map[i][j - 1] == ' ')
 				return (0);
 		}
 	}
-	else
+	return (1);
+}
+
+int	char_alone_l(char **map, int i, int j)
+{
+	if (j == 0)
 	{
-		if (map[i - 1][j] == ' ' && map[i][j + 1] == ' '
-			&& map[i][j - 1] == ' ')
+		if (map[i - 1][j] == ' ' && map[i][j + 1] == ' ')
+			return (0);
+	}
+	else 
+	{
+		if (map[i - 1][j] == ' ' && map[i][j + 1] == ' ' && map[i][j - 1] == ' ')
 			return (0);
 	}
 	return (1);
@@ -118,11 +137,10 @@ int	char_alone_fl(char **map, int i, int j)
 //Checkear la 1 linea y la ultima
 int	not_char_alone(char **map, int i, int j)
 {
-	if (!map[i + 1] || i == 0)
-	{
-		if (char_alone_fl(map, i, j))
-			return (1);
-	}
+	if (i == 0)
+		return (char_alone_f(map, i, j));
+	if (!map[i + 1])
+		return (char_alone_l(map, i, j));
 	if (map[i][j] == ' ')
 		return (1);
 	if (map[i][j] == '0' || map[i][j] == 'W' || map[i][j] == 'E'
