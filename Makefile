@@ -1,21 +1,21 @@
 NAME = cub3d
 
-SRCS = map.c
+SRCS = make_map.c parser.c gestion_textures.c normalize_map.c
 OBJS	= $(SRCS:.c=.o)
 
 LIBFT_A = libft.a
 
 CC		= gcc
 
-#READLINE = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+MLX =  -L. -lmlx -framework OpenGL -framework Appkit
 
-CCFLAGS	= -Wall -Werror -Wextra -Ilibft
+CCFLAGS	= -Wall -Werror -Wextra -Ilibft 
 
 .c.o:
 	${CC} ${CCFLAGS} -c $< -o ${<:.c=.o} -I.
 
 $(NAME): $(OBJS) $(LIBFT_A)
-			$(CC) $(CCFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+			$(CC) $(CCFLAGS) $(MLX) $(OBJS) $(LIBFT_A) -o $(NAME)
 			
 all: $(NAME)
 

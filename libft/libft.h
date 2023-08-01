@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:03:09 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/06/22 10:51:41 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/01 10:50:52 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,9 @@ long long int	ft_atoll(const char *str);
 int				matrix_len(char **matrix);
 int				rev_str_pos(char *str, char c);
 int				ft_str_is_digit(char *str);
+int				skip_char(char *str, char c, int i);
+int				str_char_num(char *str, char c);
+int				move_to_char(char *str, char c, int i);
+int				*new_int_array(int len);
+int				check_same_digit(int *arr, int val, int len);
 #endif
