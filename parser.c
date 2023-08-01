@@ -15,7 +15,7 @@ char	**new_data_dict(void)
 	return (dict);
 }
 
-int	check_valid_line(char *data, char **dict, int *arr)
+int	check_valid_line(char *data, char **dict, int *arr, char **tab)
 {
 	int	check_dict;
 	int	i;
@@ -29,6 +29,7 @@ int	check_valid_line(char *data, char **dict, int *arr)
 		if (!ft_strncmp(data, dict[i], ft_strlen(dict[i])))
 		{
 			arr[i]++;
+			tab[i] = ft_strdup(data);
 			check_dict++;
 		}
 		i++;
@@ -38,15 +39,18 @@ int	check_valid_line(char *data, char **dict, int *arr)
 	return (1);
 }
 
-int	check_valid_data(char **data, char **dict, int *arr)
+int	check_valid_data(char **data, char **dict, int *arr, char **tab)
 {
 	int		i;
 
 	i = 0;
 	while (data[i] && !check_same_digit(arr, 1, 6))
 	{
-		if (!check_valid_line(data[i], dict, arr))
+		if (!check_valid_line(data[i], dict, arr, tab))
+		{
+			free_matrix((void **)tab);
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -69,20 +73,26 @@ int	main(void)
 	array_check = new_int_array(6);
 	fd = open("map.ber", O_RDONLY);
 	matrix = new_map(fd);
-	print_map(matrix);
-	if (check_valid_data(matrix, data_dict, array_check) == 1)
+	print_matrix(matrix);
+	char **tab;
+	tab = init_matrix(7);
+	if (check_valid_data(matrix, data_dict, array_check, tab) == 1)
 		printf("Datos están bien\n");
 	else
 	{
 		printf("Datos están mal\n");
 		return (1);
 	}
+	print_matrix(tab);
 	cub = (t_cub3d *)malloc(sizeof(t_cub3d));
-	set_textures_colors(cub, matrix, data_dict);
+	if (!set_textures_colors(cub, tab))
+	{
+		printf("Texturas y colores mal\n");
+		return (1);
+	}
 	printf("Termina texturas y colores\n");
 	free(data_dict);
 	free(array_check);
-	
 	int i = 0;
 	while (i < 4)
 	{
@@ -90,9 +100,10 @@ int	main(void)
 		i++;
 	}
 	free(cub);
+	free_matrix((void **)tab);
 	printf("Libera bien\n");
 	char **normalized = normalize_map(matrix);
-	print_map(normalized);
+	print_matrix(normalized);
 	free_matrix((void**)matrix);
 	free_matrix((void**)normalized);
 	atexit(&leaks);

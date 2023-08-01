@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/01 11:27:39 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:54:37 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,69 +45,46 @@ t_texture	set_texture(t_cub3d *cub3d, char	*data)
 int	set_color(t_color *color, char	*data)
 {
 	int		start;
-	int		end;
-	int		cont;
-	char	*color_str;
+	int		i;
+	char	**color_str;
 
 	if (str_char_num(data, ',') != 2)
 		return (0);
 	start = skip_char(data, ' ', move_to_char(data, ' ', 0));
-	cont = 0;
-	while (cont < 3)
-	{
-		end = move_to_char(data, ',', start);
-		color_str = ft_substr(data, start, end - start);
-		color->rgb[cont] = ft_atoi(color_str);
-		free(color_str);
-		if (color->rgb[cont] < 0 || color->rgb[cont] > 255)
-			return (0);
-		start = ++end;
-		cont++;
-	}
-	printf("RED: %d\n", color->rgb[0]);
-	printf("GREEN: %d\n", color->rgb[1]);
-	printf("BLUE: %d\n", color->rgb[2]);
-	return (1);
-}
-
-int	set_texture_color(t_cub3d *cub3d, char *data, char **dict)
-{
-	int	i;
-
+	color_str = ft_split(&data[start], ',');
+	if (matrix_len(color_str) != 3)
+		return (0);
 	i = 0;
-	if (!*data)
-		return (-1);
-	while (dict[i])
+	while (color_str[i])
 	{
-		if (!ft_strncmp(data, dict[i], ft_strlen(dict[i])))
+		if (str_char_num(color_str[i], ' ') > 0
+			|| !ft_str_is_digit(color_str[i]))
+			return (0);
+		color->rgb[i] = ft_atoi(color_str[i]);
+		if (color->rgb[i] < 0 || color->rgb[i] > 255)
 		{
-			if (i < 4)
-				cub3d->textures[i] = set_texture(cub3d, data);
-			else
-				if (!set_color(&cub3d->colors[i], data))
-					return (0);
-		}	
-			i++;
+			free_matrix((void **)color_str);
+			return (0);
+		}
+		i++;
 	}
+	free_matrix((void **)color_str);
 	return (1);
 }
 
-int	set_textures_colors(t_cub3d *cub, char **data, char **dict)
+int	set_textures_colors(t_cub3d *cub3d, char **data)
 {
 	int		i;
-	int		count;
-	int		check;
 
 	i = 0;
-	count = 0;
-	while (data[i] && count < 6)
+	while (data[i])
 	{
 		printf("Línea %d, %s\n", i, data[i]);
-		check = set_texture_color(cub, data[i], dict);
-		if (check == 1)
-			count++;
-		else if (check == 0)
-			return (0);
+		if (i < 4)
+			cub3d->textures[i] = set_texture(cub3d, data[i]);
+		else
+			if (!set_color(&cub3d->colors[i], data[i]))
+				return (0);
 		i++;
 	}
 	return (1);

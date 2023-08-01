@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:02:39 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 12:28:22 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:27:11 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	*copy_fill_array(int new_len, char *arr, char fill)
 	int		old_len;
 	int		i;
 
+	printf("Normalizar línea\n");
 	new_arr = (char *)malloc(new_len + 1);
 	old_len = ft_strlen(arr);
 	i = 0;
@@ -50,6 +51,7 @@ static char	*copy_fill_array(int new_len, char *arr, char fill)
 		i++;
 	}
 	new_arr[i] = '\0';
+	printf("Línea normalizada\n");
 	return (new_arr);
 }
 
@@ -62,7 +64,6 @@ char	**normalize_map(char **map)
 	normalize = (char **)malloc(sizeof(char *) * (matrix_len(map) + 1));
 	i = 0;
 	max = max_array_len_matrix(map);
-	printf("Línea de longitud maxima: %d\n", max);
 	while (map[i])
 	{
 		normalize[i] = copy_fill_array(max, map[i], ' ');
