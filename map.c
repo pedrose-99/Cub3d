@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "altivec.h"
 #include "cub3d.h"
+#include <stdio.h>
 
 char	**realloc_matrix(char **matrix, int len)
 {
