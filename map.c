@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 10:56:33 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:19:11 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,56 +92,9 @@ void	leaks(void)
 	system("leaks -q cub3d");
 }
 
-int	char_alone_f(char **map, int i, int j)
-{
-	if (map[i][j] == ' ')
-		return (1);
-	else
-	{
-		if (map[i][j] == '1')
-		{
-			if (j == 0)
-			{
-				if (map[i + 1][j] == ' ' && map[i][j + 1] == ' ')
-					return (0);
-			}
-			else
-			{
-				if (j == (int)ft_strlen(map[i]) - 1)
-				{
-					if (map[i][j - 1] == ' ' && map[i][j - 1] != 1)
-						return (0);
-				}
-				if (map[i + 1][j] == ' ' && map[i][j + 1] == ' '
-					&& map[i][j - 1] == ' ')
-					return (0);
-			}
-		}
-	}
-	return (1);
-}
-
-int	char_alone_l(char **map, int i, int j)
-{
-	if (j == 0)
-	{
-		if (map[i - 1][j] == ' ' && map[i][j + 1] == ' ')
-			return (0);
-	}
-	else 
-	{
-		if (map[i - 1][j] == ' ' && map[i][j + 1] == ' ' && map[i][j - 1] == ' ')
-			return (0);
-	}
-	return (1);
-}
 
 int	not_char_alone(char **map, int i, int j)
 {
-	if (i == 0)
-		return (char_alone_f(map, i, j));
-	if (!map[i + 1])
-		return (char_alone_l(map, i, j));
 	if (map[i][j] == ' ')
 		return (1);
 	if (map[i][j] == '0' || map[i][j] == 'W' || map[i][j] == 'E'
@@ -150,21 +103,6 @@ int	not_char_alone(char **map, int i, int j)
 		if (map[i + 1][j] == ' ' || map[i - 1][j] == ' '
 			|| map[i][j + 1] == ' ' || map[i][j - 1] == ' ')
 			return (0);
-	}
-	else
-	{
-		if (j == 0)
-		{
-			if (map[i + 1][j] == ' ' && map[i - 1][j] == ' '
-			&& map[i][j + 1] == ' ')
-				return (0);
-		}	
-		else
-		{
-			if (map[i + 1][j] == ' ' && map[i - 1][j] == ' '
-				&& map[i][j + 1] == ' ' && map[i][j - 1] == ' ')
-				return (0);
-		}
 	}
 	return (1);
 }
