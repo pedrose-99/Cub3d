@@ -82,7 +82,6 @@ int	main(void)
 	printf("Termina texturas y colores\n");
 	free(data_dict);
 	free(array_check);
-	
 	int i = 0;
 	while (i < 4)
 	{

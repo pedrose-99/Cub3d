@@ -6,97 +6,19 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 12:19:11 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:55:30 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-char	**realloc_matrix(char **matrix, int len)
-{
-	char	**new_matrix;
-	int		i;
-	int		prev_len;
-
-	new_matrix = (char **)malloc(sizeof(char *) * len);
-	i = 0;
-	prev_len = matrix_len(matrix);
-	while (i < prev_len)
-	{
-		new_matrix[i] = matrix[i];
-		i++;
-	}
-	while (i < len)
-	{
-		new_matrix[i] = NULL;
-		i++;
-	}
-	free(matrix);
-	return (new_matrix);
-}
-
-char	**init_matrix(char **matrix, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		matrix[i] = NULL;
-		i++;
-	}
-	return (matrix);
-}
-
-char	**new_map(int fd)
-{
-	int		i;
-	char	**map;
-	char	*line;
-
-	i = 0;
-	map = (char **)malloc(sizeof(char *) * 2);
-	map = init_matrix(map, 2);
-	line = get_next_line(fd);
-	while (line)
-	{
-		map[i] = line;
-		if (map[i][ft_strlen(line) - 1] == '\n')
-		{
-			map[i] = ft_substr(line, 0, ft_strlen(line) - 1);
-			free(line);
-		}
-		i++;
-		line = get_next_line(fd);
-		if (line)
-			map = realloc_matrix(map, i + 2);
-	}
-	map[i] = NULL;
-	return (map);
-}
-
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-}
 
 void	leaks(void)
 {
 	system("leaks -q cub3d");
 }
 
-
 int	not_char_alone(char **map, int i, int j)
 {
-	if (map[i][j] == ' ')
-		return (1);
 	if (map[i][j] == '0' || map[i][j] == 'W' || map[i][j] == 'E'
 		|| map[i][j] == 'S' || map[i][j] == 'N')
 	{
@@ -114,9 +36,9 @@ int	check_first_and_last_line(char **map)
 
 	j = 0;
 	i = 0;
-	while (j < (int)ft_strlen(map[0]))
+	while (map[i][j])
 	{
-		if (map[0][j] != '1' && map[0][j] != ' ')
+		if (map[i][j] != '1' && map[i][j] != ' ')
 			return (0);
 		j++;
 	}
@@ -124,7 +46,7 @@ int	check_first_and_last_line(char **map)
 		i++;
 	i--;
 	j = 0;
-	while (j < (int)ft_strlen(map[i]))
+	while (map[i][j])
 	{
 		if (map[i][j] != '1' && map[i][j] != ' ')
 			return (0);
@@ -159,48 +81,41 @@ int	first_check_map(char **map)
 
 int	check_map_hor(char **map, int i, int j)
 {
-	if (j == 0)
+	if (j == 0 || (j == (int)ft_strlen(map[i]) - 1))
 	{
 		if (map[i][j] != ' ' && map[i][j] != '1')
-			return (0);
-	}
-	else if (j == (int)ft_strlen(map[i]) - 1)
-	{
-		if (map[i][j] != '1')
 			return (0);
 	}
 	else
 	{
 		if (map[i][j] == ' ')
+		{
 			if (map[i][j - 1] != '1' && map[i][j - 1] != ' ')
 				return (0);
-		if (map[i][j] == ' ')
 			if (map[i][j + 1] != '1' && map[i][j + 1] != ' ')
 				return (0);
+		}
 	}
 	return (1);
 }
 
 static int	check_map_ver(char **map, int i, int j)
 {
-	if (map[i + 1])
+	if (i == 0 || !map[i + 1])
 	{
-		if (j <= (int)ft_strlen(map[i + 1]) - 1)
-		{
-			if (map[i + 1][j] == ' ')
-				if (map[i][j] != '1' && map[i][j] != ' ')
-					return (0);
-			if (map[i][j] == ' ')
-				if (map[i + 1][j] != '1' && map[i + 1][j] != ' ')
-					return (0);
-		}
-		else
-			if (map[i][j] != '1')
-				return (0);
-	}
-	if (i != 0)
-		if (j > (int)ft_strlen(map[i - 1]) - 1 && map[i][j] != '1')
+		if (map[i][j] != ' ' && map[i][j] != '1')
 			return (0);
+	}
+	else
+	{
+		if (map[i][j] == ' ')
+		{
+			if (map[i - 1][j] != '1' && map[i - 1][j] != ' ')
+				return (0);
+			if (map[i + 1][j] != '1' && map[i + 1][j] != ' ')
+				return (0);
+		}
+	}
 	return (1);
 }
 
@@ -261,27 +176,6 @@ int	map_is_close(char **map)
 	return (1);
 }
 
-int	ft_isspace(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (line[i] == '\n')
-		return (0);
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	return (i);
-}
-
-int	check_is_empty(char *line)
-{
-	int	i;
-
-	i = ft_isspace(line);
-	if (line[i] == '\n')
-		return (1);
-	return (0); 
-}
 /*
 void	check_info_map(char *line, t_cube3d cub, int identifier)
 {
@@ -308,11 +202,13 @@ int	main(void)
 		i++;
 	}
 	matrix = new_map(fd);
-	print_map(matrix);
-	if (map_is_close(matrix))
+	char **normalized = normalize_map(matrix);
+	print_map(normalized);
+	if (map_is_close(normalized))
 		printf("Mapa bueno\n");
 	else
 		printf("Mapa malo\n");
 	free_matrix((void **)matrix);
+	free_matrix((void**)normalized);
 	return (0);
 }
