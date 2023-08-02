@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 13:55:30 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:58:08 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,14 +175,6 @@ int	map_is_close(char **map)
 	}
 	return (1);
 }
-
-/*
-void	check_info_map(char *line, t_cube3d cub, int identifier)
-{
-	int	i;
-
-	i = ft_isspace(line);
-}*/
 
 int	main(void)
 {
