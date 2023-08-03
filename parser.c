@@ -15,7 +15,7 @@ char	**new_data_dict(void)
 	return (dict);
 }
 
-int	check_valid_line(char *data, char **dict, int *arr, char **tab)
+int	set_data(t_cub3d *cub3d, char *data, char **dict)
 {
 	int	check_dict;
 	int	i;
@@ -29,30 +29,46 @@ int	check_valid_line(char *data, char **dict, int *arr, char **tab)
 		if (!ft_strncmp(data, dict[i], ft_strlen(dict[i])))
 		{
 			arr[i]++;
-			tab[i] = ft_strdup(data);
+			if (i < 4)
+				cub3d->textures[i] = set_texture(cub3d, data);
+			else
+			{
+				cub3d->colors[i - 4] = set_color(data);
+				if (!cub3d->colors[i - 4])
+					return (0);
+			}
 			check_dict++;
 		}
 		i++;
 	}
 	if (check_dict == 0)
 		return (0);
-	return (1);
+	return (check_dict);
 }
 
-int	check_valid_data(char **data, char **dict, int *arr, char **tab)
+int	set_visual_data(t_cub3d *cub3d, int fd)
 {
 	int		i;
+	char	*line;
+	char	**dict;
+	int		check;
+	int		result;
 
+	dict = new_data_dict();
 	i = 0;
-	while (data[i] && !check_same_digit(arr, 1, 6))
+	line = get_next_line_no_nl(fd);
+	while (line)
 	{
-		if (!check_valid_line(data[i], dict, arr, tab))
-		{
-			free_matrix((void **)tab);
+		printf("LÍNEA: %s$\n", line);
+		check = set_data(cub3d, line, dict);
+		free(line);
+		if (check == -1)
 			return (0);
-		}
+		result += check;
+
+		line = get_next_line_no_nl(fd);
 		i++;
-	}
+	} // si resultado no es igual a 21, está mal, no encontró los 6 correspondientes de manera única
 	return (1);
 }
 
@@ -102,37 +118,26 @@ int	main(void)
 	char		**matrix;
 	int			fd;
 	t_cub3d	*cub;
-	char	**data_dict;
-	int		*array_check;
 
-	data_dict = new_data_dict();
-	array_check = new_int_array(6);
+	//set cub3d y texturas/colores
+
 	fd = open("map.ber", O_RDONLY);
-	matrix = new_map(fd);
-	print_matrix(matrix);
-	char **tab;
-	tab = init_matrix(7);
-	if (check_valid_data(matrix, data_dict, array_check, tab) == 1)
+	cub = set_cub3d();
+	if (set_visual_data(cub, fd) == 1)
 		printf("Datos están bien\n");
 	else
 	{
 		printf("Datos están mal\n");
 		return (1);
 	}
-	print_matrix(tab);
-	cub = set_cub3d();
-	if (!set_textures_colors(cub, tab))
-	{
-		printf("Texturas y colores mal\n");
-		return (1);
-	}
-	printf("Termina texturas y colores\n");
 	free_cub3d(cub);
 	cub = NULL;
-	free(data_dict);
-	free(array_check);
-	free_matrix((void **)tab);
 	printf("Libera bien\n");
+
+	//parte del mapa
+
+	matrix = new_map(fd);
+	print_matrix(matrix);
 	char **normalized = normalize_map(matrix);
 	printf("Hace normalized\n");
 	print_matrix(normalized);
