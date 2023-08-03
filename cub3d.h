@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/02 10:50:14 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:52:10 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,8 @@ t_texture	*set_texture(t_cub3d *cub3d, char	*data);
 //mlx
 
 t_img		xpm_to_img(t_cub3d *cub3d, char *path);
+
+//map.c
+int			map_is_close(char **map);
 
 #endif
