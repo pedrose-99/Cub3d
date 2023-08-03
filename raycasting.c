@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/03 14:00:25 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:19:18 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,28 +99,29 @@ void	draw_player_angle(t_cub3d *cub3d)
 	
 	cont = 0;
 	cont2 = 0;
-	while (cont < 10)
+	while (cont < 1)
 	{
 		cont2 = 0;
 		printf("Tangente del ángulo: %f\n", tan(cub3d->player.angle));
-		y = tan(cub3d->player.angle) * (cub3d->player.x
-				- (cub3d->player.x + cont)) + (cub3d->player.y + cont);
+		
+		y = tan(cub3d->player.angle) * 
+			(cub3d->player.x - cub3d->player.x + cont) + (y + cont);
 		printf("x: %d, y: %d\n", cub3d->player.x - cont, y);
 		while (cont2 < 10)
 		{
 			mlx_pixel_put(cub3d->mlx_ptr, cub3d->win,
-				(cub3d->player.x + cont2), y, 0x00800080);
-			cont2++;
+				(cub3d->player.x + cont2) * SQUARE, y, 0x00800080);
+			cont2 += 0.1;
 		}
-		cont++;
+		cont += 0.1;
 	}
 }
 
 void	set_player_angle(t_cub3d *cub3d, int add)
 {
 	printf("Set angle: %d\n", cub3d->player.angle);
-	cub3d->player.angle += add;
 	draw_player_angle(cub3d);
+	cub3d->player.angle += add;
 }
 
 int	key_hook(int key, t_cub3d *cub3d)
