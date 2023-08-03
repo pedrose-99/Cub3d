@@ -1,6 +1,6 @@
 NAME = cub3d
 
-SRCS =  map.c make_map.c normalize_map.c
+SRCS =  parser.c gestion_textures.c make_map.c normalize_map.c
 OBJS	= $(SRCS:.c=.o)
 
 LIBFT_A = libft.a
