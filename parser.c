@@ -61,6 +61,42 @@ void	leaks(void)
 	system("leaks -q cub3d");
 }
 
+t_cub3d	*set_cub3d(void)
+{
+	t_cub3d	*cub3d;
+
+	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
+	cub3d->colors = (t_color **)malloc(sizeof(t_color *) * 2);
+	cub3d->textures = (t_texture **)malloc(sizeof(t_texture *) * 4);
+	return (cub3d);
+}
+void	free_cub3d(t_cub3d *cub3d)
+{
+	int	i;
+
+	printf("Entra a liberar cub3d\n");
+	i = 0;
+	while (i < 4)
+	{
+		free(cub3d->textures[i]->file);
+		free(cub3d->textures[i]);
+		i++;
+	}
+	free(cub3d->textures);
+	printf("Libera bien texturas\n");
+	i = 0;
+	while (i < 2)
+	{
+		if (cub3d->colors[i])
+			free(cub3d->colors[i]);
+		i++;
+	}
+	free(cub3d->colors);
+	printf("Libera bien colores\n");
+	free(cub3d);
+	printf("Libera bien todo cub3d\n");
+}
+
 int	main(void)
 {
 	char		**matrix;
@@ -84,28 +120,25 @@ int	main(void)
 		return (1);
 	}
 	print_matrix(tab);
-	cub = (t_cub3d *)malloc(sizeof(t_cub3d));
+	cub = set_cub3d();
 	if (!set_textures_colors(cub, tab))
 	{
 		printf("Texturas y colores mal\n");
 		return (1);
 	}
 	printf("Termina texturas y colores\n");
+	free_cub3d(cub);
+	cub = NULL;
 	free(data_dict);
 	free(array_check);
-	int i = 0;
-	while (i < 4)
-	{
-		free(cub->textures[i].file);
-		i++;
-	}
-	free(cub);
 	free_matrix((void **)tab);
 	printf("Libera bien\n");
 	char **normalized = normalize_map(matrix);
+	printf("Hace normalized\n");
 	print_matrix(normalized);
 	free_matrix((void**)matrix);
 	free_matrix((void**)normalized);
-	atexit(&leaks);
+	printf("Hace bien normalized\n");
+	//atexit(&leaks);
 	return (0);
 }

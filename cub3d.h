@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 16:39:09 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/02 10:50:14 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
 	t_player	player;
-	t_texture	textures[4];
-	t_color		colors[2];
+	t_texture	**textures; //4
+	t_color		**colors; //2
 	char		**map;
 }	t_cub3d;
 
@@ -87,8 +87,8 @@ char		**normalize_map(char **map);
 //textures-colors
 
 int			set_textures_colors(t_cub3d *cub3d, char **data);
-int			set_color(t_color *color, char	*data);
-t_texture	set_texture(t_cub3d *cub3d, char	*data);
+t_color		*set_color(char	*data);
+t_texture	*set_texture(t_cub3d *cub3d, char	*data);
 
 //mlx
 
