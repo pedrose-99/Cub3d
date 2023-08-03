@@ -6,7 +6,7 @@ char	**realloc_matrix(char **matrix, int len)
 	int		i;
 	int		prev_len;
 
-	new_matrix = (char **)malloc(sizeof(char *) * len);
+	new_matrix = init_matrix(len);
 	i = 0;
 	prev_len = matrix_len(matrix);
 	while (i < prev_len)
@@ -14,19 +14,16 @@ char	**realloc_matrix(char **matrix, int len)
 		new_matrix[i] = matrix[i];
 		i++;
 	}
-	while (i < len)
-	{
-		new_matrix[i] = NULL;
-		i++;
-	}
 	free(matrix);
 	return (new_matrix);
 }
 
-char	**init_matrix(char **matrix, int len)
+char	**init_matrix(int len)
 {
-	int	i;
+	char	**matrix;
+	int		i;
 
+	matrix = (char **)malloc(sizeof(char *) * len);
 	i = 0;
 	while (i < len)
 	{
@@ -43,8 +40,7 @@ char	**new_map(int fd)
 	char	*line;
 
 	i = 0;
-	map = (char **)malloc(sizeof(char *) * 2);
-	map = init_matrix(map, 2);
+	map = init_matrix(2);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -59,18 +55,17 @@ char	**new_map(int fd)
 		if (line)
 			map = realloc_matrix(map, i + 2);
 	}
-	map[i] = NULL;
 	return (map);
 }
 
-void	print_map(char **map)
+void	print_matrix(char **matrix)
 {
 	int	i;
 
 	i = 0;
-	while (map[i])
+	while (matrix[i])
 	{
-		printf("%s$\n", map[i]);
+		printf("%s$\n", matrix[i]);
 		i++;
 	}
 }
