@@ -15,7 +15,7 @@ char	**new_data_dict(void)
 	return (dict);
 }
 
-int	check_valid_line(char *data, char **dict, int *arr)
+int	check_valid_line(char *data, char **dict, int *arr, char **tab)
 {
 	int	check_dict;
 	int	i;
@@ -29,6 +29,7 @@ int	check_valid_line(char *data, char **dict, int *arr)
 		if (!ft_strncmp(data, dict[i], ft_strlen(dict[i])))
 		{
 			arr[i]++;
+			tab[i] = ft_strdup(data);
 			check_dict++;
 		}
 		i++;
@@ -38,15 +39,18 @@ int	check_valid_line(char *data, char **dict, int *arr)
 	return (1);
 }
 
-int	check_valid_data(char **data, char **dict, int *arr)
+int	check_valid_data(char **data, char **dict, int *arr, char **tab)
 {
 	int		i;
 
 	i = 0;
 	while (data[i] && !check_same_digit(arr, 1, 6))
 	{
-		if (!check_valid_line(data[i], dict, arr))
+		if (!check_valid_line(data[i], dict, arr, tab))
+		{
+			free_matrix((void **)tab);
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -55,6 +59,42 @@ int	check_valid_data(char **data, char **dict, int *arr)
 void	leaks(void)
 {
 	system("leaks -q cub3d");
+}
+
+t_cub3d	*set_cub3d(void)
+{
+	t_cub3d	*cub3d;
+
+	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
+	cub3d->colors = (t_color **)malloc(sizeof(t_color *) * 2);
+	cub3d->textures = (t_texture **)malloc(sizeof(t_texture *) * 4);
+	return (cub3d);
+}
+void	free_cub3d(t_cub3d *cub3d)
+{
+	int	i;
+
+	printf("Entra a liberar cub3d\n");
+	i = 0;
+	while (i < 4)
+	{
+		free(cub3d->textures[i]->file);
+		free(cub3d->textures[i]);
+		i++;
+	}
+	free(cub3d->textures);
+	printf("Libera bien texturas\n");
+	i = 0;
+	while (i < 2)
+	{
+		if (cub3d->colors[i])
+			free(cub3d->colors[i]);
+		i++;
+	}
+	free(cub3d->colors);
+	printf("Libera bien colores\n");
+	free(cub3d);
+	printf("Libera bien todo cub3d\n");
 }
 
 int	main(void)
@@ -69,31 +109,36 @@ int	main(void)
 	array_check = new_int_array(6);
 	fd = open("map.ber", O_RDONLY);
 	matrix = new_map(fd);
-	print_map(matrix);
-	if (check_valid_data(matrix, data_dict, array_check) == 1)
+	print_matrix(matrix);
+	char **tab;
+	tab = init_matrix(7);
+	if (check_valid_data(matrix, data_dict, array_check, tab) == 1)
 		printf("Datos están bien\n");
 	else
 	{
 		printf("Datos están mal\n");
 		return (1);
 	}
-	cub = (t_cub3d *)malloc(sizeof(t_cub3d));
-	set_textures_colors(cub, matrix, data_dict);
+	print_matrix(tab);
+	cub = set_cub3d();
+	if (!set_textures_colors(cub, tab))
+	{
+		printf("Texturas y colores mal\n");
+		return (1);
+	}
 	printf("Termina texturas y colores\n");
+	free_cub3d(cub);
+	cub = NULL;
 	free(data_dict);
 	free(array_check);
-	int i = 0;
-	while (i < 4)
-	{
-		free(cub->textures[i].file);
-		i++;
-	}
-	free(cub);
+	free_matrix((void **)tab);
 	printf("Libera bien\n");
 	char **normalized = normalize_map(matrix);
-	print_map(normalized);
+	printf("Hace normalized\n");
+	print_matrix(normalized);
 	free_matrix((void**)matrix);
 	free_matrix((void**)normalized);
-	atexit(&leaks);
+	printf("Hace bien normalized\n");
+	//atexit(&leaks);
 	return (0);
 }
