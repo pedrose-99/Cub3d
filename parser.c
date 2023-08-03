@@ -20,29 +20,27 @@ int	set_data(t_cub3d *cub3d, char *data, char **dict)
 	int	check_dict;
 	int	i;
 
-	check_dict = 0;
+	check_dict = -1;
 	i = 0;
 	if (!*data)
-		return (1);
+		return (0);
 	while (dict[i])
 	{
 		if (!ft_strncmp(data, dict[i], ft_strlen(dict[i])))
 		{
-			arr[i]++;
 			if (i < 4)
 				cub3d->textures[i] = set_texture(cub3d, data);
 			else
 			{
 				cub3d->colors[i - 4] = set_color(data);
 				if (!cub3d->colors[i - 4])
-					return (0);
+					return (-1);
 			}
-			check_dict++;
+			check_dict = i;
+			break ;
 		}
 		i++;
 	}
-	if (check_dict == 0)
-		return (0);
 	return (check_dict);
 }
 
@@ -56,8 +54,9 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 
 	dict = new_data_dict();
 	i = 0;
+	result = 0;
 	line = get_next_line_no_nl(fd);
-	while (line)
+	while (line && result != 15)
 	{
 		printf("LÍNEA: %s$\n", line);
 		check = set_data(cub3d, line, dict);
@@ -65,10 +64,12 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 		if (check == -1)
 			return (0);
 		result += check;
-
 		line = get_next_line_no_nl(fd);
 		i++;
-	} // si resultado no es igual a 21, está mal, no encontró los 6 correspondientes de manera única
+	}
+	printf("Result: %d\n", result);
+	if (result != 15)
+		return (0); // si resultado no es igual a 15, está mal, no encontró los 6 correspondientes de manera única
 	return (1);
 }
 

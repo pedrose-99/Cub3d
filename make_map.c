@@ -69,4 +69,3 @@ void	print_matrix(char **matrix)
 		i++;
 	}
 }
-

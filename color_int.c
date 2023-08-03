@@ -1,3 +1,6 @@
 #include "cub3d.h"
 
-static int	red_int
+int	color_int(int t, int red, int green, int blue)
+{
+	return (t << 24 | red << 16 | green << 8 | blue);
+}
