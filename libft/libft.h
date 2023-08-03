@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:03:09 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 10:50:52 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:04:58 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 size_t			longer_str(char *s1, char *s2);
 char			*aux_join(char *s1, char *s2);
 char			*get_next_line(int fd);
+char			*get_next_line_no_nl(int fd);
 void			free_matrix(void **matrix);
 long long int	ft_atoll(const char *str);
 int				matrix_len(char **matrix);

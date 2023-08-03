@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/03 12:52:10 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:23:52 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <mlx.h>
 # include <math.h>
 # include "libft/libft.h"
+
+# define N 90
+# define S 270
+# define W 180
+# define E 0
 
 typedef enum e_texture_id{
 	id_north = 1,
@@ -59,6 +64,7 @@ typedef struct s_player
 {
 	int		x;
 	int		y;
+	int		angle;
 	int		pixel_x;
 	int		pixel_y;
 	int		to_move;

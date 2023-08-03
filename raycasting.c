@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/03 12:48:07 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:00:25 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,41 @@ void	player_movement(t_cub3d *cub3d, int i, int j)
 	draw_square(cub3d, 0x00800080, cub3d->player.x * SQUARE, cub3d->player.y * SQUARE);
 }
 
+void	draw_player_angle(t_cub3d *cub3d)
+{
+	int	y;
+	int	cont;
+	int	cont2;
+	
+	cont = 0;
+	cont2 = 0;
+	while (cont < 10)
+	{
+		cont2 = 0;
+		printf("Tangente del ángulo: %f\n", tan(cub3d->player.angle));
+		y = tan(cub3d->player.angle) * (cub3d->player.x
+				- (cub3d->player.x + cont)) + (cub3d->player.y + cont);
+		printf("x: %d, y: %d\n", cub3d->player.x - cont, y);
+		while (cont2 < 10)
+		{
+			mlx_pixel_put(cub3d->mlx_ptr, cub3d->win,
+				(cub3d->player.x + cont2), y, 0x00800080);
+			cont2++;
+		}
+		cont++;
+	}
+}
+
+void	set_player_angle(t_cub3d *cub3d, int add)
+{
+	printf("Set angle: %d\n", cub3d->player.angle);
+	cub3d->player.angle += add;
+	draw_player_angle(cub3d);
+}
+
 int	key_hook(int key, t_cub3d *cub3d)
 {
+	printf("Key: %d\n", key);
 	if (key == 53)
 		close_window(cub3d);
 	if (key == 13)
@@ -103,14 +136,31 @@ int	key_hook(int key, t_cub3d *cub3d)
 		player_movement(cub3d, 0, 1);
 	else if (key == 2)
 		player_movement(cub3d, 1, 0);
+	else if (key == 123)
+		set_player_angle(cub3d, -3);
+	else if (key == 124)
+		set_player_angle(cub3d, 3);
 	else
 		close_window(cub3d);
 	return (0);
 }
+
 void	waiting_events(t_cub3d *cub3d)
 {
 	mlx_key_hook(cub3d->win, *key_hook, cub3d);
 	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
+}
+
+void	init_player_angle(t_player *player, char angle)
+{
+	if (angle == 'N')
+		player->angle = N;
+	else if (angle == 'S')
+		player->angle = S;
+	else if (angle == 'W')
+		player->angle = W;
+	else if (angle == 'E')
+		player->angle = E;
 }
 
 void	search_player(t_cub3d *cub3d, char **map)
@@ -129,6 +179,7 @@ void	search_player(t_cub3d *cub3d, char **map)
 			{
 				cub3d->player.x = j;
 				cub3d->player.y = i;
+				init_player_angle(&cub3d->player, map[i][j]);
 				map[i][j] = '0';
 				break ;
 			}
@@ -138,27 +189,25 @@ void	search_player(t_cub3d *cub3d, char **map)
 	}
 }
 
-int	main (int argc, char **argv)
+int	main (void)
 {
 	int	screen_l;
 	int	screen_h;
 	t_cub3d *cub3d;
 	char **map;
 	int fd;
-	char *line;
 	int	size_y = 0;
 	int size_x;
 
-	
 	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
 	fd = open("mapprueba.ber", O_RDONLY);
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
-	print_map(normalized);
-	if (map_is_close(normalized))
+	print_matrix(normalized);
+	/*if (map_is_close(normalized))
 		printf("Mapa bueno\n");
 	else
-		printf("Mapa malo\n");
+		printf("Mapa malo\n");*/
 	size_x = (int)ft_strlen(map[0]);
 	while (map[size_y])
 		size_y++;
