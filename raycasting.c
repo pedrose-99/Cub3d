@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/03 14:19:18 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/04 09:05:41 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,10 @@ int	main (void)
 	fd = open("mapprueba.ber", O_RDONLY);
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
+	//print_map(normalized);
+	if (map_is_close(normalized))
+	print_matrix(normalized);
+	/*if (map_is_close(normalized))
 	print_matrix(normalized);
 	/*if (map_is_close(normalized))
 		printf("Mapa bueno\n");
