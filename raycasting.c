@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2023/08/03 13:38:49 by pserrano         ###   ########.fr       */
-=======
-/*   Updated: 2023/08/03 14:19:18 by pfuentes         ###   ########.fr       */
->>>>>>> 281cc1d72ca6e19d0db545cee0f74bdd11a30c8a
-=======
-/*   Updated: 2023/08/03 14:19:18 by pfuentes         ###   ########.fr       */
->>>>>>> d172858cc93eb99dd7841cb257070e581bbc9e87
+/*   Updated: 2023/08/04 09:05:41 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,18 +204,12 @@ int	main (void)
 	fd = open("mapprueba.ber", O_RDONLY);
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
-<<<<<<< HEAD
-<<<<<<< HEAD
 	//print_map(normalized);
 	if (map_is_close(normalized))
-=======
 	print_matrix(normalized);
 	/*if (map_is_close(normalized))
->>>>>>> 281cc1d72ca6e19d0db545cee0f74bdd11a30c8a
-=======
 	print_matrix(normalized);
 	/*if (map_is_close(normalized))
->>>>>>> d172858cc93eb99dd7841cb257070e581bbc9e87
 		printf("Mapa bueno\n");
 	else
 		printf("Mapa malo\n");*/
