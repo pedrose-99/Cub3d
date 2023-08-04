@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/03 12:48:07 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:38:49 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	main (int argc, char **argv)
 	fd = open("mapprueba.ber", O_RDONLY);
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
-	print_map(normalized);
+	//print_map(normalized);
 	if (map_is_close(normalized))
 		printf("Mapa bueno\n");
 	else
