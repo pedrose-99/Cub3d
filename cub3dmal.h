@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3dmal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/08 11:47:55 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:47:27 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3DMAL_H
+# define CUB3DMAL_H
 
 # include <stdio.h>
 # include <sys/fcntl.h>
@@ -61,10 +61,19 @@ typedef struct s_vector{
 	int	y;
 }	t_vector;
 
+typedef struct s_vectord{
+	double	x;
+	double	y;
+}	t_vectord;
+
 typedef struct s_player
 {
+	t_vectord	*pos;
+	t_vectord	*dir;
 	int		x;
 	int		y;
+	int		dir_x;
+	int		dir_y;
 	int		angle;
 	int		pixel_x;
 	int		pixel_y;
@@ -73,10 +82,24 @@ typedef struct s_player
 	int		to_move_y;
 }			t_player;
 
+typedef struct s_raycaster{
+	float		camera_plane;
+	t_vectord	*plane;
+	t_vectord	*ray_length;
+	t_vectord	*step;
+	t_vector	*map_check;
+	float		camera_scale;
+	t_vectord	*ray_dir;
+	t_vectord	*step_size;
+	float		perp_wall_dist;
+	int			side;
+}	t_raycaster;
+
 typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
-	t_player	player;
+	t_player	*player;
+	t_raycaster	*raycaster;
 	t_texture	**textures; //4
 	t_color		**colors; //2
 	char		**map;
