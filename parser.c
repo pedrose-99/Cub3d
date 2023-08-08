@@ -113,7 +113,7 @@ void	free_cub3d(t_cub3d *cub3d)
 	free(cub3d);
 	printf("Libera bien todo cub3d\n");
 }
-
+/*
 int	main(void)
 {
 	char		**matrix;
@@ -147,4 +147,4 @@ int	main(void)
 	printf("Hace bien normalized\n");
 	//atexit(&leaks);
 	return (0);
-}
+}*/
