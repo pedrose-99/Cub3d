@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/07 13:46:53 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/08 09:40:32 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,6 +380,10 @@ int	main (void)
 	fd = open("mapprueba.ber", O_RDONLY);
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
+	//print_map(normalized);
+	if (map_is_close(normalized))
+	print_matrix(normalized);
+	/*if (map_is_close(normalized))
 	print_matrix(normalized);
 	/*if (map_is_close(normalized))
 		printf("Mapa bueno\n");
