@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/04 09:05:41 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/08 09:40:32 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
 #include "cub3d.h"
 #include "libft/libft.h"
 
-# define SQUARE 16
-# define WINDOW_X 64
-# define WINDOW_Y 64
+# define CELL_UNIT 32
+# define WINDOW_X 1280
+# define WINDOW_Y 720
 
-void	draw_square(t_cub3d *cub3d, int color, int x, int y)
+void	draw_cell_unit(t_cub3d *cub3d, int color, int x, int y)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	while (j < SQUARE)
+	while (j < CELL_UNIT)
 	{
 		i = 0;
-		while (i < SQUARE)
+		while (i < CELL_UNIT)
 		{
 			mlx_pixel_put(cub3d->mlx_ptr, cub3d->win, i + x, j + y, color);
 			i++;
@@ -39,18 +39,14 @@ void	draw_square(t_cub3d *cub3d, int color, int x, int y)
 }
 void	draw_map_point(t_cub3d *cub3d, int x, int y)
 {
-	printf("Casilla es: %c\n", cub3d->map[y][x]);
 	if (cub3d->map[y][x] == '1')
-		draw_square(cub3d, 0x00FF0000, x * SQUARE, y * SQUARE);
+		draw_cell_unit(cub3d, 0x00FF0000, x * CELL_UNIT, y * CELL_UNIT);
 	else if (cub3d->map[y][x] == '0')
-		draw_square(cub3d, 0x0000FF00, x * SQUARE, y * SQUARE);
+		draw_cell_unit(cub3d, 0x0000FF00, x * CELL_UNIT, y * CELL_UNIT);
 	else if (cub3d->map[y][x] == ' ')
-	{
-		printf("Dibujar espacio\n");
-		draw_square(cub3d, 0xFFFF000, x * SQUARE, y * SQUARE);
-	}
+		draw_cell_unit(cub3d, 0xFFFF000, x * CELL_UNIT, y * CELL_UNIT);
 	else
-		draw_square(cub3d, 0x00800080, x * SQUARE, y * SQUARE);
+		draw_cell_unit(cub3d, 0x00800080, x * CELL_UNIT, y * CELL_UNIT);
 }
 
 void	draw_map(t_cub3d *cub3d)
@@ -69,8 +65,8 @@ void	draw_map(t_cub3d *cub3d)
 		}
 		i++;
 	}
-	draw_square(cub3d, 0x00800080, cub3d->player.x * SQUARE,
-		cub3d->player.y * SQUARE);
+	draw_cell_unit(cub3d, 0x00800080, cub3d->player.x * CELL_UNIT,
+		cub3d->player.y * CELL_UNIT);
 }
 int	close_window(t_cub3d *cub3d)
 {
@@ -86,42 +82,221 @@ void	reset_player_pos(t_player *player, int x, int y)
 }
 void	player_movement(t_cub3d *cub3d, int i, int j)
 {
-	draw_map_point(cub3d, cub3d->player.x, cub3d->player.y);
+	//draw_map_point(cub3d, cub3d->player.x, cub3d->player.y);
 	reset_player_pos(&cub3d->player, cub3d->player.x + i, cub3d->player.y + j);
-	draw_square(cub3d, 0x00800080, cub3d->player.x * SQUARE, cub3d->player.y * SQUARE);
+	//draw_cell_unit(cub3d, 0x00800080, cub3d->player.x * CELL_UNIT, cub3d->player.y * CELL_UNIT);
 }
 
-void	draw_player_angle(t_cub3d *cub3d)
+double	degree_to_radians(double degree)
 {
-	int	y;
-	int	cont;
-	int	cont2;
-	
-	cont = 0;
-	cont2 = 0;
-	while (cont < 1)
+	return (degree * (M_PI / 180.0));
+}
+
+void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end)
+{
+	float	delta_x;
+	float	delta_y;
+	float		steps;
+	float 	x_inc;
+	float	y_inc;
+	float	x;
+	float	y;
+
+	//printf("x_start: %d, x_end: %d, y_start: %d, y_end: %d\n", x_start, x_end, y_start, y_end);
+	delta_x = x_end - x_start;
+	delta_y = y_end - y_start;
+	if (fabs(delta_x) > fabs(delta_y))
+		steps = fabs(delta_x);
+	else
+		steps = fabs(delta_y);
+	//printf("Delta_x: %f, steps: %f\n", delta_x, steps);
+	x_inc = delta_x / steps;
+	y_inc = delta_y / steps;
+	x = x_start;
+	y = y_start;
+	//printf("xinc: %f, yinc: %f\n", x_inc, y_inc);
+	int	i = 0;
+	while (i < steps)
 	{
-		cont2 = 0;
-		printf("Tangente del ángulo: %f\n", tan(cub3d->player.angle));
-		
-		y = tan(cub3d->player.angle) * 
-			(cub3d->player.x - cub3d->player.x + cont) + (y + cont);
-		printf("x: %d, y: %d\n", cub3d->player.x - cont, y);
-		while (cont2 < 10)
+		mlx_pixel_put(cub3d->mlx_ptr, cub3d->win, x, y, 0x00ffa500);
+		//printf("x: %d, y: %d\n", x_start, y_start);
+		x += x_inc;
+		y += y_inc;
+		i++;
+	}
+}
+
+void	draw_line_bresenham(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end)
+{
+	int	step_x;
+	int	step_y;
+	int	delta_x;
+	int	delta_y;
+	int	p;
+
+	delta_x = x_end - x_start;
+	delta_y = y_end - y_start;
+	p = (2 * delta_x) - delta_y;
+	if (delta_x < 0)
+	{
+		step_x = -1;
+		delta_x *= -1;
+	}
+	else if (delta_x == 0)
+		step_x = 0;
+	else
+		step_x = 1;
+	if (delta_y < 0)
+	{
+		step_y = -1;
+		delta_y *= -1;
+	}
+	else if (delta_y == 0)
+		step_y = 0;
+	else
+		step_y = 1;
+	//printf("x_start: %d, x_end: %d, y_start: %d, y_end: %d\n", x_start, x_end, y_start, y_end);
+	if (abs(delta_x) > abs(delta_y))
+	{
+		while (x_start != x_end)
 		{
-			mlx_pixel_put(cub3d->mlx_ptr, cub3d->win,
-				(cub3d->player.x + cont2) * SQUARE, y, 0x00800080);
-			cont2 += 0.1;
+			mlx_pixel_put(cub3d->mlx_ptr, cub3d->win, x_start, y_start, 0x00ffa500);
+			x_start += step_x;
+			if (p < 0)
+				p += 2 * abs(delta_y);
+			else
+			{
+				p += (2 * abs(delta_y)) - (2 * abs(delta_x));
+				y_start += step_y;
+			}
 		}
-		cont += 0.1;
+	}
+	else
+	{
+		//printf("delta y es mayor que delta x\n");
+		while (y_start != y_end)
+		{
+			mlx_pixel_put(cub3d->mlx_ptr, cub3d->win, x_start, y_start, 0x00ffa500);
+			y_start += step_y;
+			if (p < 0)
+				p += 2 * abs(delta_y);
+			else
+			{
+				p += (2 * abs(delta_y)) - (2 * abs(delta_x));
+				x_start += step_x;
+			}
+		}
+	}
+}
+
+void	cast_ray(t_cub3d *cub3d)
+{
+	double		playerx = cub3d->player.x + 0.5; //posicion del jugador
+	double		playery = cub3d->player.y + 0.5;
+	double	dirx = cos(degree_to_radians(cub3d->player.angle)); // vector director
+	double	diry = sin(degree_to_radians(cub3d->player.angle));
+	//printf("Vector director: %f, %f\n", dirx, diry);
+	double	rightx = -diry;
+	double	righty = dirx;
+	double	camPlane = tan( FOV / 2.0f * (M_PI / 180.0) );
+
+	
+	double	raylengthx; //guarda longitud del rayo en filas y columnas "acumuladas"
+	double	raylengthy;
+
+	double	stepx; //direccion en eje x e y
+	double	stepy;
+
+	int	x = 0;
+	while (x < WINDOW_X)
+	{
+		int		mapcheckx = playerx; //posicion en el mapa
+		int		mapchecky = playery;
+		double cameraScale = (2.0f * x / WINDOW_X) - 1.0f; //x-coordinate in camera space
+		//printf("cameraScale: %f\n", cameraScale);
+     	double rayDirX = dirx + (rightx * camPlane) * cameraScale;
+      	double rayDirY = diry + (righty * camPlane) * cameraScale;
+		double	stepsizex = fabs(1 / rayDirX); // delta o incrementos en cada paso
+		double	stepsizey = fabs(1 / rayDirY);
+		double 	perpWallDist; //perp = distancia perpendicular al muro
+
+      	int side; //was a NS or a EW wall hit?
+		if (rayDirX < 0)
+		{
+			stepx = -1;
+			raylengthx = (playerx - (float)mapcheckx) * stepsizex;
+		}
+		else
+		{
+			stepx = 1;
+			raylengthx = ((float)(mapcheckx + 1) - playerx) * stepsizex;
+		}
+		if (rayDirY < 0)
+		{
+			stepy = 1;
+			raylengthy = (playery - (float)mapchecky) * stepsizey;
+		}
+		else
+		{
+			stepy = -1;
+			raylengthy = ((float)(mapchecky + 1) - playery) * stepsizey;
+		}
+		
+		int	map_lenx = ft_strlen(cub3d->map[0]);
+		int	map_leny = matrix_len(cub3d->map);
+		int	collision = 0;
+		while (collision == 0)
+		{
+			if (raylengthx < raylengthy)
+			{
+				mapcheckx += stepx;
+				raylengthx += stepsizex;
+				side = 0;
+			}
+			else
+			{
+				mapchecky += stepy;
+				raylengthy += stepsizey;
+				side = 1;
+			}
+			if ((mapcheckx >= 0 && mapcheckx < map_lenx)
+				&& (mapchecky >= 0 && mapchecky < map_leny))
+			{
+				if (cub3d->map[mapchecky][mapcheckx] == '1')
+					collision = 1;
+			}
+		}
+		//printf("Punto de colisión: '%c', x %d, y %d\n", cub3d->map[mapchecky][mapcheckx],
+		//		mapcheckx, mapchecky);
+		//draw_line_dda(cub3d, playerx * CELL_UNIT, playery * CELL_UNIT,
+		//	(mapcheckx + 0.5) * CELL_UNIT, mapchecky * CELL_UNIT);
+		//draw_cell_unit(cub3d, 0x00ffa500, mapcheckx * CELL_UNIT, mapchecky * CELL_UNIT);
+		//printf("coordenada x: %d\n", x);
+		if (side == 0)
+			perpWallDist = raylengthx - stepsizex;
+		else
+			perpWallDist = raylengthy - stepsizey;
+		int	lineHeight = (int)( WINDOW_Y / perpWallDist);
+		int drawStart = -lineHeight / 2 + WINDOW_Y / 2;
+     	if (drawStart < 0)
+			drawStart = 0;
+     	int drawEnd = lineHeight / 2 + WINDOW_Y / 2;
+      	if (drawEnd >= WINDOW_Y)
+			drawEnd = WINDOW_Y - 1;
+		draw_line_dda(cub3d, x, drawStart, x, drawEnd);
+		x++;
 	}
 }
 
 void	set_player_angle(t_cub3d *cub3d, int add)
 {
-	printf("Set angle: %d\n", cub3d->player.angle);
-	draw_player_angle(cub3d);
+	//draw_map(cub3d);
+	//printf("Set angle: %d\n", cub3d->player.angle);
 	cub3d->player.angle += add;
+	if (cub3d->player.angle >= 360)
+		cub3d->player.angle -= 360;
+	else if (cub3d->player.angle <= 0)
+		cub3d->player.angle += 360;
 }
 
 int	key_hook(int key, t_cub3d *cub3d)
@@ -138,11 +313,12 @@ int	key_hook(int key, t_cub3d *cub3d)
 	else if (key == 2)
 		player_movement(cub3d, 1, 0);
 	else if (key == 123)
-		set_player_angle(cub3d, -3);
+		set_player_angle(cub3d, 10);
 	else if (key == 124)
-		set_player_angle(cub3d, 3);
+		set_player_angle(cub3d, -10);
 	else
 		close_window(cub3d);
+	cast_ray(cub3d);
 	return (0);
 }
 
@@ -220,11 +396,10 @@ int	main (void)
 	screen_l = WINDOW_X * size_x;
 	cub3d->map = normalized;
 	cub3d->mlx_ptr = mlx_init();
-	cub3d->win = mlx_new_window(cub3d->mlx_ptr, screen_l, screen_h, "cub3d");
+	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
 	//mlx_pixel_put(cub3d.mlx_ptr, cub3d.win, 200, 200, 0x0000FF00);
 	search_player(cub3d, cub3d->map);
-	draw_map(cub3d);
-	printf("llega despues draw_map\n");
+	//draw_map(cub3d);
 	waiting_events(cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 }
