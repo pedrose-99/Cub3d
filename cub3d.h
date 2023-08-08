@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/08 11:47:55 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:20:27 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 # define W 180
 # define E 0
 # define FOV 66
+
+# define MOVE_UP 13
+# define MOVE_DOWN 1
+# define MOVE_LEFT 0
+# define MOVE_RIGHT 2
+# define ROT_LEFT 123
+# define ROT_RIGHT 124
+# define ESC 53
 
 typedef enum e_texture_id{
 	id_north = 1,
@@ -63,8 +71,8 @@ typedef struct s_vector{
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	float		x;
+	float		y;
 	int		angle;
 	int		pixel_x;
 	int		pixel_y;
@@ -80,6 +88,12 @@ typedef struct s_cub3d{
 	t_texture	**textures; //4
 	t_color		**colors; //2
 	char		**map;
+	double		dirx;
+	double		diry;
+	double		planex;
+	double		planey;
+	double		rot_speed;
+	double		move_speed;	
 }	t_cub3d;
 
 
