@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/03 13:23:52 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:44:35 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define S 270
 # define W 180
 # define E 0
+# define FOV 66
 
 typedef enum e_texture_id{
 	id_north = 1,
