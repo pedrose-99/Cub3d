@@ -1,13 +1,13 @@
 NAME = cub3d
 
-SRCS =  raycasting.c make_map.c map.c normalize_map.c #parser.c gestion_textures.c 
+SRCS =  raycasting.c make_map.c map.c parser.c gestion_textures.c normalize_map.c 
 OBJS	= $(SRCS:.c=.o)
 
 LIBFT_A = libft.a
 
 CC		= gcc
 
-MLX =  -L. -lmlx -framework OpenGL -framework Appkit
+MLX =  -framework OpenGL -framework Appkit libmlx.a
 
 CCFLAGS	= -Wall -Werror -Wextra -Ilibft 
 
