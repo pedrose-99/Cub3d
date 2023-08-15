@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/08 15:20:27 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:04:32 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ typedef struct s_cub3d{
 }	t_cub3d;
 
 
+//cub3d
+
+t_cub3d	*set_cub3d(void);
+void	free_cub3d(t_cub3d *cub3d);
+int		set_visual_data(t_cub3d *cub3d, int fd);
+
 //map
 
 char		**realloc_matrix(char **matrix, int len);
@@ -107,7 +113,6 @@ char		**normalize_map(char **map);
 
 //textures-colors
 
-int			set_textures_colors(t_cub3d *cub3d, char **data);
 t_color		*set_color(char	*data);
 t_texture	*set_texture(t_cub3d *cub3d, char	*data);
 

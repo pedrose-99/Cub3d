@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-char	**new_data_dict(void)
+static char	**new_data_dict(void)
 {
 	char	**dict;
 
@@ -15,7 +15,7 @@ char	**new_data_dict(void)
 	return (dict);
 }
 
-int	set_data(t_cub3d *cub3d, char *data, char **dict)
+static int	set_data(t_cub3d *cub3d, char *data, char **dict)
 {
 	int	check_dict;
 	int	i;
@@ -73,16 +73,12 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 	return (1);
 }
 
-void	leaks(void)
-{
-	system("leaks -q cub3d");
-}
-
 t_cub3d	*set_cub3d(void)
 {
 	t_cub3d	*cub3d;
 
 	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
+	cub3d->mlx_ptr = mlx_init();
 	cub3d->colors = (t_color **)malloc(sizeof(t_color *) * 2);
 	cub3d->textures = (t_texture **)malloc(sizeof(t_texture *) * 4);
 	return (cub3d);

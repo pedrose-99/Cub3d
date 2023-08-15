@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/02 11:04:48 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:52:57 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ t_img	xpm_to_img(t_cub3d *cub3d, char *path)
 	int		img_w;
 	int		img_h;
 
+	printf("Path: %s$\n", path);
 	img.img_ptr = mlx_xpm_file_to_image(cub3d->mlx_ptr, path, &img_w, &img_h);
+	printf("Bien ptr\n");
 	if (!img.img_ptr)
 	{
 		free(img.img_ptr);
@@ -27,6 +29,7 @@ t_img	xpm_to_img(t_cub3d *cub3d, char *path)
 	else
 		img.data = (int *)mlx_get_data_addr(img.img_ptr, &img.bpp,
 				&img.size_l, &img.endian);
+	printf("Bien\n");
 	return (img);
 }
 
@@ -34,12 +37,17 @@ t_texture	*set_texture(t_cub3d *cub3d, char	*data)
 {
 	t_texture	*texture;
 	int			space_start;
-
 	texture = (t_texture *)malloc(sizeof(t_texture));
 	space_start = move_to_char(data, ' ', 0);
 	texture->file = ft_strtrim(&data[space_start], " ");
 	texture->img = xpm_to_img(cub3d, texture->file);
-	printf("FILE: %s$\n", texture->file);
+	int	cont = 0;
+	while (cont < 4096)
+	{
+		printf("%d\n", texture->img.data[cont]);
+		cont++;
+	}
+	printf("Número de vueltas: %d\n", cont);
 	return (texture);
 }
 
@@ -90,26 +98,4 @@ t_color	*set_color(char	*data)
 	printf("GREEN: %d\n", color->rgb[1]);
 	printf("BLUE: %d\n", color->rgb[2]);
 	return (color);
-}
-
-int	set_textures_colors(t_cub3d *cub3d, char **data)
-{
-	int		i;
-
-	i = 0;
-	while (data[i])
-	{
-		printf("Línea %d, %s\n", i, data[i]);
-		if (i < 4)
-			cub3d->textures[i] = set_texture(cub3d, data[i]);
-		else
-		{
-			cub3d->colors[i - 4] = set_color(data[i]);
-			if (!cub3d->colors[i - 4])
-				return (0);
-		}
-		i++;
-	}
-	printf("Termina de setear texturas y colores\n");
-	return (1);
 }

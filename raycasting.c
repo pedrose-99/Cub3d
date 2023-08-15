@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/08 16:25:55 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/15 15:09:29 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,14 +290,14 @@ void	move_angle(t_cub3d *cub3d, int sign)
 void	player_movement_y(t_cub3d *cub3d, int sign)
 {
 	//draw_map_point(cub3d, cub3d->player.x, cub3d->player.y);
-	printf("Vector director: x %f, y %f\n", cub3d->dirx, cub3d->diry);
-	printf("Player: x %f, y %f\n", cub3d->player.x, cub3d->player.y);
+	//printf("Vector director: x %f, y %f\n", cub3d->dirx, cub3d->diry);
+	//printf("Player: x %f, y %f\n", cub3d->player.x, cub3d->player.y);
 	if (sign == 1)
 	{
 		cub3d->player.x += cub3d->dirx * cub3d->move_speed;
-		printf("Suma a x: %f\n", cub3d->dirx * cub3d->move_speed);
+		//printf("Suma a x: %f\n", cub3d->dirx * cub3d->move_speed);
 		cub3d->player.y += cub3d->diry * cub3d->move_speed;
-		printf("Suma a y: %f\n", cub3d->diry * cub3d->move_speed);
+		//printf("Suma a y: %f\n", cub3d->diry * cub3d->move_speed);
 	}
 	else
 	{
@@ -306,38 +306,25 @@ void	player_movement_y(t_cub3d *cub3d, int sign)
 	}
 	//cub3d->player.x += i;
 	//cub3d->player.y += j;
-	printf("Player: x %f, y %f\n", cub3d->player.x, cub3d->player.y);
+	//printf("Player: x %f, y %f\n", cub3d->player.x, cub3d->player.y);
 	//draw_cell_unit(cub3d, 0x00800080, cub3d->player.x * CELL_UNIT, cub3d->player.y * CELL_UNIT);
 }
 
 void	player_movement_x(t_cub3d *cub3d, int sign)
 {
-	float	aux_x;
-	float	aux_y;
-
 	if (sign == 1)
 	{
-		printf("el dir x es %f, dir y es %f\n", cub3d->dirx, cub3d->diry);
-		printf("el ang x es %f, ang y es %f\n", acosf(cub3d->dirx), asinf(cub3d->diry));
-		aux_x = acosf(cub3d->dirx) - (M_PI / 2);
-		aux_x = cosf(aux_x);
-		aux_y = asinf(cub3d->diry) - (M_PI / 2);
-		aux_y = sinf(aux_y);
-		printf("Auxy es %f, auxx es %f\n", aux_y, aux_x);
-		cub3d->player.x -= aux_x * cub3d->move_speed;
-		cub3d->player.y -= aux_y * cub3d->move_speed;
-	//	printf("Auuxy es %f, auxx es %f\n", aux_y, aux_x);
+		cub3d->player.x += cub3d->planex * cub3d->move_speed;
+		//printf("Suma a x: %f\n", cub3d->planex * cub3d->move_speed);
+		cub3d->player.y += cub3d->planey * cub3d->move_speed;
+		//printf("Suma a y: %f\n", cub3d->planey * cub3d->move_speed);
 	}
 	else
 	{
-		aux_x = acosf(cub3d->dirx) + (M_PI / 2);
-		aux_x = cosf(aux_x);
-		aux_y = asinf(cub3d->diry) + (M_PI / 2);
-		aux_y = sinf(aux_y);
-		cub3d->player.x += aux_x * cub3d->move_speed;
-		cub3d->player.y += aux_y * cub3d->move_speed;
+		cub3d->player.x -= cub3d->planex * cub3d->move_speed;
+		cub3d->player.y -= cub3d->planey * cub3d->move_speed;
 	}
-	printf("Posición del jugador: x %f, y %f\n", cub3d->player.x, cub3d->player.y);
+	//printf("Posición del jugador: x %f, y %f\n", cub3d->player.x, cub3d->player.y);
 }
 
 int	key_hook(int key, t_cub3d *cub3d)
@@ -367,7 +354,8 @@ int	key_hook(int key, t_cub3d *cub3d)
 
 void	waiting_events(t_cub3d *cub3d)
 {
-	mlx_key_hook(cub3d->win, *key_hook, cub3d);
+	//mlx_key_hook(cub3d->win, *key_hook, cub3d);
+	mlx_hook(cub3d->win, 2, 0, *key_hook, cub3d);
 	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
 }
 
@@ -419,8 +407,13 @@ int	main (void)
 	int	size_y = 0;
 	int size_x;
 
-	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
-	fd = open("mapprueba.ber", O_RDONLY);
+	cub3d = set_cub3d();
+	fd = open("map2.ber", O_RDONLY);
+	if (!set_visual_data(cub3d, fd))
+	{
+		printf("Invalid data format\n");
+		return (1);
+	}
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
 	//print_map(normalized);
@@ -438,7 +431,6 @@ int	main (void)
 	screen_h = WINDOW_Y * size_y;
 	screen_l = WINDOW_X * size_x;
 	cub3d->map = normalized;
-	cub3d->mlx_ptr = mlx_init();
 	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
 	cub3d->dirx = cos(degree_to_radians(cub3d->player.angle)); // vector director
 	cub3d->diry = sin(degree_to_radians(cub3d->player.angle));
