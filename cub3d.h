@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/15 13:04:32 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:39:56 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define S 270
 # define W 180
 # define E 0
-# define FOV 66
+# define FOV 90
 
 # define MOVE_UP 13
 # define MOVE_DOWN 1
@@ -36,6 +36,11 @@
 # define ROT_LEFT 123
 # define ROT_RIGHT 124
 # define ESC 53
+
+# define CELL_UNIT 32
+# define WINDOW_X 1280
+# define WINDOW_Y 720
+# define RAY_MAX_DISTANCE 100
 
 typedef enum e_texture_id{
 	id_north = 1,
@@ -49,6 +54,8 @@ typedef enum e_texture_id{
 typedef struct s_img
 {
 	void		*img_ptr;
+	int			img_w;
+	int			img_h;
 	int			*data;
 	int			size_l;
 	int			bpp;
@@ -69,31 +76,48 @@ typedef struct s_vector{
 	int	y;
 }	t_vector;
 
+typedef struct s_vector_d{
+	double	x;
+	double	y;
+}	t_vector_d;
+
 typedef struct s_player
 {
-	float		x;
-	float		y;
-	int		angle;
-	int		pixel_x;
-	int		pixel_y;
-	int		to_move;
-	int		to_move_x;
-	int		to_move_y;
+	t_vector_d	pos;
+	t_vector_d	dir;
+	t_vector_d	plane;
+	double		angle;
+	double		camera_plane;
+	double		rot_speed;
+	double		move_speed;
 }			t_player;
+
+typedef struct s_raycaster
+{
+	t_vector_d	origin;
+	t_vector_d	ray_dir;
+	t_vector_d	ray_len;
+	t_vector	map_pos;
+	t_vector	map_len;
+	t_vector_d	step_dir;
+	t_vector_d	step_incr;
+	double		camera_scale;
+	int			side;
+	double		perp_wall_dist;
+	double		line_height;
+	double		draw_start;
+	double		draw_end;
+}	t_raycaster;
+
 
 typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
-	t_player	player;
+	t_player	*player;
 	t_texture	**textures; //4
-	t_color		**colors; //2
+	int			colors[2]; //2
 	char		**map;
-	double		dirx;
-	double		diry;
-	double		planex;
-	double		planey;
-	double		rot_speed;
-	double		move_speed;	
+	t_img		buffer;
 }	t_cub3d;
 
 
@@ -113,8 +137,22 @@ char		**normalize_map(char **map);
 
 //textures-colors
 
-t_color		*set_color(char	*data);
+int			set_color(char	*data);
 t_texture	*set_texture(t_cub3d *cub3d, char	*data);
+
+//player
+
+t_player	*set_player(char **map);
+void		move_player_pos(t_player *player, int sign, t_vector_d mult);
+void		move_player_angle(t_player *player, int sign);
+
+//angles
+
+double	degree_to_radians(double degree);
+
+//raycasting
+
+void	raycaster(t_cub3d *cub3d);
 
 //mlx
 

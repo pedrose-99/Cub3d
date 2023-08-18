@@ -3,6 +3,10 @@
 		"unistd.h": "c",
 		"cub3d.h": "c",
 		"mlx.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"array": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 	}
 }

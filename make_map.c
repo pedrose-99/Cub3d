@@ -40,21 +40,23 @@ char	**new_map(int fd)
 	char	*line;
 
 	i = 0;
+	map = (char **)malloc(sizeof(char *) * 2);
 	map = init_matrix(2);
-	line = get_next_line(fd);
+	line = get_next_line_no_nl(fd);
+	while (!*line)
+	{
+		free(line);
+		line = get_next_line_no_nl(fd);
+	}
 	while (line)
 	{
 		map[i] = line;
-		if (map[i][ft_strlen(line) - 1] == '\n')
-		{
-			map[i] = ft_substr(line, 0, ft_strlen(line) - 1);
-			free(line);
-		}
 		i++;
-		line = get_next_line(fd);
+		line = get_next_line_no_nl(fd);
 		if (line)
 			map = realloc_matrix(map, i + 2);
 	}
+	map[i] = NULL;
 	return (map);
 }
 
