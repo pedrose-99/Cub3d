@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/18 17:39:56 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:17:43 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct s_raycaster
 	double		draw_end;
 }	t_raycaster;
 
-
 typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
@@ -117,6 +116,7 @@ typedef struct s_cub3d{
 	t_texture	**textures; //4
 	int			colors[2]; //2
 	char		**map;
+	int			keys[6];
 	t_img		buffer;
 }	t_cub3d;
 
@@ -158,7 +158,20 @@ void	raycaster(t_cub3d *cub3d);
 
 t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 
-//map.c
+//map
 int			map_is_close(char **map);
+
+//keys
+void	key_funcs(t_cub3d *cub3d);
+int		press_key(int key, t_cub3d *cub3d);
+int		release_key(int key, t_cub3d *cub3d);
+int		close_window(t_cub3d *cub3d);
+
+//render
+
+int		render_frame(t_cub3d *cub3d);
+int		render_loop(t_cub3d *cub3d);
+void	buffer_ceilling_floor(t_cub3d *cub3d);
+void	clear_buffer(t_cub3d *cub3d);
 
 #endif

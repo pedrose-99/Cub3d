@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/18 18:15:15 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:19:51 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,6 @@ void	draw_map(t_cub3d *cub3d)
 	}
 	draw_cell_unit(cub3d, 0x00800080, cub3d->player->pos.x * CELL_UNIT,
 		cub3d->player->pos.y * CELL_UNIT);
-}
-int	close_window(t_cub3d *cub3d)
-{
-	mlx_destroy_window(cub3d->mlx_ptr, cub3d->win);
-	exit(0);
-	return (0);
 }
 
 double	degree_to_radians(double degree)
@@ -262,10 +256,10 @@ static int	calculate_ray(t_raycaster *rc, char **map)
 	}
 	return (0);
 }
-static int	calculate_tex_x(t_cub3d *cub3d, t_raycaster *rc)
+static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
 {
 	int		tex_x;
-	double	wallx; //coordenada x exacta donde impactó el rayo
+	double	wallx; //coordenada x o y exacta donde impactó el rayo
 
 	tex_x = 0;
 	if (rc->side == 0)
@@ -275,26 +269,40 @@ static int	calculate_tex_x(t_cub3d *cub3d, t_raycaster *rc)
 	wallx -= floor((wallx));
 	if ((rc->side == 0 && rc->ray_dir.x > 0)
 		&& (rc->side == 1 && rc->ray_dir.y < 0))
-		tex_x = cub3d->textures[3]->img.img_w - tex_x - 1;
+		tex_x = texture->img_w - tex_x - 1;
 	else
-		tex_x = (int)(wallx * (double)(cub3d->textures[3]->img.img_w));
+		tex_x = (int)(wallx * (double)(texture->img_w));
 	return (tex_x);
 }
 
-static t_img	select_texture(t_cub3d *cub3d)
+static t_img	select_texture(t_cub3d *cub3d, t_player *player, t_raycaster *rc)
 {
 	t_img	texture;
+	double	pos_diff_x;
+	double	pos_diff_y;
 
-	// textura oeste
-	texture = cub3d->textures[3]->img;
-	/*
-	if ((player->angle < 180 && player->angle >= 0) && rc->side == 1) // textura norte
-		texture = cub3d->textures[0]->img;
-	else if ((player->angle > 180 && player->angle < 360) && rc->side == 1) // textura sur
+	pos_diff_x = rc->map_pos.x - player->pos.x;
+	pos_diff_y = rc->map_pos.y - player->pos.y;
+	printf("Dir rayo: x %f, y %f\n", rc->ray_dir.x, rc->ray_dir.y);
+	printf("Pos diff: x %f, y %f\n", pos_diff_x, pos_diff_y);
+	texture = cub3d->textures[3]->img; // textura oeste
+	if (rc->ray_dir.y < 0 && pos_diff_y < 0 && rc->side == 1) // textura sur
+	{
+		printf("Textura sur\n");
 		texture = cub3d->textures[1]->img;
-	else if ((player->angle > 90 && player->angle < 270) && rc->side == 0) // textura este
+	}
+	else if (rc->ray_dir.y > 0 && pos_diff_y > 0 && rc->side == 1) // textura norte
+	{
+		printf("Textura norte\n");
+		texture = cub3d->textures[0]->img;
+	}	
+	else if (rc->ray_dir.x > 0 && pos_diff_x > 0 && rc->side == 0) // textura este
+	{
+		printf("Textura este\n");
 		texture = cub3d->textures[2]->img;
-	*/
+	}
+	else
+		printf("Textura oeste\n");
 	return (texture);
 }
 
@@ -307,8 +315,8 @@ void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x)
 	double	step;
 	int		y;
 
-	tex_x = calculate_tex_x(cub3d, rc);
-	texture = select_texture(cub3d);
+	texture = select_texture(cub3d, cub3d->player, rc);
+	tex_x = calculate_tex_x(&texture, rc);
 	step = 1.0 * texture.img_h / rc->line_height;
 	tex_pos = (rc->draw_start - WINDOW_Y / 2 + rc->line_height / 2) * step;
 	y = rc->draw_start;
@@ -368,29 +376,6 @@ void	raycaster(t_cub3d *cub3d)
 		x++;
 	}
 	mlx_put_image_to_window(cub3d->mlx_ptr, cub3d->win, cub3d->buffer.img_ptr, 0, 0);
-	/*int	i = 0;
-	printf("Pixeles de la imagen\n");
-	while (i < (WINDOW_X * WINDOW_Y))
-	{
-		printf("%d\n", cub3d->buffer.data[i]);
-		i++;
-	}
-	printf("\n");
-	*/
-}
-
-void	clear_buffer(t_cub3d *cub3d)
-{
-	int	i;
-	int	size;
-
-	i = 0;
-	size = WINDOW_X * WINDOW_Y;
-	while (i < size)
-	{
-		cub3d->buffer.data[i] = 0;
-		i++;
-	}
 }
 
 t_img	new_img_rectangle(t_cub3d *cub3d, int width, int height, int color)
@@ -415,68 +400,10 @@ t_img	new_img_rectangle(t_cub3d *cub3d, int width, int height, int color)
 	return (img);
 }
 
-
-void	buffer_ceilling_floor(t_cub3d *cub3d)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < WINDOW_Y / 2)
-	{
-		x = 0;
-		while (x < WINDOW_X)
-		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[0];
-			x++;
-		}
-		y++;
-	}
-	y = WINDOW_Y / 2;
-	while (y < WINDOW_Y)
-	{
-		x = 0;
-		while (x < WINDOW_X)
-		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[1];
-			x++;
-		}
-		y++;
-	}
-}
-
-
-int	key_hook(int key, t_cub3d *cub3d)
-{
-	printf("Key: %d\n", key);
-	if (key == ESC)
-		close_window(cub3d);
-	if (key == MOVE_UP)
-		move_player_pos(cub3d->player, 1, cub3d->player->dir);
-	else if (key == MOVE_DOWN)
-		move_player_pos(cub3d->player, -1, cub3d->player->dir);
-	else if (key == MOVE_LEFT)
-		move_player_pos(cub3d->player, -1, cub3d->player->plane);
-	else if (key == MOVE_RIGHT)
-		move_player_pos(cub3d->player, 1, cub3d->player->plane);
-	else if (key == ROT_LEFT)
-		move_player_angle(cub3d->player, -1);
-	else if (key == ROT_RIGHT)
-		move_player_angle(cub3d->player, 1);
-	else
-		close_window(cub3d);
-	mlx_clear_window(cub3d->mlx_ptr, cub3d->win);
-	clear_buffer(cub3d);
-	//draw_map(cub3d);
-	buffer_ceilling_floor(cub3d);
-	raycaster(cub3d);
-	return (0);
-}
-
 void	waiting_events(t_cub3d *cub3d)
 {
-	//mlx_key_hook(cub3d->win, *key_hook, cub3d);
-	mlx_hook(cub3d->win, 2, 0, *key_hook, cub3d);
+	mlx_hook(cub3d->win, 2, 1L<<0, &press_key, cub3d);
+	mlx_hook(cub3d->win, 3, 1L<<1, &release_key, cub3d);
 	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
 }
 
@@ -516,5 +443,6 @@ int	main (void)
 	cub3d->player = set_player(cub3d->map);
 	//draw_map(cub3d);
 	waiting_events(cub3d);
+	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 }
