@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/18 13:38:23 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:03:20 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 t_cub3d	*set_cub3d(void)
 {
 	t_cub3d	*cub3d;
-
+	int		i;
+	
 	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
 	cub3d->mlx_ptr = mlx_init();
 	//cub3d->colors = (t_color **)malloc(sizeof(t_color *) * 2);
@@ -23,6 +24,12 @@ t_cub3d	*set_cub3d(void)
 	cub3d->buffer.img_ptr = mlx_new_image(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y);
 	cub3d->buffer.data = (int *)mlx_get_data_addr(cub3d->buffer.img_ptr,
 			&cub3d->buffer.bpp, &cub3d->buffer.size_l, &cub3d->buffer.endian);
+	i = 0;
+	while (i < 6)
+	{
+		cub3d->keys[i] = 0;
+		i++;
+	}
 	return (cub3d);
 }
 

@@ -43,7 +43,7 @@ char	**new_map(int fd)
 	map = (char **)malloc(sizeof(char *) * 2);
 	map = init_matrix(2);
 	line = get_next_line_no_nl(fd);
-	while (!*line)
+	while (!line)
 	{
 		free(line);
 		line = get_next_line_no_nl(fd);
