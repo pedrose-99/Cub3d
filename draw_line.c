@@ -3,49 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:53:06 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:53:15 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:05:03 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//Meter en vectores
 void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end)
 {
-	float	delta_x;
-	float	delta_y;
-	float	steps;
-	float 	x_inc;
-	float	y_inc;
-	float	x;
-	float	y;
+	t_vector_d	delta;
+	float		steps;
+	t_vector_d	inc;
+	t_vector_d	coor;
+	int			i;
 
-	//printf("x_start: %d, x_end: %d, y_start: %d, y_end: %d\n", x_start, x_end, y_start, y_end);
-	delta_x = x_end - x_start;
-	delta_y = y_end - y_start;
-	if (fabs(delta_x) > fabs(delta_y))
-		steps = fabs(delta_x);
+	delta.x = x_end - x_start;
+	delta.y = y_end - y_start;
+	if (fabs(delta.x) > fabs(delta.y))
+		steps = fabs(delta.x);
 	else
-		steps = fabs(delta_y);
-	//printf("Delta_x: %f, steps: %f\n", delta_x, steps);
-	x_inc = delta_x / steps;
-	y_inc = delta_y / steps;
-	x = x_start;
-	y = y_start;
-	//printf("xinc: %f, yinc: %f\n", x_inc, y_inc);
-	int	i = 0;
+		steps = fabs(delta.y);
+	inc.x = delta.x / steps;
+	inc.y = delta.y / steps;
+	coor.x = x_start;
+	coor.y = y_start;
+	i = 0;
 	while (i < steps)
 	{
-		mlx_pixel_put(cub3d->mlx_ptr, cub3d->win, x, y, 0x00ffa500);
-		//printf("x: %d, y: %d\n", x_start, y_start);
-		x += x_inc;
-		y += y_inc;
+		mlx_pixel_put(cub3d->mlx_ptr, cub3d->win, coor.x, coor.y, 0x00ffa500);
+		coor.x += inc.x;
+		coor.y += inc.y;
 		i++;
 	}
 }
-
+//No tocar
 void	draw_line_bresenham(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end)
 {
 	int	step_x;

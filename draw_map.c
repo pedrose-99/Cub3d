@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:53:49 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:53:54 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:05:15 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	draw_cell_unit(t_cub3d *cub3d, int color, int x, int y)
 		j++;
 	}
 }
+
 void	draw_map_point(t_cub3d *cub3d, int x, int y)
 {
 	if (cub3d->map[y][x] == '1')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gestion_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/18 13:37:47 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:25:30 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,66 +32,78 @@ t_img	xpm_to_img(t_cub3d *cub3d, char *path)
 	return (img);
 }
 
-t_texture	*set_texture(t_cub3d *cub3d, char	*data)
+t_img	set_texture(t_cub3d *cub3d, char	*data)
 {
-	t_texture	*texture;
-	int			space_start;
-	texture = (t_texture *)malloc(sizeof(t_texture));
+	t_img	texture;
+	int		space_start;
+	char	*file;
+
 	space_start = move_to_char(data, ' ', 0);
-	texture->file = ft_strtrim(&data[space_start], " ");
-	texture->img = xpm_to_img(cub3d, texture->file);
+	file = ft_strtrim(&data[space_start], " ");
+	texture = xpm_to_img(cub3d, file);
+	free(file);
 	return (texture);
 }
 
-static int	color_int(int t, int red, int green, int blue)
+static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
 {
-	return (t << 24 | red << 16 | green << 8 | blue);
+	int		tex_x;
+	double	wallx; //coordenada x o y exacta donde impactó el rayo
+
+	tex_x = 0;
+	if (rc->side == 0)
+		wallx = rc->origin.y + rc->perp_wall_dist * rc->ray_dir.y;
+	else
+		wallx = rc->origin.x + rc->perp_wall_dist * rc->ray_dir.x;
+	wallx -= floor((wallx));
+	if ((rc->side == 0 && rc->ray_dir.x > 0)
+		&& (rc->side == 1 && rc->ray_dir.y < 0))
+		tex_x = texture->img_w - tex_x - 1;
+	else
+		tex_x = (int)(wallx * (double)(texture->img_w));
+	return (tex_x);
 }
 
-int	set_color(char	*data)
+static t_img	select_texture(t_cub3d *cub3d,t_player *player, t_raycaster *rc)
 {
-	int		start;
-	int		end;
-	int		cont;
-	char	*color_str;
-	int		color[3];
+	t_img	texture;
+	double	pos_diff_x;
+	double	pos_diff_y;
 
-	if (str_char_num(data, ',') != 2)
+	pos_diff_x = rc->map_pos.x - player->pos.x;
+	pos_diff_y = rc->map_pos.y - player->pos.y;
+	texture = cub3d->textures[3]; // textura oeste
+	if (pos_diff_y < 0 && rc->side == 1) // textura sur
+		texture = cub3d->textures[1];
+	else if (pos_diff_y > 0 && rc->side == 1) // textura norte
+		texture = cub3d->textures[0];	
+	else if (pos_diff_x > 0 && rc->side == 0) // textura este
+		texture = cub3d->textures[2];
+	return (texture);
+}
+
+void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x)
+{
+	t_vector	tex;
+	double		tex_pos;
+	t_img		texture;
+	double		step;
+	int			y;
+
+	texture = select_texture(cub3d, cub3d->player, rc);
+	tex.x = calculate_tex_x(&texture, rc);
+	step = 1.0 * texture.img_h / rc->line_height;
+	tex_pos = (rc->draw_start - WINDOW_Y / 2 + rc->line_height / 2) * step;
+	y = rc->draw_start;
+	while (y < rc->draw_end)
 	{
-		printf("Número de comillas distinto de 2\n");
-		return (-1);
+		tex.y = (int)tex_pos & (texture.img_h - 1);
+		tex_pos += step;
+		cub3d->buffer.data[(y * WINDOW_X) + x]
+			= texture.data[texture.img_h * tex.y + tex.x];
+		if (rc->side == 1)
+			cub3d->buffer.data[(y * WINDOW_X) + x]
+				= (cub3d->buffer.data[(y * WINDOW_X) + x] >> 1) & 8355711;
+		y++;
 	}
-	start = skip_char(data, ' ', move_to_char(data, ' ', 0));
-	cont = 0;
-	while (cont < 3)
-	{
-		end = move_to_char(data, ',', start);
-		color_str = ft_substr(data, start, end - start);
-		if (!*color_str)
-		{
-			free(color_str);
-			printf("No hay color_str, no hay nada antes de comilla\n");
-			return (-1);
-		}
-		printf("Color_str: %s$\n", color_str);
-		if (!ft_str_is_digit(color_str))
-		{
-			free(color_str);
-			printf("Color_str tiene algo que no es dígito\n");
-			return (-1);
-		}
-		color[cont] = ft_atoi(color_str);
-		free(color_str);
-		if (color[cont] < 0 || color[cont] > 255)
-		{
-			printf("Se sale del rango\n");
-			return (-1);
-		}
-		start = ++end;
-		cont++;
-	}
-	printf("RED: %d\n", color[0]);
-	printf("GREEN: %d\n", color[1]);
-	printf("BLUE: %d\n", color[2]);
-	return (color_int(0, color[0], color[1], color[2]));
 }

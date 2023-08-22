@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
 /*   Updated: 2023/08/22 11:45:24 by pfuentes         ###   ########.fr       */
@@ -62,15 +62,6 @@ typedef struct s_img
 	int			endian;
 }				t_img;
 
-typedef struct s_texture{
-	char	*file;
-	t_img	img;
-}	t_texture;
-
-typedef struct s_color{
-	int		rgb[3];
-}	t_color;
-
 typedef struct s_vector{
 	int	x;
 	int	y;
@@ -113,7 +104,7 @@ typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
 	t_player	*player;
-	t_texture	**textures; //4
+	t_img		textures[4]; //4
 	int			colors[2]; //2
 	char		**map;
 	int			keys[6];
@@ -135,10 +126,13 @@ char		**new_map(int fd);
 void		print_matrix(char **matrix);
 char		**normalize_map(char **map);
 
-//textures-colors
+//textures
+
+t_img	set_texture(t_cub3d *cub3d, char	*data);
+
+//colors
 
 int			set_color(char	*data);
-t_texture	*set_texture(t_cub3d *cub3d, char	*data);
 
 //player
 
@@ -148,11 +142,15 @@ void		move_player_angle(t_player *player, int sign);
 
 //angles
 
-double	degree_to_radians(double degree);
+double			degree_to_radians(double degree);
 
 //raycasting
 
-void	raycaster(t_cub3d *cub3d);
+void			raycaster(t_cub3d *cub3d);
+t_raycaster		init_ray(t_cub3d *cub3d, int x);
+
+// Calc_textures
+void			calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
 
 //texturecasting
 

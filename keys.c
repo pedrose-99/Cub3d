@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:54:30 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:06:31 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	close_window(t_cub3d *cub3d)
 
 void	waiting_events(t_cub3d *cub3d)
 {
-	mlx_hook(cub3d->win, 2, 1L<<0, &press_key, cub3d);
-	mlx_hook(cub3d->win, 3, 1L<<1, &release_key, cub3d);
+	mlx_hook(cub3d->win, 2, 1L << 0, &press_key, cub3d);
+	mlx_hook(cub3d->win, 3, 1L << 1, &release_key, cub3d);
 	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
 }
