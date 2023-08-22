@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:56:58 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:00:29 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ typedef struct s_texture{
 	t_img	img;
 }	t_texture;
 
-typedef struct s_color{
-	int		rgb[3];
-}	t_color;
 
 typedef struct s_vector{
 	int	x;

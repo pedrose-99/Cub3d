@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gestion_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/18 13:37:47 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:05:34 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_texture	*set_texture(t_cub3d *cub3d, char	*data)
 {
 	t_texture	*texture;
 	int			space_start;
+
 	texture = (t_texture *)malloc(sizeof(t_texture));
 	space_start = move_to_char(data, ' ', 0);
 	texture->file = ft_strtrim(&data[space_start], " ");
@@ -48,6 +49,7 @@ static int	color_int(int t, int red, int green, int blue)
 	return (t << 24 | red << 16 | green << 8 | blue);
 }
 
+//Arreglar
 int	set_color(char	*data)
 {
 	int		start;
