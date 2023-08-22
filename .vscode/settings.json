@@ -5,15 +5,21 @@
 		"mlx.h": "c",
 		"stdio.h": "c",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"libft.h": "c",
 		"stdlib.h": "c",
 		"cub3dmal.h": "c"
 =======
+=======
+>>>>>>> 889255b8d34a9634f7269072b993843bbaa805b8
 		"array": "c",
 		"string": "c",
 		"string_view": "c",
 		"vector": "c",
 		"__node_handle": "c"
+<<<<<<< HEAD
 >>>>>>> 05cf54b375f561279f0488141c0608e41c1b78a9
+=======
+>>>>>>> 889255b8d34a9634f7269072b993843bbaa805b8
 	}
 }
