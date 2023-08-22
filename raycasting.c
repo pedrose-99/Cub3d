@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/08/08 11:53:10 by pserrano         ###   ########.fr       */
+=======
+/*   Updated: 2023/08/21 13:19:51 by pfuentes         ###   ########.fr       */
+>>>>>>> 05cf54b375f561279f0488141c0608e41c1b78a9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +19,6 @@
 #include "minilibx_opengl_20191021/mlx.h"
 #include "cub3d.h"
 #include "libft/libft.h"
-
-# define CELL_UNIT 32
-# define WINDOW_X 1280
-# define WINDOW_Y 720
 
 void	draw_cell_unit(t_cub3d *cub3d, int color, int x, int y)
 {
@@ -65,26 +65,8 @@ void	draw_map(t_cub3d *cub3d)
 		}
 		i++;
 	}
-	draw_cell_unit(cub3d, 0x00800080, cub3d->player.x * CELL_UNIT,
-		cub3d->player.y * CELL_UNIT);
-}
-int	close_window(t_cub3d *cub3d)
-{
-	mlx_destroy_window(cub3d->mlx_ptr, cub3d->win);
-	exit(0);
-	return (0);
-}
-
-void	reset_player_pos(t_player *player, int x, int y)
-{
-	player->x = x;
-	player->y = y;
-}
-void	player_movement(t_cub3d *cub3d, int i, int j)
-{
-	//draw_map_point(cub3d, cub3d->player.x, cub3d->player.y);
-	reset_player_pos(&cub3d->player, cub3d->player.x + i, cub3d->player.y + j);
-	//draw_cell_unit(cub3d, 0x00800080, cub3d->player.x * CELL_UNIT, cub3d->player.y * CELL_UNIT);
+	draw_cell_unit(cub3d, 0x00800080, cub3d->player->pos.x * CELL_UNIT,
+		cub3d->player->pos.y * CELL_UNIT);
 }
 
 double	degree_to_radians(double degree)
@@ -96,7 +78,7 @@ void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_en
 {
 	float	delta_x;
 	float	delta_y;
-	float		steps;
+	float	steps;
 	float 	x_inc;
 	float	y_inc;
 	float	x;
@@ -189,217 +171,282 @@ void	draw_line_bresenham(t_cub3d *cub3d, int x_start, int y_start, int x_end, in
 	}
 }
 
-void	cast_ray(t_cub3d *cub3d)
+static void	init_ray_len_side(t_raycaster *rc)
 {
-	double		playerx = cub3d->player.x + 0.5; //posicion del jugador
-	double		playery = cub3d->player.y + 0.5;
-	double	dirx = cos(degree_to_radians(cub3d->player.angle)); // vector director
-	double	diry = sin(degree_to_radians(cub3d->player.angle));
-	//printf("Vector director: %f, %f\n", dirx, diry);
-	double	rightx = -diry;
-	double	righty = dirx;
-	double	camPlane = tan( FOV / 2.0f * (M_PI / 180.0) );
-
-	
-	double	raylengthx; //guarda longitud del rayo en filas y columnas "acumuladas"
-	double	raylengthy;
-
-	double	stepx; //direccion en eje x e y
-	double	stepy;
-
-	int	x = 0;
-	while (x < WINDOW_X)
+	if (rc->ray_dir.x < 0)
 	{
-		int		mapcheckx = playerx; //posicion en el mapa
-		int		mapchecky = playery;
-		double cameraScale = (2.0f * x / WINDOW_X) - 1.0f; //x-coordinate in camera space
-		//printf("cameraScale: %f\n", cameraScale);
-     	double rayDirX = dirx + (rightx * camPlane) * cameraScale;
-      	double rayDirY = diry + (righty * camPlane) * cameraScale;
-		double	stepsizex = fabs(1 / rayDirX); // delta o incrementos en cada paso
-		double	stepsizey = fabs(1 / rayDirY);
-		double 	perpWallDist; //perp = distancia perpendicular al muro
-
-      	int side; //was a NS or a EW wall hit?
-		if (rayDirX < 0)
-		{
-			stepx = -1;
-			raylengthx = (playerx - (float)mapcheckx) * stepsizex;
-		}
-		else
-		{
-			stepx = 1;
-			raylengthx = ((float)(mapcheckx + 1) - playerx) * stepsizex;
-		}
-		if (rayDirY < 0)
-		{
-			stepy = 1;
-			raylengthy = (playery - (float)mapchecky) * stepsizey;
-		}
-		else
-		{
-			stepy = -1;
-			raylengthy = ((float)(mapchecky + 1) - playery) * stepsizey;
-		}
-		
-		int	map_lenx = ft_strlen(cub3d->map[0]);
-		int	map_leny = matrix_len(cub3d->map);
-		int	collision = 0;
-		while (collision == 0)
-		{
-			if (raylengthx < raylengthy)
-			{
-				mapcheckx += stepx;
-				raylengthx += stepsizex;
-				side = 0;
-			}
-			else
-			{
-				mapchecky += stepy;
-				raylengthy += stepsizey;
-				side = 1;
-			}
-			if ((mapcheckx >= 0 && mapcheckx < map_lenx)
-				&& (mapchecky >= 0 && mapchecky < map_leny))
-			{
-				if (cub3d->map[mapchecky][mapcheckx] == '1')
-					collision = 1;
-			}
-		}
-		//printf("Punto de colisión: '%c', x %d, y %d\n", cub3d->map[mapchecky][mapcheckx],
-		//		mapcheckx, mapchecky);
-		//draw_line_dda(cub3d, playerx * CELL_UNIT, playery * CELL_UNIT,
-		//	(mapcheckx + 0.5) * CELL_UNIT, mapchecky * CELL_UNIT);
-		//draw_cell_unit(cub3d, 0x00ffa500, mapcheckx * CELL_UNIT, mapchecky * CELL_UNIT);
-		//printf("coordenada x: %d\n", x);
-		if (side == 0)
-			perpWallDist = raylengthx - stepsizex;
-		else
-			perpWallDist = raylengthy - stepsizey;
-		int	lineHeight = (int)( WINDOW_Y / perpWallDist);
-		int drawStart = -lineHeight / 2 + WINDOW_Y / 2;
-     	if (drawStart < 0)
-			drawStart = 0;
-     	int drawEnd = lineHeight / 2 + WINDOW_Y / 2;
-      	if (drawEnd >= WINDOW_Y)
-			drawEnd = WINDOW_Y - 1;
-		draw_line_dda(cub3d, x, drawStart, x, drawEnd);
-		x++;
+		rc->step_dir.x = -1;
+		rc->ray_len.x = (rc->origin.x
+				- (double)rc->map_pos.x) * rc->step_incr.x;
+	}
+	else
+	{
+		rc->step_dir.x = 1;
+		rc->ray_len.x = ((double)(rc->map_pos.x + 1.0)
+				- rc->origin.x) * rc->step_incr.x;
+	}
+	if (rc->ray_dir.y < 0)
+	{
+		rc->step_dir.y = -1;
+		rc->ray_len.y = (rc->origin.y
+				- (double)rc->map_pos.y) * rc->step_incr.y;
+	}
+	else
+	{
+		rc->step_dir.y = 1;
+		rc->ray_len.y = ((double)(rc->map_pos.y + 1.0)
+				- rc->origin.y) * rc->step_incr.y;
 	}
 }
 
-void	set_player_angle(t_cub3d *cub3d, int add)
+static t_raycaster	init_ray(t_cub3d *cub3d, int x)
 {
-	//draw_map(cub3d);
-	//printf("Set angle: %d\n", cub3d->player.angle);
-	cub3d->player.angle += add;
-	if (cub3d->player.angle >= 360)
-		cub3d->player.angle -= 360;
-	else if (cub3d->player.angle <= 0)
-		cub3d->player.angle += 360;
+	t_raycaster	rc;
+
+	rc.origin.x = cub3d->player->pos.x;
+	rc.origin.y = cub3d->player->pos.y;
+	//printf("Origen del rayo: x %f, y %f\n", rc.origin.x, rc.origin.y);
+	rc.map_pos.x = (int)rc.origin.x;
+	rc.map_pos.y = (int)rc.origin.y;
+	rc.camera_scale = (2.0f * x / (double)WINDOW_X) - 1.0f;
+	rc.ray_dir.x = cub3d->player->dir.x
+		+ (cub3d->player->plane.x * cub3d->player->camera_plane)
+		* rc.camera_scale;
+	rc.ray_dir.y = cub3d->player->dir.y
+		+ (cub3d->player->plane.y * cub3d->player->camera_plane)
+		* rc.camera_scale;
+	//printf("Raydir: x %f, y %f\n", rc.ray_dir.x, rc.ray_dir.y);
+	if (rc.ray_dir.x == 0)
+		rc.ray_dir.x = 1e30;
+	if (rc.ray_dir.y == 0)
+		rc.ray_dir.y = 1e30;
+	rc.step_incr.x = fabs(1 / rc.ray_dir.x);
+	rc.step_incr.y = fabs(1 / rc.ray_dir.y);
+	//printf("Stepincr: x %f, y %f\n", rc.step_incr.x, rc.step_incr.y);
+	rc.map_len.x = ft_strlen(cub3d->map[0]);
+	rc.map_len.y = matrix_len(cub3d->map);
+	init_ray_len_side(&rc);
+	return (rc);
 }
 
-int	key_hook(int key, t_cub3d *cub3d)
+static int	calculate_ray(t_raycaster *rc, char **map)
 {
-	printf("Key: %d\n", key);
-	if (key == 53)
-		close_window(cub3d);
-	if (key == 13)
-		player_movement(cub3d, 0, -1);
-	else if (key == 0)
-		player_movement(cub3d, -1, 0);
-	else if (key == 1)
-		player_movement(cub3d, 0, 1);
-	else if (key == 2)
-		player_movement(cub3d, 1, 0);
-	else if (key == 123)
-		set_player_angle(cub3d, 10);
-	else if (key == 124)
-		set_player_angle(cub3d, -10);
-	else
-		close_window(cub3d);
-	cast_ray(cub3d);
+	double	distance;
+
+	distance = 0;
+	while (distance < RAY_MAX_DISTANCE) // bucle de ir generando el rayo y calcular paso a paso
+	{
+		if (rc->ray_len.x < rc->ray_len.y)
+		{
+			rc->map_pos.x += (int)rc->step_dir.x;
+			distance = rc->ray_len.x;
+			rc->ray_len.x += rc->step_incr.x;
+			rc->side = 0;
+		}
+		else
+		{
+			rc->map_pos.y += (int)rc->step_dir.y;
+			distance = rc->ray_len.y;
+			rc->ray_len.y += rc->step_incr.y;
+			rc->side = 1;
+		}
+		if ((rc->map_pos.x >= 0 && rc->map_pos.x < rc->map_len.x)
+			&& (rc->map_pos.y >= 0 && rc->map_pos.y < rc->map_len.y))
+		{
+			if (map[rc->map_pos.y][rc->map_pos.x] == '1')
+				return (1);
+		}
+		//printf("Distancia del rayo: %f\n", distance);
+	}
 	return (0);
+}
+static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
+{
+	int		tex_x;
+	double	wallx; //coordenada x o y exacta donde impactó el rayo
+
+	tex_x = 0;
+	if (rc->side == 0)
+		wallx = rc->origin.y + rc->perp_wall_dist * rc->ray_dir.y;
+	else
+		wallx = rc->origin.x + rc->perp_wall_dist * rc->ray_dir.x;
+	wallx -= floor((wallx));
+	if ((rc->side == 0 && rc->ray_dir.x > 0)
+		&& (rc->side == 1 && rc->ray_dir.y < 0))
+		tex_x = texture->img_w - tex_x - 1;
+	else
+		tex_x = (int)(wallx * (double)(texture->img_w));
+	return (tex_x);
+}
+
+static t_img	select_texture(t_cub3d *cub3d, t_player *player, t_raycaster *rc)
+{
+	t_img	texture;
+	double	pos_diff_x;
+	double	pos_diff_y;
+
+	pos_diff_x = rc->map_pos.x - player->pos.x;
+	pos_diff_y = rc->map_pos.y - player->pos.y;
+	printf("Dir rayo: x %f, y %f\n", rc->ray_dir.x, rc->ray_dir.y);
+	printf("Pos diff: x %f, y %f\n", pos_diff_x, pos_diff_y);
+	texture = cub3d->textures[3]->img; // textura oeste
+	if (rc->ray_dir.y < 0 && pos_diff_y < 0 && rc->side == 1) // textura sur
+	{
+		printf("Textura sur\n");
+		texture = cub3d->textures[1]->img;
+	}
+	else if (rc->ray_dir.y > 0 && pos_diff_y > 0 && rc->side == 1) // textura norte
+	{
+		printf("Textura norte\n");
+		texture = cub3d->textures[0]->img;
+	}	
+	else if (rc->ray_dir.x > 0 && pos_diff_x > 0 && rc->side == 0) // textura este
+	{
+		printf("Textura este\n");
+		texture = cub3d->textures[2]->img;
+	}
+	else
+		printf("Textura oeste\n");
+	return (texture);
+}
+
+void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x)
+{
+	int		tex_x;
+	int		tex_y;
+	double	tex_pos;
+	t_img	texture;
+	double	step;
+	int		y;
+
+	texture = select_texture(cub3d, cub3d->player, rc);
+	tex_x = calculate_tex_x(&texture, rc);
+	step = 1.0 * texture.img_h / rc->line_height;
+	tex_pos = (rc->draw_start - WINDOW_Y / 2 + rc->line_height / 2) * step;
+	y = rc->draw_start;
+	while (y < rc->draw_end)
+	{
+        tex_y = (int)tex_pos & (texture.img_h - 1);
+        tex_pos += step;
+       	cub3d->buffer.data[(y * WINDOW_X) + x]
+			= texture.data[texture.img_h * tex_y + tex_x];
+        if (rc->side == 1)
+			cub3d->buffer.data[(y * WINDOW_X) + x]
+					= (cub3d->buffer.data[(y * WINDOW_X) + x] >> 1) & 8355711;
+		y++;
+	}
+}
+
+static void	calculate_ray_line(t_raycaster *rc)
+{
+	if (rc->side == 0)
+		rc->perp_wall_dist = rc->ray_len.x - rc->step_incr.x;
+	else
+		rc->perp_wall_dist = rc->ray_len.y - rc->step_incr.y;
+	//printf("Distancia del rayo: %f\n", rc->perp_wall_dist);
+	rc->line_height = (int)(WINDOW_Y / rc->perp_wall_dist);
+	rc->draw_start = -rc->line_height / 2 + WINDOW_Y / 2;
+	if (rc->draw_start < 0)
+		rc->draw_start = 0;
+	rc->draw_end = rc->line_height / 2 + WINDOW_Y / 2;
+	if (rc->draw_end >= WINDOW_Y)
+		rc->draw_end = WINDOW_Y - 1;
+	//draw_line_dda(cub3d, x, rc->draw_start, x, rc->draw_end);
+}
+
+void	cast_ray(t_cub3d *cub3d, int x)
+{
+	t_raycaster	ray;
+
+	ray = init_ray(cub3d, x);
+	//printf("Rayo inicializado\n");
+	if (!calculate_ray(&ray, cub3d->map))
+		return ;
+	//printf("Rayo calculado\n");
+	calculate_ray_line(&ray);
+	//draw_line_dda(cub3d, x, ray.draw_start, x, ray.draw_end);
+	//printf("Línea dibujada en base a rayo\n");
+	calculate_texture_pixel(cub3d, &ray, x);
+}
+
+void	raycaster(t_cub3d *cub3d)
+{
+	int			x;
+
+	x = 0;
+	while (x < WINDOW_X)
+	{
+		cast_ray(cub3d, x);
+		x++;
+	}
+	mlx_put_image_to_window(cub3d->mlx_ptr, cub3d->win, cub3d->buffer.img_ptr, 0, 0);
+}
+
+t_img	new_img_rectangle(t_cub3d *cub3d, int width, int height, int color)
+{
+	int		x;
+	int		y;
+	t_img	img;
+
+	img.img_ptr = mlx_new_image(cub3d->mlx_ptr, width, height);
+	img.data = (int *)mlx_get_data_addr(img.img_ptr, &img.bpp, &img.size_l, &img.endian);
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			img.data[(y * width) + x] = color;
+			x++;
+		}
+		y++;
+	}
+	return (img);
 }
 
 void	waiting_events(t_cub3d *cub3d)
 {
-	mlx_key_hook(cub3d->win, *key_hook, cub3d);
+	mlx_hook(cub3d->win, 2, 1L<<0, &press_key, cub3d);
+	mlx_hook(cub3d->win, 3, 1L<<1, &release_key, cub3d);
 	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
-}
-
-void	init_player_angle(t_player *player, char angle)
-{
-	if (angle == 'N')
-		player->angle = N;
-	else if (angle == 'S')
-		player->angle = S;
-	else if (angle == 'W')
-		player->angle = W;
-	else if (angle == 'E')
-		player->angle = E;
-}
-
-void	search_player(t_cub3d *cub3d, char **map)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'N' || map[i][j] == 'S' ||
-				map[i][j] == 'W' || map[i][j] == 'E')
-			{
-				cub3d->player.x = j;
-				cub3d->player.y = i;
-				init_player_angle(&cub3d->player, map[i][j]);
-				map[i][j] = '0';
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
 }
 
 int	main (void)
 {
-	int	screen_l;
-	int	screen_h;
 	t_cub3d *cub3d;
-	char **map;
-	int fd;
-	int	size_y = 0;
-	int size_x;
+	char 	**map;
+	int 	fd;
 
-	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
-	fd = open("mapprueba.ber", O_RDONLY);
+	cub3d = set_cub3d();
+	fd = open("map2.ber", O_RDONLY);
+	if (!set_visual_data(cub3d, fd))
+	{
+		printf("Invalid data format\n");
+		return (1);
+	}
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
+	free_matrix((void **)map);
 	//print_map(normalized);
 	if (map_is_close(normalized))
-	print_matrix(normalized);
+		print_matrix(normalized);
+	else
+	{
+		printf("Mapa malo\n");
+		return (1);
+	}
 	/*if (map_is_close(normalized))
 	print_matrix(normalized);
 	if (map_is_close(normalized))
 		printf("Mapa bueno\n");
 	else
 		printf("Mapa malo\n");*/
-	size_x = (int)ft_strlen(map[0]);
-	while (map[size_y])
-		size_y++;
-	screen_h = WINDOW_Y * size_y;
-	screen_l = WINDOW_X * size_x;
+	
 	cub3d->map = normalized;
-	cub3d->mlx_ptr = mlx_init();
 	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
-	//mlx_pixel_put(cub3d.mlx_ptr, cub3d.win, 200, 200, 0x0000FF00);
-	search_player(cub3d, cub3d->map);
+	cub3d->player = set_player(cub3d->map);
 	//draw_map(cub3d);
 	waiting_events(cub3d);
+	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 }

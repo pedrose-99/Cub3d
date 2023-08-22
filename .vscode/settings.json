@@ -4,8 +4,16 @@
 		"cub3d.h": "c",
 		"mlx.h": "c",
 		"stdio.h": "c",
+<<<<<<< HEAD
 		"libft.h": "c",
 		"stdlib.h": "c",
 		"cub3dmal.h": "c"
+=======
+		"array": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c",
+		"__node_handle": "c"
+>>>>>>> 05cf54b375f561279f0488141c0608e41c1b78a9
 	}
 }

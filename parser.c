@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-char	**new_data_dict(void)
+static char	**new_data_dict(void)
 {
 	char	**dict;
 
@@ -15,7 +15,7 @@ char	**new_data_dict(void)
 	return (dict);
 }
 
-int	set_data(t_cub3d *cub3d, char *data, char **dict)
+static int	set_data(t_cub3d *cub3d, char *data, char **dict)
 {
 	int	check_dict;
 	int	i;
@@ -33,7 +33,7 @@ int	set_data(t_cub3d *cub3d, char *data, char **dict)
 			else
 			{
 				cub3d->colors[i - 4] = set_color(data);
-				if (!cub3d->colors[i - 4])
+				if (cub3d->colors[i - 4] < 0)
 					return (-1);
 			}
 			check_dict = i;
@@ -73,46 +73,6 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 	return (1);
 }
 
-void	leaks(void)
-{
-	system("leaks -q cub3d");
-}
-
-t_cub3d	*set_cub3d(void)
-{
-	t_cub3d	*cub3d;
-
-	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
-	cub3d->colors = (t_color **)malloc(sizeof(t_color *) * 2);
-	cub3d->textures = (t_texture **)malloc(sizeof(t_texture *) * 4);
-	return (cub3d);
-}
-void	free_cub3d(t_cub3d *cub3d)
-{
-	int	i;
-
-	printf("Entra a liberar cub3d\n");
-	i = 0;
-	while (i < 4)
-	{
-		free(cub3d->textures[i]->file);
-		free(cub3d->textures[i]);
-		i++;
-	}
-	free(cub3d->textures);
-	printf("Libera bien texturas\n");
-	i = 0;
-	while (i < 2)
-	{
-		if (cub3d->colors[i])
-			free(cub3d->colors[i]);
-		i++;
-	}
-	free(cub3d->colors);
-	printf("Libera bien colores\n");
-	free(cub3d);
-	printf("Libera bien todo cub3d\n");
-}
 /*
 int	main(void)
 {
