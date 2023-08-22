@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3dmal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/08 11:47:27 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:13:30 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct s_vectord{
 
 typedef struct s_player
 {
-	t_vectord	*pos;
-	t_vectord	*dir;
+	t_vectord	pos;
+	t_vectord	dir;
 	int		x;
 	int		y;
 	int		dir_x;
@@ -84,15 +84,16 @@ typedef struct s_player
 
 typedef struct s_raycaster{
 	float		camera_plane;
-	t_vectord	*plane;
-	t_vectord	*ray_length;
-	t_vectord	*step;
-	t_vector	*map_check;
+	t_vectord	plane;
+	t_vectord	ray_length;
+	t_vectord	step;
+	t_vector	map_check;
 	float		camera_scale;
-	t_vectord	*ray_dir;
-	t_vectord	*step_size;
+	t_vectord	ray_dir;
+	t_vectord	step_size;
 	float		perp_wall_dist;
 	int			side;
+	t_vectord	tonterias;
 }	t_raycaster;
 
 typedef struct s_cub3d{

@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/08 11:50:47 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:53:10 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,19 +381,11 @@ int	main (void)
 	map = new_map(fd);
 	char **normalized = normalize_map(map);
 	//print_map(normalized);
-<<<<<<< HEAD
-	//if (map_is_close(normalized))
-	//print_matrix(normalized);
-	//*if (map_is_close(normalized))
-	//print_matrix(normalized);
-	/*if (map_is_close(normalized))
-=======
 	if (map_is_close(normalized))
 	print_matrix(normalized);
 	/*if (map_is_close(normalized))
 	print_matrix(normalized);
 	if (map_is_close(normalized))
->>>>>>> 137ccc32cf836e854e9948a1a3792c30eeea3bd8
 		printf("Mapa bueno\n");
 	else
 		printf("Mapa malo\n");*/

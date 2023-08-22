@@ -1,6 +1,6 @@
 NAME = cub3d
 
-SRCS =  raycasting.c make_map.c map.c normalize_map.c #parser.c gestion_textures.c 
+SRCS =  raycasting_mal.c make_map.c map.c normalize_map.c #parser.c gestion_textures.c 
 OBJS	= $(SRCS:.c=.o)
 
 LIBFT_A = libft.a
