@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:36 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/22 12:07:37 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/22 13:49:19 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,39 +84,3 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 		return (0); // si resultado no es igual a 15, está mal, no encontró los 6 correspondientes de manera única
 	return (1);
 }
-
-/*
-int	main(void)
-{
-	char		**matrix;
-	int			fd;
-	t_cub3d	*cub;
-
-	//set cub3d y texturas/colores
-
-	fd = open("map.ber", O_RDONLY);
-	cub = set_cub3d();
-	if (set_visual_data(cub, fd) == 1)
-		printf("Datos están bien\n");
-	else
-	{
-		printf("Datos están mal\n");
-		return (1);
-	}
-	free_cub3d(cub);
-	cub = NULL;
-	printf("Libera bien\n");
-
-	//parte del mapa
-
-	matrix = new_map(fd);
-	print_matrix(matrix);
-	char **normalized = normalize_map(matrix);
-	printf("Hace normalized\n");
-	print_matrix(normalized);
-	free_matrix((void**)matrix);
-	free_matrix((void**)normalized);
-	printf("Hace bien normalized\n");
-	//atexit(&leaks);
-	return (0);
-}*/

@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/03 10:44:08 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/22 13:50:37 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,32 +175,3 @@ int	map_is_close(char **map)
 	}
 	return (1);
 }
-/*
-int	main(void)
-{
-	char		**matrix;
-	int			fd;
-	char		*line;
-	//t_cube3d	cub;
-
-	atexit(&leaks);
-	fd = open("map2.ber", O_RDONLY);
-	int	i = 0;
-
-	while (i < 8)
-	{
-		line = get_next_line(fd);
-		free(line);
-		i++;
-	}
-	matrix = new_map(fd);
-	char **normalized = normalize_map(matrix);
-	print_map(normalized);
-	if (map_is_close(normalized))
-		printf("Mapa bueno\n");
-	else
-		printf("Mapa malo\n");
-	free_matrix((void **)matrix);
-	free_matrix((void**)normalized);
-	return (0);
-}*/
