@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:50:51 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/21 13:10:15 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 09:55:48 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ t_player	*set_player(char **map)
 	init_player_angle(player, val);
 	player->dir.x = cos(degree_to_radians(player->angle));
 	player->dir.y = -sin(degree_to_radians(player->angle));
-	player->move_speed = 0.1;
-	player->rot_speed = 0.05;
+	player->move_speed = 0.075;
+	player->rot_speed = 0.04;
 	player->camera_plane = tan(FOV / 2.0f * (M_PI / 180.0));
 	player->plane.x = -player->dir.y * player->camera_plane;
 	player->plane.y = player->dir.x * player->camera_plane;
