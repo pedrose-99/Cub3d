@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_mal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:45:53 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/08 11:46:04 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:16:16 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "minilibx_opengl_20191021/mlx.h"
-#include "cub3d.h"
+#include "cub3dmal.h"
 #include "libft/libft.h"
 
 # define CELL_UNIT 32
@@ -192,59 +192,59 @@ void	draw_line_bresenham(t_cub3d *cub3d, int x_start, int y_start, int x_end, in
 void	set_plane(t_cub3d *cub3d)
 {
 	cub3d->raycaster->camera_plane = tan(FOV / 2.0f * (M_PI / 180.0));
-	cub3d->raycaster->plane->x = - (cub3d->player->dir->y)
+	cub3d->raycaster->plane.x = - (cub3d->player->dir.y)
 		* cub3d->raycaster->camera_plane;
-	cub3d->raycaster->plane->y = cub3d->player->dir->x
+	cub3d->raycaster->plane.y = cub3d->player->dir.x
 		* cub3d->raycaster->camera_plane;
 }
 
 static void	set_ray_dir_y(t_cub3d *cub3d)
 {
-	if (cub3d->raycaster->ray_dir->y < 0)
+	if (cub3d->raycaster->ray_dir.y < 0)
 	{
-		cub3d->raycaster->step->y = 1;
-		cub3d->raycaster->ray_length->y = (cub3d->player->pos->y
-				- (float)cub3d->raycaster->map_check->y)
-			* cub3d->raycaster->step_size->y;
+		cub3d->raycaster->step.y = 1;
+		cub3d->raycaster->ray_length.y = (cub3d->player->pos.y
+				- (float)cub3d->raycaster->map_check.y)
+			* cub3d->raycaster->step_size.y;
 	}
 	else
 	{
-		cub3d->raycaster->step->y = -1;
-		cub3d->raycaster->ray_length->y
-			= ((float)(cub3d->raycaster->map_check->y + 1) - cub3d->player->pos->y)
-			* cub3d->raycaster->step_size->y;
+		cub3d->raycaster->step.y = -1;
+		cub3d->raycaster->ray_length.y
+			= ((float)(cub3d->raycaster->map_check.y + 1) - cub3d->player->pos.y)
+			* cub3d->raycaster->step_size.y;
 	}
 }
 
 static void	set_ray_dir_x(t_cub3d *cub3d)
 {
-	if (cub3d->raycaster->ray_dir->x < 0)
+	if (cub3d->raycaster->ray_dir.x < 0)
 	{
-		cub3d->raycaster->step->x = -1;
-		cub3d->raycaster->ray_length->x = (cub3d->player->pos->x
-				- (float)cub3d->raycaster->map_check->x)
-			* cub3d->raycaster->step_size->x;
+		cub3d->raycaster->step.x = -1;
+		cub3d->raycaster->ray_length.x = (cub3d->player->pos.x
+				- (float)cub3d->raycaster->map_check.x)
+			* cub3d->raycaster->step_size.x;
 	}
 	else
 	{
-		cub3d->raycaster->step->x = 1;
-		cub3d->raycaster->ray_length->x
-			= ((float)(cub3d->raycaster->map_check->x + 1) - cub3d->player->pos->x)
-			* cub3d->raycaster->step_size->x;
+		cub3d->raycaster->step.x = 1;
+		cub3d->raycaster->ray_length.x
+			= ((float)(cub3d->raycaster->map_check.x + 1) - cub3d->player->pos.x)
+			* cub3d->raycaster->step_size.x;
 	}
 }
 
 void	set_ray(t_cub3d *cub3d, int x)
 {
-	cub3d->raycaster->map_check->x = cub3d->player->pos->x;
-	cub3d->raycaster->map_check->y = cub3d->player->pos->y;
+	cub3d->raycaster->map_check.x = cub3d->player->pos.x;
+	cub3d->raycaster->map_check.y = cub3d->player->pos.y;
 	cub3d->raycaster->camera_scale = (2.0f * x / WINDOW_X) - 1.0f;
-	cub3d->raycaster->ray_dir->x = (cub3d->player->dir->x
-		+ cub3d->raycaster->plane->x) * cub3d->raycaster->camera_scale;
-	cub3d->raycaster->ray_dir->y = (cub3d->player->dir->y
-		+ cub3d->raycaster->plane->y) * cub3d->raycaster->camera_scale;
-	cub3d->raycaster->step_size->x = fabs(1 / cub3d->raycaster->ray_dir->x);
-	cub3d->raycaster->step_size->y = fabs(1 / cub3d->raycaster->ray_dir->y);
+	cub3d->raycaster->ray_dir.x = (cub3d->player->dir.x
+		+ cub3d->raycaster->plane.x) * cub3d->raycaster->camera_scale;
+	cub3d->raycaster->ray_dir.y = (cub3d->player->dir.y
+		+ cub3d->raycaster->plane.y) * cub3d->raycaster->camera_scale;
+	cub3d->raycaster->step_size.x = fabs(1 / cub3d->raycaster->ray_dir.x);
+	cub3d->raycaster->step_size.y = fabs(1 / cub3d->raycaster->ray_dir.y);
 	set_ray_dir_x(cub3d);
 	set_ray_dir_y(cub3d);
 }
@@ -255,14 +255,14 @@ void	draw_ray_line(t_cub3d *cub3d, int x)
 	int	draw_start;
 	int	draw_end;
 
-	printf("%f %f\n", cub3d->raycaster->ray_length->x, cub3d->raycaster->step_size->x);
-	printf("%f %f\n", cub3d->raycaster->ray_length->y, cub3d->raycaster->step_size->y);
+	printf("%f %f\n", cub3d->raycaster->ray_length.x, cub3d->raycaster->step_size.x);
+	printf("%f %f\n", cub3d->raycaster->ray_length.y, cub3d->raycaster->step_size.y);
 	if (cub3d->raycaster->side == 0)
-		cub3d->raycaster->perp_wall_dist = cub3d->raycaster->ray_length->x
-			- cub3d->raycaster->step_size->x;
+		cub3d->raycaster->perp_wall_dist = cub3d->raycaster->ray_length.x
+			- cub3d->raycaster->step_size.x;
 	else
-		cub3d->raycaster->perp_wall_dist = cub3d->raycaster->ray_length->y
-			- cub3d->raycaster->step_size->y;
+		cub3d->raycaster->perp_wall_dist = cub3d->raycaster->ray_length.y
+			- cub3d->raycaster->step_size.y;
 	printf("Perp wall: %f\n", cub3d->raycaster->perp_wall_dist);
 	line_height = (int)(WINDOW_Y / cub3d->raycaster->perp_wall_dist);
 	draw_start = -line_height / 2 + WINDOW_Y / 2;
@@ -273,7 +273,9 @@ void	draw_ray_line(t_cub3d *cub3d, int x)
 		draw_end = WINDOW_Y - 1;
 	printf("Dibujar línea: x %d, y start %d, y end %d\n\n", x, draw_start, draw_end);
 	draw_line_dda(cub3d, x, draw_start, x, draw_end);
+	
 	printf("Línea dibujada\n");
+	printf("Rayo PEdro es :x es %f y es %f\n", cub3d->raycaster->tonterias.x, cub3d->raycaster->tonterias.y);
 }
 
 int	check_ray_collision(t_cub3d *cub3d)
@@ -287,25 +289,25 @@ int	check_ray_collision(t_cub3d *cub3d)
 	map_leny = matrix_len(cub3d->map);
 	while (collision == 0)
 	{
-		if (cub3d->raycaster->ray_length->x < cub3d->raycaster->ray_length->y)
+		if (cub3d->raycaster->ray_length.x < cub3d->raycaster->ray_length.y)
 		{
-			cub3d->raycaster->map_check->x += cub3d->raycaster->step->x;
-			cub3d->raycaster->ray_length->x += cub3d->raycaster->step_size->x;
+			cub3d->raycaster->map_check.x += cub3d->raycaster->step.x;
+			cub3d->raycaster->ray_length.x += cub3d->raycaster->step_size.x;
 			cub3d->raycaster->side = 0;
 		}
 		else
 		{
-			cub3d->raycaster->map_check->y += cub3d->raycaster->step->y;
-			cub3d->raycaster->ray_length->y += cub3d->raycaster->step_size->y;
+			cub3d->raycaster->map_check.y += cub3d->raycaster->step.y;
+			cub3d->raycaster->ray_length.y += cub3d->raycaster->step_size.y;
 			cub3d->raycaster->side = 1;
 		}
-		if ((cub3d->raycaster->map_check->x >= 0
-				&& cub3d->raycaster->map_check->x < map_lenx)
-			&& (cub3d->raycaster->map_check->y >= 0
-				&& cub3d->raycaster->map_check->y < map_leny))
+		if ((cub3d->raycaster->map_check.x >= 0
+				&& cub3d->raycaster->map_check.x < map_lenx)
+			&& (cub3d->raycaster->map_check.y >= 0
+				&& cub3d->raycaster->map_check.y < map_leny))
 		{
-			if (cub3d->map[cub3d->raycaster->map_check->y]
-				[cub3d->raycaster->map_check->x] == '1')
+			if (cub3d->map[cub3d->raycaster->map_check.y]
+				[cub3d->raycaster->map_check.x] == '1')
 				collision = 1;
 		}
 	}
@@ -397,8 +399,6 @@ void	set_player(t_player	*player, char **map)
 	int	j;
 
 	i = 0;
-	player->pos = (t_vectord *)malloc(sizeof(t_vectord));
-	player->dir = (t_vectord *)malloc(sizeof(t_vectord));
 	while (map[i])
 	{
 		j = 0;
@@ -407,10 +407,10 @@ void	set_player(t_player	*player, char **map)
 			if (map[i][j] == 'N' || map[i][j] == 'S' ||
 				map[i][j] == 'W' || map[i][j] == 'E')
 			{
-				player->pos->x = j + 0.5;
-				player->pos->y = i + 0.5;
-				player->dir->x = cos(degree_to_radians(player->angle));
-				player->dir->y = sin(degree_to_radians(player->angle));
+				player->pos.x = j + 0.5;
+				player->pos.y = i + 0.5;
+				player->dir.x = cos(degree_to_radians(player->angle));
+				player->dir.y = sin(degree_to_radians(player->angle));
 				init_player_angle(player, map[i][j]);
 				map[i][j] = '0';
 				break ;
@@ -420,7 +420,7 @@ void	set_player(t_player	*player, char **map)
 		i++;
 	}
 }
-
+/*
 void	set_raycaster(t_raycaster *raycaster)
 {
 	raycaster->plane = (t_vectord *)malloc(sizeof(t_vectord));
@@ -429,7 +429,9 @@ void	set_raycaster(t_raycaster *raycaster)
 	raycaster->map_check = (t_vector *)malloc(sizeof(t_vector));
 	raycaster->ray_dir = (t_vectord *)malloc(sizeof(t_vectord));
 	raycaster->step_size = (t_vectord *)malloc(sizeof(t_vectord));
-}
+	raycaster->tonterias.x = 2345;
+	raycaster->tonterias.y = 9876;
+}*/
 
 int	main (void)
 {
@@ -467,7 +469,7 @@ int	main (void)
 	cub3d->player = (t_player *)malloc(sizeof(t_player));
 	cub3d->raycaster = (t_raycaster *)malloc(sizeof(t_raycaster));
 	set_player(cub3d->player, cub3d->map);
-	set_raycaster(cub3d->raycaster);
+	//set_raycaster(cub3d->raycaster);
 	waiting_events(cub3d);
 	printf("Castear rayos\n");
 	cast_ray(cub3d);
