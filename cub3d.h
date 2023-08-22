@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/21 13:17:43 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 09:56:58 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 int			map_is_close(char **map);
 
 //keys
+void	waiting_events(t_cub3d *cub3d);
 void	key_funcs(t_cub3d *cub3d);
 int		press_key(int key, t_cub3d *cub3d);
 int		release_key(int key, t_cub3d *cub3d);
@@ -173,5 +174,9 @@ int		render_frame(t_cub3d *cub3d);
 int		render_loop(t_cub3d *cub3d);
 void	buffer_ceilling_floor(t_cub3d *cub3d);
 void	clear_buffer(t_cub3d *cub3d);
+
+//drawing
+
+void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end);
 
 #endif

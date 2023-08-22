@@ -39,18 +39,15 @@ char	**new_map(int fd)
 	char	**map;
 	char	*line;
 
-	i = 0;
-	map = (char **)malloc(sizeof(char *) * 2);
-	map = init_matrix(2);
+	map = (char **)malloc(sizeof(char *) * 3);
+	map = init_matrix(3);
 	line = get_next_line_no_nl(fd);
-	while (!line)
-	{
-		free(line);
-		line = get_next_line_no_nl(fd);
-	}
+	map[0] = ft_strdup(" ");
+	i = 1;
 	while (line)
 	{
-		map[i] = line;
+		map[i] = ft_strjoin(" ", line);
+		free(line);
 		i++;
 		line = get_next_line_no_nl(fd);
 		if (line)
