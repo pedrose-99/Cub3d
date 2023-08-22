@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:56:58 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/22 11:45:24 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,10 @@ double	degree_to_radians(double degree);
 //raycasting
 
 void	raycaster(t_cub3d *cub3d);
+
+//texturecasting
+
+void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
 
 //mlx
 
