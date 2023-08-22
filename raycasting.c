@@ -28,6 +28,17 @@ static int	ray_inside_cell(t_raycaster *rc, char **map)
 	return (0);
 }
 
+static int	ray_inside_cell(t_raycaster *rc, char **map)
+{
+	if ((rc->map_pos.x >= 0 && rc->map_pos.x < rc->map_len.x)
+		&& (rc->map_pos.y >= 0 && rc->map_pos.y < rc->map_len.y))
+	{
+		if (map[rc->map_pos.y][rc->map_pos.x] == '1')
+			return (1);
+	}
+	return (0);
+}
+
 static int	calculate_ray(t_raycaster *rc, char **map)
 {
 	double	distance;
