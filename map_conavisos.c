@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_conavisos.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/07/27 13:10:21 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:17:33 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ char	**new_map(int fd)
 	i = 0;
 	map = (char **)malloc(sizeof(char *) * 2);
 	map = init_matrix(map, 2);
-	line = get_next_line(fd);
+	line = get_next_line_no_nl(fd);
+	while (!*line)
+	{
+		free(line);
+		line = get_next_line_no_nl(fd);
+	}
 	while (line)
 	{
 		map[i] = line;
-		if (map[i][ft_strlen(line) - 1] == '\n')
-		{
-			map[i] = ft_substr(line, 0, ft_strlen(line) - 1);
-			free(line);
-		}
 		i++;
-		line = get_next_line(fd);
+		line = get_next_line_nl(fd);
 		if (line)
 			map = realloc_matrix(map, i + 2);
 	}
