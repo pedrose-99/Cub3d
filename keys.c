@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 12:06:31 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:39:45 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	release_key(int key, t_cub3d *cub3d)
 
 int	close_window(t_cub3d *cub3d)
 {
-	mlx_destroy_window(cub3d->mlx_ptr, cub3d->win);
+	free_cub3d(cub3d, 0, 4);
 	exit(0);
 	return (0);
 }

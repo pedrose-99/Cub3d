@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:03:09 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/03 11:06:24 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:40:56 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*create_new_stash(char *stash)
 	else
 	{
 		new_stash = ft_substr(stash, cont + 1, (ft_strlen(stash)) - cont + 1);
-		free (stash);
+		free(stash);
 		if (!new_stash)
 			return (NULL);
 	}

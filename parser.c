@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:36 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/22 15:07:14 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:09:56 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 		result += check;
 		line = get_next_line_no_nl(fd);
 	}
+	free(line);
+	free(dict);
 	if (result != 15)
 		return (0);
 	return (1);
