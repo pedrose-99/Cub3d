@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   process_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/08/23 14:05:30 by pfuentes         ###   ########.fr       */
+=======
+/*   Updated: 2023/08/23 11:57:49 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 

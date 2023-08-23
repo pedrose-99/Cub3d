@@ -3,20 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/08/23 14:03:15 by pfuentes         ###   ########.fr       */
+=======
+/*   Updated: 2023/08/23 12:16:43 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+<<<<<<< HEAD
 void	leaks(void)
 {
 	system("leaks -q cub3d");
 }
 
+=======
+>>>>>>> origin/develop
 int	main(int argc, char **argv)
 {
 	t_cub3d	*cub3d;

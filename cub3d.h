@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/08/23 14:04:16 by pfuentes         ###   ########.fr       */
+=======
+/*   Updated: 2023/08/23 11:58:17 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +134,7 @@ char		**init_matrix(int len);
 char		**new_map(int fd);
 void		print_matrix(char **matrix);
 char		**normalize_map(char **map);
-
+int			process_file(t_cub3d *cub3d, char *file);
 //textures
 
 t_img	set_texture(t_cub3d *cub3d, char	*data);
@@ -164,6 +168,10 @@ t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 
 //map
 int			map_is_close(char **map);
+
+//check char
+int			not_char_alone(char **map, int i, int j);
+int			check_char(char **map);
 
 //keys
 void	waiting_events(t_cub3d *cub3d);
