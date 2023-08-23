@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/22 13:37:48 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:59:20 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "minilibx_opengl_20191021/mlx.h"
 #include "cub3d.h"
-#include "libft/libft.h"
-
-static int	ray_inside_cell(t_raycaster *rc, char **map)
-{
-	if ((rc->map_pos.x >= 0 && rc->map_pos.x < rc->map_len.x)
-		&& (rc->map_pos.y >= 0 && rc->map_pos.y < rc->map_len.y))
-	{
-		if (map[rc->map_pos.y][rc->map_pos.x] == '1')
-			return (1);
-	}
-	return (0);
-}
 
 static int	ray_inside_cell(t_raycaster *rc, char **map)
 {
@@ -106,42 +90,4 @@ void	raycaster(t_cub3d *cub3d)
 	}
 	mlx_put_image_to_window(cub3d->mlx_ptr, cub3d->win,
 		cub3d->buffer.img_ptr, 0, 0);
-}
-
-int	main (void)
-{
-	t_cub3d	*cub3d;
-	char	**map;
-	int		fd;
-
-	cub3d = set_cub3d();
-	fd = open("map2.ber", O_RDONLY);
-	if (!set_visual_data(cub3d, fd))
-	{
-		printf("Invalid data format\n");
-		return (1);
-	}
-	map = new_map(fd);
-	char **normalized = normalize_map(map);
-	free_matrix((void **)map);
-	if (map_is_close(normalized))
-		print_matrix(normalized);
-	else
-	{
-		printf("Mapa malo\n");
-		return (1);
-	}
-	/*if (map_is_close(normalized))
-	print_matrix(normalized);
-	if (map_is_close(normalized))
-		printf("Mapa bueno\n");
-	else
-		printf("Mapa malo\n");*/
-	cub3d->map = normalized;
-	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
-	cub3d->player = set_player(cub3d->map);
-	//draw_map(cub3d);
-	waiting_events(cub3d);
-	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
-	mlx_loop(cub3d->mlx_ptr);
 }

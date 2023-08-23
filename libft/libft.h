@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:03:09 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/03 11:04:58 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/23 10:43:49 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ size_t			ft_strlen(const char *str);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 int				ft_strncmp(char *s1, char *s2, size_t n);
+int				ft_rev_strncmp(char *s1, char *s2, int n);
 void			*ft_memset(void *s, int c, unsigned int len);
 size_t			ft_strlcpy(char *dest, char *src, size_t size);
 size_t			ft_strlcat(char *dest, char *src, size_t size);
@@ -86,4 +87,5 @@ int				str_char_num(char *str, char c);
 int				move_to_char(char *str, char c, int i);
 int				*new_int_array(int len);
 int				check_same_digit(int *arr, int val, int len);
+int				ft_open(char *file);
 #endif

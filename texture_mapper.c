@@ -1,16 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_caster.c                                   :+:      :+:    :+:   */
+/*   gestion_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/22 11:44:39 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 11:44:57 by pfuentes         ###   ########.fr       */
+/*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
+/*   Updated: 2023/08/23 09:49:41 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+t_img	xpm_to_img(t_cub3d *cub3d, char *path)
+{
+	t_img	img;
+
+	printf("Path: %s$\n", path);
+	img.img_ptr = mlx_xpm_file_to_image(cub3d->mlx_ptr, path,
+			&img.img_w, &img.img_h);
+	printf("Hace img_ptr\n");
+	if (!img.img_ptr)
+	{
+		printf("Mal img ptr\n");
+		free(img.img_ptr);
+		exit(EXIT_FAILURE);
+	}
+	else
+		img.data = (int *)mlx_get_data_addr(img.img_ptr, &img.bpp,
+				&img.size_l, &img.endian);
+	printf("Bien img ptr\n");
+	return (img);
+}
+
+t_img	set_texture(t_cub3d *cub3d, char	*data)
+{
+	t_img	texture;
+	int		space_start;
+	char	*file;
+
+	space_start = move_to_char(data, ' ', 0);
+	file = ft_strtrim(&data[space_start], " ");
+	texture = xpm_to_img(cub3d, file);
+	free(file);
+	return (texture);
+}
 
 static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
 {
@@ -31,7 +65,7 @@ static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
 	return (tex_x);
 }
 
-static t_img	select_texture(t_cub3d *cub3d, t_player *player, t_raycaster *rc)
+static t_img	select_texture(t_cub3d *cub3d,t_player *player, t_raycaster *rc)
 {
 	t_img	texture;
 	double	pos_diff_x;
@@ -39,39 +73,38 @@ static t_img	select_texture(t_cub3d *cub3d, t_player *player, t_raycaster *rc)
 
 	pos_diff_x = rc->map_pos.x - player->pos.x;
 	pos_diff_y = rc->map_pos.y - player->pos.y;
-	texture = cub3d->textures[3]->img; // textura oeste
+	texture = cub3d->textures[3]; // textura oeste
 	if (pos_diff_y < 0 && rc->side == 1) // textura sur
-		texture = cub3d->textures[1]->img;
+		texture = cub3d->textures[1];
 	else if (pos_diff_y > 0 && rc->side == 1) // textura norte
-		texture = cub3d->textures[0]->img;	
+		texture = cub3d->textures[0];	
 	else if (pos_diff_x > 0 && rc->side == 0) // textura este
-		texture = cub3d->textures[2]->img;
+		texture = cub3d->textures[2];
 	return (texture);
 }
 
 void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x)
 {
-	int		tex_x;
-	int		tex_y;
-	double	tex_pos;
-	t_img	texture;
-	double	step;
-	int		y;
+	t_vector	tex;
+	double		tex_pos;
+	t_img		texture;
+	double		step;
+	int			y;
 
 	texture = select_texture(cub3d, cub3d->player, rc);
-	tex_x = calculate_tex_x(&texture, rc);
+	tex.x = calculate_tex_x(&texture, rc);
 	step = 1.0 * texture.img_h / rc->line_height;
 	tex_pos = (rc->draw_start - WINDOW_Y / 2 + rc->line_height / 2) * step;
 	y = rc->draw_start;
 	while (y < rc->draw_end)
 	{
-        tex_y = (int)tex_pos & (texture.img_h - 1);
-        tex_pos += step;
-       	cub3d->buffer.data[(y * WINDOW_X) + x]
-			= texture.data[texture.img_h * tex_y + tex_x];
-        if (rc->side == 1)
+		tex.y = (int)tex_pos & (texture.img_h - 1);
+		tex_pos += step;
+		cub3d->buffer.data[(y * WINDOW_X) + x]
+			= texture.data[texture.img_h * tex.y + tex.x];
+		if (rc->side == 1)
 			cub3d->buffer.data[(y * WINDOW_X) + x]
-					= (cub3d->buffer.data[(y * WINDOW_X) + x] >> 1) & 8355711;
+				= (cub3d->buffer.data[(y * WINDOW_X) + x] >> 1) & 8355711;
 		y++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:02:39 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/02 10:20:10 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/23 10:46:31 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	**normalize_map(char **map)
 	normalize = (char **)malloc(sizeof(char *) * (matrix_len(map) + 1));
 	i = 0;
 	max = max_array_len_matrix(map);
-	printf("Línea de longitud maxima: %d\n", max);
 	while (map[i])
 	{
 		normalize[i] = copy_fill_array(max, map[i], ' ');

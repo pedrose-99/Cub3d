@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:36 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/22 13:49:19 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:07:14 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static char	**new_data_dict(void)
 
 static int	set_data(t_cub3d *cub3d, char *data, char **dict)
 {
-	int	check_dict;
+	int	check;
 	int	i;
 
-	check_dict = -1;
+	check = -1;
 	i = 0;
 	if (!*data)
 		return (0);
@@ -48,39 +48,34 @@ static int	set_data(t_cub3d *cub3d, char *data, char **dict)
 				if (cub3d->colors[i - 4] < 0)
 					return (-1);
 			}
-			check_dict = i;
+			check = i;
 			break ;
 		}
 		i++;
 	}
-	return (check_dict);
+	return (check);
 }
 
 int	set_visual_data(t_cub3d *cub3d, int fd)
 {
-	int		i;
 	char	*line;
 	char	**dict;
 	int		check;
 	int		result;
 
 	dict = new_data_dict();
-	i = 0;
 	result = 0;
 	line = get_next_line_no_nl(fd);
 	while (line && result != 15)
 	{
-		printf("LÍNEA: %s$\n", line);
 		check = set_data(cub3d, line, dict);
 		free(line);
 		if (check == -1)
 			return (0);
 		result += check;
 		line = get_next_line_no_nl(fd);
-		i++;
 	}
-	printf("Result: %d\n", result);
 	if (result != 15)
-		return (0); // si resultado no es igual a 15, está mal, no encontró los 6 correspondientes de manera única
+		return (0);
 	return (1);
 }

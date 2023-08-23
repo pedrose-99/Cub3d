@@ -1,7 +1,7 @@
 NAME = cub3d
 
-SRCS =  raycasting.c make_map.c map.c parser.c gestion_textures.c \
-normalize_map.c player.c keys.c render.c cub3d.c check_color.c utils.c \
+SRCS =  raycasting.c make_map.c map.c parser.c texture_mapper.c \
+normalize_map.c player.c keys.c render.c cub3d.c set_color.c utils.c main.c\
 init_raycast.c
 
 OBJS	= $(SRCS:.c=.o)
