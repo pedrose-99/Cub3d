@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 14:23:04 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:54:21 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_cub3d	*set_cub3d(void)
 
 	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
 	cub3d->mlx_ptr = mlx_init();
+	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
 	cub3d->buffer.img_ptr = mlx_new_image(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y);
 	cub3d->buffer.data = (int *)mlx_get_data_addr(cub3d->buffer.img_ptr,
 			&cub3d->buffer.bpp, &cub3d->buffer.size_l, &cub3d->buffer.endian);
@@ -31,23 +32,26 @@ t_cub3d	*set_cub3d(void)
 	return (cub3d);
 }
 
-void	free_cub3d(t_cub3d *cub3d)
+void	free_textures(t_cub3d *cub3d)
 {
 	int	i;
 
-	printf("Entra a liberar cub3d\n");
 	i = 0;
-	printf("Libera bien texturas\n");
-	i = 0;
-	/*
-	while (i < 2)
+	while (i < 4)
 	{
-		if (cub3d->colors[i])
-			free(cub3d->colors[i]);
+		mlx_destroy_image(cub3d->mlx_ptr, cub3d->textures[i].img_ptr);
 		i++;
-	}*/
-	//free(cub3d->colors);
-	printf("Libera bien colores\n");
+	}
+}
+
+void	free_cub3d(t_cub3d *cub3d)
+{
+	printf("Free cub3d\n");
+	free_matrix((void **)cub3d->map);
+	free_textures(cub3d);
+	free(cub3d->player);
+	free(cub3d->mlx_ptr);
+	free(cub3d->win);
 	free(cub3d);
-	printf("Libera bien todo cub3d\n");
+	cub3d = NULL;
 }
