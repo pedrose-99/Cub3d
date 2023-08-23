@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/08/23 14:05:30 by pfuentes         ###   ########.fr       */
+=======
 /*   Updated: 2023/08/23 11:57:49 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +34,39 @@ static int	valid_file_ext(char *file)
 	return (0);
 }
 
-int	process_file(t_cub3d *cub3d, char *file)
+int	process_file(t_cub3d **cub3d, char *file)
 {
 	char	**map;
 	int		fd;
+	t_cub3d	*cub;
 
 	if (!valid_file_ext(file))
-		return (0);
+		return (1);
 	fd = ft_open(file);
 	if (fd < 0)
-		return (0);
-	if (!set_visual_data(cub3d, fd))
+		return (1);
+	*cub3d = set_cub3d();
+	cub = *cub3d;
+	if (!set_visual_data(cub, fd))
 	{
 		print_errors_file(1);
-		return (0);
+		close(fd);
+		return (2);
 	}
 	map = new_map(fd);
-	cub3d->map = normalize_map(map);
+	cub->map = normalize_map(map);
+	system("leaks -q cub3d");
 	free_matrix((void **)map);
-	if (!map_is_close(cub3d->map))
+	map = NULL;
+	if (!map_is_close(cub->map))
 	{
 		print_errors_file(2);
-		return (0);
+		close(fd);
+		system("leaks -q cub3d");
+		return (3);
 	}
-	return (1);
+	system("leaks -q cub3d");
+	close(fd);
+	printf("Process file bien\n");
+	return (0);
 }

@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/08/23 14:04:16 by pfuentes         ###   ########.fr       */
+=======
 /*   Updated: 2023/08/23 11:58:17 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +120,12 @@ typedef struct s_cub3d{
 //cub3d
 
 t_cub3d	*set_cub3d(void);
-void	free_cub3d(t_cub3d *cub3d);
+void	free_cub3d(t_cub3d *cub3d, int start, int end);
 int		set_visual_data(t_cub3d *cub3d, int fd);
+
+//file
+
+int		process_file(t_cub3d **cub3d, char *file);
 
 //map
 
@@ -150,10 +158,7 @@ double			degree_to_radians(double degree);
 void			raycaster(t_cub3d *cub3d);
 t_raycaster		init_ray(t_cub3d *cub3d, int x);
 
-// Calc_textures
-void			calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
-
-//texturecasting
+//texturemapper
 
 void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
 
