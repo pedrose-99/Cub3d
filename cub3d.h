@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 11:38:48 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/23 11:58:17 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char		**init_matrix(int len);
 char		**new_map(int fd);
 void		print_matrix(char **matrix);
 char		**normalize_map(char **map);
-
+int			process_file(t_cub3d *cub3d, char *file);
 //textures
 
 t_img	set_texture(t_cub3d *cub3d, char	*data);
