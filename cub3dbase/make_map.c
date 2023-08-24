@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:08 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/23 13:03:21 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/24 11:00:12 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ char	**new_map(int fd)
 	printf("%p\n", &map_lst);
 	map_lst = NULL;
 	print_matrix(map_matrix);
-	system("leaks -q cub3d");
 	printf("Hizo mapa matriz\n");
 	return (map_matrix);
 }

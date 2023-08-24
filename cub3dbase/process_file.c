@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:13:12 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/24 11:27:06 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,15 @@ int	process_file(t_cub3d **cub3d, char *file)
 	}
 	map = new_map(fd);
 	cub->map = normalize_map(map);
-	system("leaks -q cub3d");
+	//system("leaks -q cub3d");
 	free_matrix((void **)map);
 	map = NULL;
 	if (!map_is_close(cub->map))
 	{
 		print_errors_file(2);
 		close(fd);
-		system("leaks -q cub3d");
 		return (3);
 	}
-	system("leaks -q cub3d");
 	close(fd);
 	printf("Process file bien\n");
 	return (0);

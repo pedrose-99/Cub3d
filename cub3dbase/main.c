@@ -6,17 +6,24 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:13:01 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:17:53 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+//Segmentation fault si no existe o si el mapa es incorrecto (si pones el error - 1 funciona bn)
+void	leaks(void)
+{
+	system("leaks -q cub3d");
+}
 
 int	main(int argc, char **argv)
 {
 	t_cub3d	*cub3d;
 	int		error;
 
+	atexit(leaks);
 	cub3d = NULL;
 	if (argc != 2)
 	{
@@ -26,7 +33,7 @@ int	main(int argc, char **argv)
 	error = process_file(&cub3d, argv[1]);
 	if (error != 0)
 	{
-		free_cub3d(cub3d, 0, error - 1);
+		free_cub3d(cub3d, 0, error);
 		printf("Salir del programa\n");
 		return (1);
 	}
