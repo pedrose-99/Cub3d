@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:03:15 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/24 09:51:39 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	error = process_file(&cub3d, argv[1]);
 	if (error != 0)
 	{
-		free_cub3d(cub3d, 0, error - 1);
+		free_cub3d(cub3d, 0, error);
 		printf("Salir del programa\n");
 		return (1);
 	}
