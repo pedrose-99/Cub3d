@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 13:39:45 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/08/24 09:53:01 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	release_key(int key, t_cub3d *cub3d)
 int	close_window(t_cub3d *cub3d)
 {
 	free_cub3d(cub3d, 0, 4);
-	exit(0);
+	exit(1);
 	return (0);
 }
 

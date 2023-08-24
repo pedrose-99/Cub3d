@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD:process_file.c
+/*   Updated: 2023/08/24 09:51:55 by pfuentes         ###   ########.fr       */
+=======
 /*   Updated: 2023/08/23 14:13:12 by pserrano         ###   ########.fr       */
+>>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/process_file.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +41,17 @@ int	process_file(t_cub3d **cub3d, char *file)
 	t_cub3d	*cub;
 
 	if (!valid_file_ext(file))
-		return (1);
+		exit(1);
 	fd = ft_open(file);
 	if (fd < 0)
-		return (1);
+		exit(1);
 	*cub3d = set_cub3d();
 	cub = *cub3d;
 	if (!set_visual_data(cub, fd))
 	{
 		print_errors_file(1);
 		close(fd);
-		return (2);
+		return (1);
 	}
 	map = new_map(fd);
 	cub->map = normalize_map(map);
@@ -59,7 +63,7 @@ int	process_file(t_cub3d **cub3d, char *file)
 		print_errors_file(2);
 		close(fd);
 		system("leaks -q cub3d");
-		return (3);
+		return (2);
 	}
 	system("leaks -q cub3d");
 	close(fd);

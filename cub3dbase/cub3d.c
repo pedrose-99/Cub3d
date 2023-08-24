@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD:cub3d.c
+/*   Updated: 2023/08/24 12:27:29 by pfuentes         ###   ########.fr       */
+=======
 /*   Updated: 2023/08/23 14:20:42 by pserrano         ###   ########.fr       */
+>>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/cub3d.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +69,11 @@ void	free_mlx_data(t_cub3d *cub3d)
 	//free(cub3d->buffer.data);
 	mlx_destroy_image(cub3d->mlx_ptr, cub3d->buffer.img_ptr);
 	mlx_destroy_window(cub3d->mlx_ptr, cub3d->win);
-	free(cub3d->mlx_ptr);
-	cub3d->mlx_ptr = NULL;
+	//free(cub3d->mlx_ptr);
+	//cub3d->mlx_ptr = NULL;
 	//free(cub3d->win);
 	//cub3d->win = NULL;
-	system("leaks -q cub3d");
+	//system("leaks -q cub3d");
 }
 
 void	free_map(t_cub3d *cub3d)
@@ -89,20 +93,21 @@ void	free_player(t_cub3d *cub3d)
 void	free_cub3d(t_cub3d *cub3d, int start, int end)
 {
 	void	(*funcs[5])(t_cub3d*);
-
 	printf("Liberar cub3d\n");
 	funcs[0] = free_textures;
 	funcs[1] = free_mlx_data;
 	funcs[2] = free_map;
 	funcs[3] = free_player;
 	funcs[4] = NULL;
-	while (funcs[start] && start < end)
+	while (funcs[start] && start <= end)
 	{
 		(*funcs[start])(cub3d);
+		printf("Liberar cub3d %d\n", start);
 		system("leaks -q cub3d");
 		start++;
 	}
 	printf("Liberar cub3d: %p\n", &cub3d);
-	free(cub3d);
-	cub3d = NULL;
+	//free(cub3d);
+	//cub3d = NULL;
+	exit(1);
 }

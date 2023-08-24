@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD:main.c
+/*   Updated: 2023/08/24 09:51:39 by pfuentes         ###   ########.fr       */
+=======
 /*   Updated: 2023/08/23 14:13:01 by pserrano         ###   ########.fr       */
+>>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/main.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +30,7 @@ int	main(int argc, char **argv)
 	error = process_file(&cub3d, argv[1]);
 	if (error != 0)
 	{
-		free_cub3d(cub3d, 0, error - 1);
+		free_cub3d(cub3d, 0, error);
 		printf("Salir del programa\n");
 		return (1);
 	}
