@@ -6,7 +6,15 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/08/24 11:45:16 by pserrano         ###   ########.fr       */
+=======
+<<<<<<< HEAD:cub3d.c
+/*   Updated: 2023/08/24 12:27:29 by pfuentes         ###   ########.fr       */
+=======
+/*   Updated: 2023/08/23 14:20:42 by pserrano         ###   ########.fr       */
+>>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/cub3d.c
+>>>>>>> e51693cdf09b9cecfa609be47f6b3a9d7eeb44c6
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +89,21 @@ void	free_player(t_cub3d *cub3d)
 void	free_cub3d(t_cub3d *cub3d, int start, int end)
 {
 	void	(*funcs[5])(t_cub3d*);
-
 	printf("Liberar cub3d\n");
 	funcs[0] = free_textures;
 	funcs[1] = free_mlx_data;
 	funcs[2] = free_map;
 	funcs[3] = free_player;
 	funcs[4] = NULL;
-	while (funcs[start] && start < end)
+	while (funcs[start] && start <= end)
 	{
 		(*funcs[start])(cub3d);
+		printf("Liberar cub3d %d\n", start);
+		system("leaks -q cub3d");
 		start++;
 	}
 	printf("Liberar cub3d: %p\n", &cub3d);
-	free(cub3d);
-	cub3d = NULL;
+	//free(cub3d);
+	//cub3d = NULL;
 	exit(1);
 }
