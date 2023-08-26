@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:13:12 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:36:09 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	process_file(t_cub3d **cub3d, char *file)
 		close(fd);
 		return (2);
 	}
+	cub->textures[4] = xpm_to_img(*cub3d, "images/floor.xpm");
+	cub->textures[5] = xpm_to_img(*cub3d, "images/ceilling.xpm");
 	map = new_map(fd);
 	cub->map = normalize_map(map);
 	system("leaks -q cub3d");
