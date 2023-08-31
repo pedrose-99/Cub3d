@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:15:05 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:27:38 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <stdio.h>
 # include <sys/fcntl.h>
@@ -84,6 +84,18 @@ typedef struct s_player
 	double		move_speed;
 }			t_player;
 
+typedef struct s_floorcaster
+{
+	t_vector_d	ray_dir0;
+	t_vector_d	ray_dir1;
+	int			p;
+	double		pos_z;
+	double		row_distance;
+	t_vector_d	floor_step;
+	t_vector_d	floor_pos;
+}	t_floorcaster;
+
+
 typedef struct s_raycaster
 {
 	t_vector_d	origin;
@@ -105,7 +117,7 @@ typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
 	t_player	*player;
-	t_img		textures[4]; //4
+	t_img		textures[6]; //6
 	int			colors[2]; //2
 	char		**map;
 	int			keys[6];
@@ -152,6 +164,7 @@ double			degree_to_radians(double degree);
 
 void			raycaster(t_cub3d *cub3d);
 t_raycaster		init_ray(t_cub3d *cub3d, int x);
+void			floorcaster(t_cub3d *cub3d);
 
 //texturemapper
 
