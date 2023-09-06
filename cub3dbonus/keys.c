@@ -6,7 +6,11 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2023/09/05 16:12:16 by pfuentes         ###   ########.fr       */
+=======
 /*   Updated: 2023/09/06 09:46:02 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +18,8 @@
 
 void	key_funcs(t_cub3d *cub3d)
 {
+	if (check_same_digit(cub3d->keys, 0, 6))
+		return ;
 	if (cub3d->keys[0] == 1)
 		move_player_pos_aux(cub3d->player, 1, cub3d->player->dir, cub3d);
 	else if (cub3d->keys[1] == 1)
