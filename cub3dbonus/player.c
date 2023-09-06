@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:50:51 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 09:57:11 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 10:25:51 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	move_player_pos_aux(t_player *player, int sign, t_vector_d mult, t_cub3d *c
 {
 	t_vector_d	pos_aux;
 	int			x;
-	int			y;
+	int			y; 
 
 	pos_aux.x = player->pos.x + (mult.x * player->move_speed) * sign;
 	pos_aux.y = player->pos.y + (mult.y * player->move_speed) * sign;

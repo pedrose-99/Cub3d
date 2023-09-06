@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 11:33:45 by pserrano          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/09/05 13:16:12 by pfuentes         ###   ########.fr       */
-=======
-/*   Updated: 2023/09/06 09:32:13 by pserrano         ###   ########.fr       */
->>>>>>> origin/develop
+/*   Updated: 2023/09/06 10:25:21 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +15,7 @@
 int	ft_valid_char(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W'
-<<<<<<< HEAD
 		|| c == '1' || c == '0' || c == ' ' || c == 'D')
-=======
-		|| c == '1' || c == '0' || c == ' ' || c == 'P')
->>>>>>> origin/develop
 		return (1);
 	return (0);
 }
@@ -107,4 +99,4 @@ int	check_door(char **map)
 	}
 	return (1);
 }
-//colision muros y mover camara con raton (funcion mlx)
+//mover camara con raton (funcion mlx)
