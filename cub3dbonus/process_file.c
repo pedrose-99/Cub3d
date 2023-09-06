@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/29 12:25:35 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:38:14 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,22 @@ int	process_file(t_cub3d **cub3d, char *file)
 	}
 	cub->textures[4] = xpm_to_img(*cub3d, "images/ceilling2.xpm");
 	cub->textures[5] = xpm_to_img(*cub3d, "images/floor.xpm");
+	cub->textures[6] = xpm_to_img(*cub3d, "images/puertabuena.xpm");
 	map = new_map(fd);
 	cub->map = normalize_map(map);
-	system("leaks -q cub3d");
+	printf("Mapa normalizado\n");
+	print_matrix(cub->map);
 	free_matrix((void **)map);
 	map = NULL;
 	if (!map_is_close(cub->map))
 	{
 		print_errors_file(2);
 		close(fd);
-		system("leaks -q cub3d");
 		return (3);
 	}
-	system("leaks -q cub3d");
+	cub->doors = set_doors_lst(cub->map);
+	if (!cub->doors)
+		printf("No hizo bien lista de puertas\n");
 	close(fd);
-	printf("Process file bien\n");
 	return (0);
 }

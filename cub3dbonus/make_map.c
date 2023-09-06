@@ -6,44 +6,11 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:08 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/23 13:03:21 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:44:32 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-char	**realloc_matrix(char **matrix, int len)
-{
-	char	**new_matrix;
-	int		i;
-	int		prev_len;
-
-	new_matrix = init_matrix(len);
-	i = 0;
-	prev_len = matrix_len(matrix);
-	while (i < prev_len)
-	{
-		new_matrix[i] = matrix[i];
-		i++;
-	}
-	free(matrix);
-	return (new_matrix);
-}
-
-char	**init_matrix(int len)
-{
-	char	**matrix;
-	int		i;
-
-	matrix = (char **)malloc(sizeof(char *) * len);
-	i = 0;
-	while (i < len)
-	{
-		matrix[i] = NULL;
-		i++;
-	}
-	return (matrix);
-}
 
 char	**lst_to_matrix(t_list *lst)
 {
@@ -97,20 +64,22 @@ char	**new_map(int fd)
 	char	*line;
 
 	line = get_next_line_no_nl(fd);
+	while (!*line)
+	{
+		printf("Línea: %s\n", line);
+		free(line);
+		line = get_next_line_no_nl(fd);
+	}
 	map_lst = ft_lstnew((void *)line);
 	while (line)
 	{
 		line = get_next_line_no_nl(fd);
 		ft_lstadd_back(&map_lst, ft_lstnew((void *)line));
 	}
-	printf("Hizo lista\n");
 	map_matrix = lst_to_matrix(map_lst);
 	free_lst_nodes(map_lst);
-	printf("%p\n", &map_lst);
 	map_lst = NULL;
 	print_matrix(map_matrix);
-	system("leaks -q cub3d");
-	printf("Hizo mapa matriz\n");
 	return (map_matrix);
 }
 

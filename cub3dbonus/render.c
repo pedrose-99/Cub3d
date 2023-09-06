@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/26 12:31:08 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:57:10 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int	render_frame(t_cub3d *cub3d)
 int	render_loop(t_cub3d *cub3d)
 {
 	key_funcs(cub3d);
+	if (cub3d->frame > 100)
+	{
+		animate_doors(cub3d, cub3d->doors);
+		cub3d->frame = 0;
+	}
+	cub3d->frame++;
 	return (0);
 }
 

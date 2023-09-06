@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 13:39:45 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:12:16 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	key_funcs(t_cub3d *cub3d)
 {
+	if (check_same_digit(cub3d->keys, 0, 6))
+		return ;
 	if (cub3d->keys[0] == 1)
 		move_player_pos(cub3d->player, 1, cub3d->player->dir);
 	else if (cub3d->keys[1] == 1)

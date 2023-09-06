@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 11:33:45 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/23 11:38:32 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:16:12 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_valid_char(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == '1' || c == '0' || c == ' ')
+		|| c == '1' || c == '0' || c == ' ' || c == 'D')
 		return (1);
 	return (0);
 }

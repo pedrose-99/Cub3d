@@ -1,67 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gestion_textures.c                                 :+:      :+:    :+:   */
+/*   texture_mapper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:41 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/06 10:08:48 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_img	xpm_to_img(t_cub3d *cub3d, char *path)
+void	calculate_wall_x(t_raycaster *rc)
 {
-	t_img	img;
-
-	printf("Path: %s$\n", path);
-	img.img_ptr = mlx_xpm_file_to_image(cub3d->mlx_ptr, path,
-			&img.img_w, &img.img_h);
-	printf("Hace img_ptr\n");
-	if (!img.img_ptr)
-	{
-		printf("Mal img ptr\n");
-		free(img.img_ptr);
-		exit(EXIT_FAILURE);
-	}
-	else
-		img.data = (int *)mlx_get_data_addr(img.img_ptr, &img.bpp,
-				&img.size_l, &img.endian);
-	printf("Bien img ptr\n");
-	return (img);
-}
-
-t_img	set_texture(t_cub3d *cub3d, char	*data)
-{
-	t_img	texture;
-	int		space_start;
-	char	*file;
-
-	space_start = move_to_char(data, ' ', 0);
-	file = ft_strtrim(&data[space_start], " ");
-	texture = xpm_to_img(cub3d, file);
-	free(file);
-	return (texture);
-}
-
-static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
-{
-	int		tex_x;
 	double	wallx; //coordenada x o y exacta donde impactó el rayo
 
-	tex_x = 0;
 	if (rc->side == 0)
 		wallx = rc->origin.y + rc->perp_wall_dist * rc->ray_dir.y;
 	else
 		wallx = rc->origin.x + rc->perp_wall_dist * rc->ray_dir.x;
 	wallx -= floor((wallx));
+	rc->wall_x = wallx;
+}
+
+static int	calculate_tex_x(t_img *texture, t_raycaster *rc)
+{
+	int		tex_x;
+	//double	wallx; //coordenada x o y exacta donde impactó el rayo
+
+	tex_x = 0;
+	if (rc->impact_type != 'D')
+		calculate_wall_x(rc);
 	if ((rc->side == 0 && rc->ray_dir.x > 0)
 		&& (rc->side == 1 && rc->ray_dir.y < 0))
 		tex_x = texture->img_w - tex_x - 1;
 	else
-		tex_x = (int)(wallx * (double)(texture->img_w));
+		tex_x = (int)(rc->wall_x * (double)(texture->img_w));
 	return (tex_x);
 }
 
@@ -73,13 +48,15 @@ static t_img	select_texture(t_cub3d *cub3d,t_player *player, t_raycaster *rc)
 
 	pos_diff_x = rc->map_pos.x - player->pos.x;
 	pos_diff_y = rc->map_pos.y - player->pos.y;
-	texture = cub3d->textures[3]; // textura oeste
-	if (pos_diff_y < 0 && rc->side == 1) // textura sur
+	texture = cub3d->textures[3]; // textura oeste muro
+	if (pos_diff_y < 0 && rc->side == 1) // textura sur muro
 		texture = cub3d->textures[1];
-	else if (pos_diff_y > 0 && rc->side == 1) // textura norte
+	else if (pos_diff_y > 0 && rc->side == 1) // textura norte muro
 		texture = cub3d->textures[0];	
-	else if (pos_diff_x > 0 && rc->side == 0) // textura este
+	else if (pos_diff_x > 0 && rc->side == 0) // textura este muro
 		texture = cub3d->textures[2];
+	if (rc->impact_type == 'D') //textura puerta
+		texture = cub3d->textures[6];
 	return (texture);
 }
 

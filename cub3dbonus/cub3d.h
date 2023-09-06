@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/29 11:04:31 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:27:12 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,14 @@ typedef struct s_floorcaster
 	t_vector_d	floor_pos;
 }	t_floorcaster;
 
+typedef struct s_door
+{
+	t_vector	pos;
+	double		border;
+	int			open;
+	int			view;
+}	t_door;
+
 
 typedef struct s_raycaster
 {
@@ -111,17 +119,21 @@ typedef struct s_raycaster
 	double		line_height;
 	double		draw_start;
 	double		draw_end;
+	int			impact_type;
+	double		wall_x;
 }	t_raycaster;
 
 typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
 	t_player	*player;
-	t_img		textures[6]; //6
+	t_img		textures[7]; //7
 	int			colors[2]; //2
 	char		**map;
 	int			keys[6];
+	t_list		*doors;
 	t_img		buffer;
+	int			frame;
 }	t_cub3d;
 
 
@@ -168,6 +180,7 @@ void			floorcaster(t_cub3d *cub3d);
 
 //texturemapper
 
+void	calculate_wall_x(t_raycaster *rc);
 void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
 
 //mlx
@@ -194,6 +207,13 @@ int		render_frame(t_cub3d *cub3d);
 int		render_loop(t_cub3d *cub3d);
 void	buffer_ceilling_floor(t_cub3d *cub3d);
 void	clear_buffer(t_cub3d *cub3d);
+
+//doors
+
+t_door	*new_door(int x, int y);
+t_door	*find_door(t_list *doors, int x, int y);
+t_list	*set_doors_lst(char **map);
+void	animate_doors(t_cub3d *cub3d, t_list *doors);
 
 //drawing
 

@@ -1,8 +1,8 @@
 NAME = cub3d
 
 SRCS =  raycasting.c floorcaster.c make_map.c map.c parser.c texture_mapper.c check_char.c\
-normalize_map.c player.c keys.c render.c cub3d.c set_color.c utils.c main.c\
-init_raycast.c process_file.c
+normalize_map.c player.c keys.c render.c cub3d.c set_texture.c set_color.c utils.c main.c\
+init_raycast.c process_file.c doors.c
 
 OBJS	= $(SRCS:.c=.o)
 
