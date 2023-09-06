@@ -6,11 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/09/05 16:12:16 by pfuentes         ###   ########.fr       */
-=======
-/*   Updated: 2023/09/06 09:46:02 by pserrano         ###   ########.fr       */
->>>>>>> origin/develop
+/*   Updated: 2023/09/06 10:47:07 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +80,7 @@ int	close_window(t_cub3d *cub3d)
 void	waiting_events(t_cub3d *cub3d)
 {
 	mlx_hook(cub3d->win, 2, 1L << 0, &press_key, cub3d);
+	mlx_mouse_hide();
 	mlx_hook(cub3d->win, 3, 1L << 1, &release_key, cub3d);
 	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
 }
