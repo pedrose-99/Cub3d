@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/05 16:28:54 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:30:15 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	}
 	cub3d->player = set_player(cub3d->map);
 	//draw_map(cub3d);
-	waiting_events(cub3d);
+	waiting_events_aux(cub3d);
 	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 }
