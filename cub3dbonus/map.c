@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:04 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 09:26:27 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/08/23 11:38:40 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,5 @@ int	map_is_close(char **map)
 		}
 		i++;
 	}
-	if (!check_door(map))
-		return (0);
 	return (1);
 }

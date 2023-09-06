@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:20:42 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:30:39 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ t_cub3d	*set_cub3d(void)
 	int		i;
 
 	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
-	printf("Size of t_cub3d: %lu\n", sizeof(t_cub3d) * 8);
 	cub3d->mlx_ptr = mlx_init();
 	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
 	cub3d->buffer.img_ptr = mlx_new_image(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y);
 	cub3d->buffer.data = (int *)mlx_get_data_addr(cub3d->buffer.img_ptr,
 			&cub3d->buffer.bpp, &cub3d->buffer.size_l, &cub3d->buffer.endian);
 	i = 0;
-	while (i < 6)
+	while (i < 7)
 	{
 		cub3d->keys[i] = 0;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 11:45:44 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/29 12:36:04 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:33:57 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	set_buffer_data(t_img *buffer, t_floorcaster *fc,
 	int	ty;
 	int	color;
 
+	//printf("Pos: %d\n", pos);
 	tx = (int)(img->img_w * (fc->floor_pos.x - (int)(fc->floor_pos.x)))
 		& (img->img_w - 1);
 	ty = (int)(img->img_h * (fc->floor_pos.y - (int)(fc->floor_pos.y)))
@@ -47,6 +48,7 @@ static void	set_buffer_data(t_img *buffer, t_floorcaster *fc,
 	color = img->data[img->img_w * ty + tx];
 	//color = (color >> 1) & 8355711;
 	buffer->data[pos] = color;
+	//printf("Guardó color en buffer\n");
 }
 
 static void	set_floor_buffer(t_cub3d *cub3d, t_floorcaster *fc, int y, int x)
@@ -56,7 +58,7 @@ static void	set_floor_buffer(t_cub3d *cub3d, t_floorcaster *fc, int y, int x)
 		(y * WINDOW_X) + x);
 	//printf("Suelo\n");
 	set_buffer_data(&cub3d->buffer, fc, &cub3d->textures[4],
-		((WINDOW_Y - y + 1) * WINDOW_X) + x);
+		((WINDOW_Y - y - 1) * (WINDOW_X)) + x);
 	fc->floor_pos.x += fc->floor_step.x;
 	fc->floor_pos.y += fc->floor_step.y;
 }
@@ -69,6 +71,7 @@ static void	floorcaster_x(t_cub3d *cub3d, t_floorcaster *fc, int y)
 	while (x < WINDOW_X)
 	{
 		//fc = set_floorcaster(cub3d->player, y);
+		//printf("x %d\n", x);
 		set_floor_buffer(cub3d, fc, y, x);
 		x++;
 	}
@@ -82,6 +85,7 @@ void	floorcaster(t_cub3d *cub3d)
 	y = 0;
 	while (y < WINDOW_Y)
 	{
+		//printf("y %d\n", y);
 		fc = set_floorcaster(cub3d->player, y);
 		floorcaster_x(cub3d, &fc, y);
 		y++;
