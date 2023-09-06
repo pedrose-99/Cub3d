@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/29 11:04:31 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:25:29 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 
 //map
 int			map_is_close(char **map);
+int			check_door(char **map);
 
 //check char
 int			not_char_alone(char **map, int i, int j);

@@ -6,13 +6,10 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-<<<<<<< HEAD:process_file.c
-/*   Updated: 2023/08/24 09:51:55 by pfuentes         ###   ########.fr       */
-=======
-/*   Updated: 2023/08/23 14:13:12 by pserrano         ###   ########.fr       */
->>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/process_file.c
+/*   Updated: 2023/08/24 13:45:10 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -55,7 +52,7 @@ int	process_file(t_cub3d **cub3d, char *file)
 	}
 	map = new_map(fd);
 	cub->map = normalize_map(map);
-	system("leaks -q cub3d");
+	//system("leaks -q cub3d");
 	free_matrix((void **)map);
 	map = NULL;
 	if (!map_is_close(cub->map))
@@ -65,7 +62,6 @@ int	process_file(t_cub3d **cub3d, char *file)
 		system("leaks -q cub3d");
 		return (2);
 	}
-	system("leaks -q cub3d");
 	close(fd);
 	printf("Process file bien\n");
 	return (0);

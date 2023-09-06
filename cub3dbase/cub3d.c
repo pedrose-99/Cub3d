@@ -6,12 +6,10 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
-<<<<<<< HEAD:cub3d.c
-/*   Updated: 2023/08/24 12:27:29 by pfuentes         ###   ########.fr       */
-=======
-/*   Updated: 2023/08/23 14:20:42 by pserrano         ###   ########.fr       */
->>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/cub3d.c
+/*   Updated: 2023/08/24 13:44:40 by pserrano         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+
 /* ************************************************************************** */
 
 #include "cub3d.h"
@@ -64,16 +62,8 @@ void	free_textures(t_cub3d *cub3d)
 void	free_mlx_data(t_cub3d *cub3d)
 {
 	printf("Liberar datos de cub3d\n");
-	system("leaks -q cub3d");
-	//free(cub3d->buffer.img_ptr);
-	//free(cub3d->buffer.data);
 	mlx_destroy_image(cub3d->mlx_ptr, cub3d->buffer.img_ptr);
 	mlx_destroy_window(cub3d->mlx_ptr, cub3d->win);
-	//free(cub3d->mlx_ptr);
-	//cub3d->mlx_ptr = NULL;
-	//free(cub3d->win);
-	//cub3d->win = NULL;
-	//system("leaks -q cub3d");
 }
 
 void	free_map(t_cub3d *cub3d)
