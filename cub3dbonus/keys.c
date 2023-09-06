@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/05 16:12:16 by pfuentes         ###   ########.fr       */
+=======
+/*   Updated: 2023/09/06 09:46:02 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +21,13 @@ void	key_funcs(t_cub3d *cub3d)
 	if (check_same_digit(cub3d->keys, 0, 6))
 		return ;
 	if (cub3d->keys[0] == 1)
-		move_player_pos(cub3d->player, 1, cub3d->player->dir);
+		move_player_pos_aux(cub3d->player, 1, cub3d->player->dir, cub3d);
 	else if (cub3d->keys[1] == 1)
-		move_player_pos(cub3d->player, -1, cub3d->player->dir);
+		move_player_pos_aux(cub3d->player, -1, cub3d->player->dir, cub3d);
 	else if (cub3d->keys[2] == 1)
-		move_player_pos(cub3d->player, -1, cub3d->player->plane);
+		move_player_pos_aux(cub3d->player, -1, cub3d->player->plane, cub3d);
 	else if (cub3d->keys[3] == 1)
-		move_player_pos(cub3d->player, 1, cub3d->player->plane);
+		move_player_pos_aux(cub3d->player, 1, cub3d->player->plane, cub3d);
 	if (cub3d->keys[4] == 1)
 		move_player_angle(cub3d->player, -1);
 	else if (cub3d->keys[5] == 1)

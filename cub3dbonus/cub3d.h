@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/05 17:27:12 by pfuentes         ###   ########.fr       */
+=======
+/*   Updated: 2023/09/06 09:46:40 by pserrano         ###   ########.fr       */
+>>>>>>> origin/develop
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +169,7 @@ int			set_color(char	*data);
 //player
 
 t_player	*set_player(char **map);
+void		move_player_pos_aux(t_player *player, int sign, t_vector_d mult, t_cub3d *cub3d);
 void		move_player_pos(t_player *player, int sign, t_vector_d mult);
 void		move_player_angle(t_player *player, int sign);
 
@@ -189,6 +194,7 @@ t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 
 //map
 int			map_is_close(char **map);
+int			check_door(char **map);
 
 //check char
 int			not_char_alone(char **map, int i, int j);

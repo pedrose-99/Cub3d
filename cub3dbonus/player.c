@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:50:51 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:55:48 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:57:11 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,24 @@ t_player	*set_player(char **map)
 	player->plane.x = -player->dir.y * player->camera_plane;
 	player->plane.y = player->dir.x * player->camera_plane;
 	return (player);
+}
+
+void	move_player_pos_aux(t_player *player, int sign, t_vector_d mult, t_cub3d *cub3d)
+{
+	t_vector_d	pos_aux;
+	int			x;
+	int			y;
+
+	pos_aux.x = player->pos.x + (mult.x * player->move_speed) * sign;
+	pos_aux.y = player->pos.y + (mult.y * player->move_speed) * sign;
+	x = floor(pos_aux.x);
+	y = floor(pos_aux.y);
+	if (cub3d->map[y][x] == '0')
+	{
+		player->pos.x += (mult.x * player->move_speed) * sign;
+		player->pos.y += (mult.y * player->move_speed) * sign;
+	}
+	printf("Pos: x %f, y %f\n", player->pos.x, player->pos.y);
 }
 
 void	move_player_pos(t_player *player, int sign, t_vector_d mult)
