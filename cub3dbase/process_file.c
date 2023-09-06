@@ -6,17 +6,10 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/08/24 11:27:06 by pserrano         ###   ########.fr       */
-=======
-<<<<<<< HEAD:process_file.c
-/*   Updated: 2023/08/24 09:51:55 by pfuentes         ###   ########.fr       */
-=======
-/*   Updated: 2023/08/23 14:13:12 by pserrano         ###   ########.fr       */
->>>>>>> 1dfd4f9e952d3b51f01be7605404d9b79a8091e9:cub3dbase/process_file.c
->>>>>>> e51693cdf09b9cecfa609be47f6b3a9d7eeb44c6
+/*   Updated: 2023/08/24 13:45:10 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
