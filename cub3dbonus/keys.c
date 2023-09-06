@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 11:40:21 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 12:37:24 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	key_funcs(t_cub3d *cub3d)
 
 void	check_mouse_move(t_cub3d *cub3d, t_player *player)
 {
-	double	x;
-	double	y;
-	int		sign;
+	int	x;
+	int	y;
+	int	sign;
 
 	sign = 1;
-	mlx_mouse_get_pos(cub3d->mlx_ptr, cub3d->win, &x, &y);
+	mlx_mouse_get_pos(cub3d->win, &x, &y);
 	if (x > player->pos.x)
 		sign = 1;
 	else
