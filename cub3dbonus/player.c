@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:50:51 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 10:26:40 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:11:26 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,29 +70,18 @@ t_player	*set_player(char **map)
 	return (player);
 }
 
-void	move_player_pos_aux(t_player *player, int sign, t_vector_d mult, t_cub3d *cub3d)
+void	move_player_pos(t_cub3d *cub3d, t_player *player,
+						int sign, t_vector_d mult)
 {
-	t_vector_d	pos_aux;
-	int			x;
-	int			y;
+	t_vector_d	to_move;
 
-	pos_aux.x = player->pos.x + (mult.x * player->move_speed) * sign;
-	pos_aux.y = player->pos.y + (mult.y * player->move_speed) * sign;
-	x = floor(pos_aux.x);
-	y = floor(pos_aux.y);
-	if (cub3d->map[y][x] == '0')
+	to_move.x = player->pos.x + (mult.x * player->move_speed) * sign;
+	to_move.y = player->pos.y + (mult.y * player->move_speed) * sign;
+	if (cub3d->map[(int)to_move.y][(int)to_move.x] == '0')
 	{
-		player->pos.x += (mult.x * player->move_speed) * sign;
-		player->pos.y += (mult.y * player->move_speed) * sign;
+		player->pos.x = to_move.x;
+		player->pos.y = to_move.y;
 	}
-	printf("Pos: x %f, y %f\n", player->pos.x, player->pos.y);
-}
-
-void	move_player_pos(t_player *player, int sign, t_vector_d mult)
-{
-	player->pos.x += (mult.x * player->move_speed) * sign;
-	player->pos.y += (mult.y * player->move_speed) * sign;
-	printf("Pos: x %f, y %f\n", player->pos.x, player->pos.y);
 }
 
 void	move_player_angle(t_player *player, int sign)
@@ -110,11 +99,4 @@ void	move_player_angle(t_player *player, int sign)
 		- player->plane.y * sin(sign * player->rot_speed);
 	player->plane.y = old_planex * sin(sign * player->rot_speed)
 		+ player->plane.y * cos(sign * player->rot_speed);
-	/*player->angle += sign * 3;
-	if (player->angle < 0)
-		player->angle += 360;
-	else if (player->angle > 360)
-		player->angle -= 360;*/
-	printf("Dir: x %f, y %f\n", player->dir.x, player->dir.y);
-	printf("Plane: x %f, y %f\n", player->plane.x, player->plane.y);
 }

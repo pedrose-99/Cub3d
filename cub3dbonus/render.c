@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 11:35:21 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:30:52 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	render_frame(t_cub3d *cub3d)
 {
 	mlx_clear_window(cub3d->mlx_ptr, cub3d->win);
 	clear_buffer(cub3d);
-	//draw_map(cub3d);
-	//buffer_ceilling_floor(cub3d);
 	floorcaster(cub3d);
 	raycaster(cub3d);
 	return (0);
@@ -26,7 +24,6 @@ int	render_frame(t_cub3d *cub3d)
 int	render_loop(t_cub3d *cub3d)
 {
 	key_funcs(cub3d);
-	check_mouse_move(cub3d, cub3d->player);
 	if (cub3d->frame > 100)
 	{
 		animate_doors(cub3d, cub3d->doors);

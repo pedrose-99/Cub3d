@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 12:36:18 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:03:53 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <mlx.h>
 # include <math.h>
 # include "libft/libft.h"
 # include "minilibx_opengl_20191021/mlx.h"
@@ -35,6 +36,7 @@
 # define MOVE_RIGHT 2
 # define ROT_LEFT 123
 # define ROT_RIGHT 124
+# define E_KEY 14
 # define ESC 53
 
 # define CELL_UNIT 32
@@ -98,6 +100,7 @@ typedef struct s_door
 {
 	t_vector	pos;
 	double		border;
+	int			move;
 	int			open;
 	int			view;
 }	t_door;
@@ -129,7 +132,7 @@ typedef struct s_cub3d{
 	t_img		textures[7]; //7
 	int			colors[2]; //2
 	char		**map;
-	int			keys[6];
+	int			keys[7];
 	t_list		*doors;
 	t_img		buffer;
 	int			frame;
@@ -164,8 +167,7 @@ int			set_color(char	*data);
 //player
 
 t_player	*set_player(char **map);
-void		move_player_pos_aux(t_player *player, int sign, t_vector_d mult, t_cub3d *cub3d);
-void		move_player_pos(t_player *player, int sign, t_vector_d mult);
+void		move_player_pos(t_cub3d *cub3d, t_player *player, int sign, t_vector_d mult);
 void		move_player_angle(t_player *player, int sign);
 
 //angles
@@ -189,7 +191,6 @@ t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 
 //map
 int			map_is_close(char **map);
-int			check_door(char **map);
 
 //check char
 int			not_char_alone(char **map, int i, int j);
@@ -214,12 +215,12 @@ void	clear_buffer(t_cub3d *cub3d);
 t_door	*new_door(int x, int y);
 t_door	*find_door(t_list *doors, int x, int y);
 t_list	*set_doors_lst(char **map);
+void	move_door(t_cub3d *cub3d, t_list *doors, t_player *player);
+void	animate_door(t_cub3d *cub3d, t_door *door);
 void	animate_doors(t_cub3d *cub3d, t_list *doors);
 
 //drawing
 
 void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end);
 
-void	check_mouse_move(t_cub3d *cub3d, t_player *player);
-void	waiting_events_aux(t_cub3d *cub3d);
 #endif

@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/05 17:54:45 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/06 12:08:37 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ray_inside_door(t_cub3d *cub3d, t_raycaster *rc)
 	if (rc->wall_x < door->border)
 	{
 		//if (rc->ray_dir.x < 0 || rc->ray_dir.y < 0)
-		//	rc->wall_x -= 1 - door->border;
+		rc->wall_x += 1 - door->border;
 		if (door->view == 0)
 			door->view = 1;
 		return (1);
