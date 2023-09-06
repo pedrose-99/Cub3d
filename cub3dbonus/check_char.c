@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 11:33:45 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/06 09:28:41 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:32:13 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	check_door_wall(char **map, int i, int j)
 	return (0);
 }
 
-//Funcion pa checkear las puertas, colision muros y mover camara con raton (funcion mlx)
 int	check_door(char **map)
 {
 	int	i;
@@ -100,3 +99,4 @@ int	check_door(char **map)
 	}
 	return (1);
 }
+//colision muros y mover camara con raton (funcion mlx)

@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 09:25:29 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:46:40 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int			set_color(char	*data);
 //player
 
 t_player	*set_player(char **map);
+void		move_player_pos_aux(t_player *player, int sign, t_vector_d mult, t_cub3d *cub3d);
 void		move_player_pos(t_player *player, int sign, t_vector_d mult);
 void		move_player_angle(t_player *player, int sign);
 
