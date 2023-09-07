@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 13:16:26 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 09:28:22 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	//draw_map(cub3d);
 	printf("Dibujar frame\n");
 	render_frame(cub3d);
-	waiting_events(cub3d);
+	waiting_events_aux(cub3d);
 	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 }
