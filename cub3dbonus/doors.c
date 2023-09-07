@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 12:05:20 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 13:00:28 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 10:26:05 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void	animate_door(t_cub3d *cub3d, t_door *door)
 	}
 	else if (door->border > 1)
 		door->border = 1;
-	if (door->view == 1)
-		render_frame(cub3d);
 }
 
 void	animate_doors(t_cub3d *cub3d, t_list *doors)
