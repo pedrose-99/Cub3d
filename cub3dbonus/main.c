@@ -6,9 +6,10 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 11:28:29 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:08:22 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -31,6 +32,10 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	cub3d->player = set_player(cub3d->map);
+	//draw_map(cub3d);
+	printf("Dibujar frame\n");
+	mlx_mouse_move(cub3d->win, WINDOW_X / 2, WINDOW_Y / 2);
+	mlx_mouse_hide();
 	render_frame(cub3d);
 	waiting_events(cub3d);
 	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);

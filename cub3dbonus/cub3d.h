@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 11:25:37 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:07:44 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# include <mlx.h>
 # include <math.h>
 # include "libft/libft.h"
 # include "minilibx_opengl_20191021/mlx.h"
@@ -225,5 +224,6 @@ void	draw_minimap(t_cub3d *cub3d);
 //drawing
 
 void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end);
+void	check_mouse_move(t_cub3d *cub3d, t_player *player);
 
 #endif

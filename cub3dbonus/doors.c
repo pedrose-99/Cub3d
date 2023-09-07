@@ -6,9 +6,10 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 12:05:20 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 09:40:17 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:07:56 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -106,8 +107,6 @@ void	animate_door(t_cub3d *cub3d, t_door *door)
 	}
 	else if (door->border > 1)
 		door->border = 1;
-	//if (door->view == 1)
-	//	render_frame(cub3d);
 }
 
 void	animate_doors(t_cub3d *cub3d, t_list *doors)

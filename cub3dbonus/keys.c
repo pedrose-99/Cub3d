@@ -6,9 +6,10 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 09:41:16 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:08:05 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -53,6 +54,18 @@ int	press_key(int key, t_cub3d *cub3d)
 	if (key == ESC)
 		close_window(cub3d);
 	return (0);
+}
+void	check_mouse_move(t_cub3d *cub3d, t_player *player)
+{
+	int	x;
+	int	y;
+	int	sign;
+
+	sign = 1;
+	mlx_mouse_get_pos(cub3d->win, &x, &y);
+	sign = (x - (WINDOW_X / 2)) * 0.05;
+	move_player_angle(player, sign);
+	mlx_mouse_move(cub3d->win, WINDOW_X / 2, WINDOW_Y / 2);
 }
 
 int	release_key(int key, t_cub3d *cub3d)
