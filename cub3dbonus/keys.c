@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:11:41 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/06 13:04:16 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 09:19:07 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,23 @@ int	press_key(int key, t_cub3d *cub3d)
 		close_window(cub3d);
 	return (0);
 }
+void	check_mouse_move(t_cub3d *cub3d, t_player *player)
+{
+	int	x;
+	int	y;
+	int	sign;
+
+	sign = 1;
+	mlx_mouse_get_pos(cub3d->win, &x, &y);
+	if (x > player->pos.x)
+		sign = 1;
+	else
+		sign = -1;
+	move_player_angle(player, sign);
+	x = WINDOW_X / 2;
+	y = WINDOW_Y / 2;
+	mlx_mouse_move(cub3d->mlx_ptr, x, y);
+}
 
 int	release_key(int key, t_cub3d *cub3d)
 {
@@ -79,6 +96,18 @@ int	close_window(t_cub3d *cub3d)
 	free_cub3d(cub3d, 0, 4);
 	exit(0);
 	return (0);
+}
+void	waiting_events_aux(t_cub3d *cub3d)
+{
+	double	x;
+	double	y;
+
+	x = WINDOW_X / 2;
+	y = WINDOW_Y / 2;
+	mlx_mouse_move(cub3d->mlx_ptr, x, y);
+	mlx_hook(cub3d->win, 2, 1L << 0, &press_key, cub3d);
+	mlx_hook(cub3d->win, 3, 1L << 1, &release_key, cub3d);
+	mlx_hook(cub3d->win, 17, 0, close_window, cub3d);
 }
 
 void	waiting_events(t_cub3d *cub3d)
