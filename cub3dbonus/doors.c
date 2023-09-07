@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 12:05:20 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 10:26:05 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:07:56 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -66,21 +67,29 @@ void	move_door(t_cub3d *cub3d, t_list *doors, t_player *player)
 {
 	t_vector	next;
 	t_door		*door;
+	int			i;
 
 	cub3d->keys[6] = 0;
-	next.x = player->pos.x + player->dir.x;
-	next.y = player->pos.y + player->dir.y;
-	door = find_door(doors, next.x, next.y);
-	if (!door)
-		return ;
-	cub3d->map[door->pos.y][door->pos.x] = 'D';
-	if (door->move == 0)
-		door->move = door->open;
-	if (door->move < 0)
-		door->move = 1;
-	else if (door->move > 0)
-		door->move = -1;
-	animate_door(cub3d, door);
+	i = 0;
+	while (i < 3)
+	{
+		next.x = player->pos.x + player->dir.x * i;
+		next.y = player->pos.y + player->dir.y * i;
+		door = find_door(doors, next.x, next.y);
+		if (door)
+		{
+			cub3d->map[door->pos.y][door->pos.x] = 'D';
+			if (door->move == 0)
+				door->move = door->open;
+			if (door->move < 0)
+				door->move = 1;
+			else if (door->move > 0)
+				door->move = -1;
+			animate_door(cub3d, door);
+			return ;
+		}
+		i++;
+	}
 }
 
 void	animate_door(t_cub3d *cub3d, t_door *door)

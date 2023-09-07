@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 10:23:55 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:07:44 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define E_KEY 14
 # define ESC 53
 
-# define CELL_UNIT 32
+# define CELL_UNIT 10
 # define WINDOW_X 1280
 # define WINDOW_Y 720
 # define RAY_MAX_DISTANCE 100
@@ -217,6 +217,9 @@ t_list	*set_doors_lst(char **map);
 void	move_door(t_cub3d *cub3d, t_list *doors, t_player *player);
 void	animate_door(t_cub3d *cub3d, t_door *door);
 void	animate_doors(t_cub3d *cub3d, t_list *doors);
+
+//minimap
+void	draw_minimap(t_cub3d *cub3d);
 
 //drawing
 

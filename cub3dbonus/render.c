@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 10:26:40 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:08:33 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -18,6 +19,9 @@ int	render_frame(t_cub3d *cub3d)
 	clear_buffer(cub3d);
 	floorcaster(cub3d);
 	raycaster(cub3d);
+	draw_minimap(cub3d);
+	mlx_put_image_to_window(cub3d->mlx_ptr, cub3d->win,
+		cub3d->buffer.img_ptr, 0, 0);
 	return (0);
 }
 

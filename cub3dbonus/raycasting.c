@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/06 12:08:37 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:26:24 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,4 @@ void	raycaster(t_cub3d *cub3d)
 		cast_ray(cub3d, x);
 		x++;
 	}
-	mlx_put_image_to_window(cub3d->mlx_ptr, cub3d->win,
-		cub3d->buffer.img_ptr, 0, 0);
 }
