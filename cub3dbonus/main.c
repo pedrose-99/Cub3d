@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 09:28:22 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/07 10:34:17 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int	main(int argc, char **argv)
 	cub3d->player = set_player(cub3d->map);
 	//draw_map(cub3d);
 	printf("Dibujar frame\n");
+	mlx_mouse_move(cub3d->win, WINDOW_X / 2, WINDOW_Y / 2);
+	mlx_mouse_hide();
 	render_frame(cub3d);
-	waiting_events_aux(cub3d);
+	waiting_events(cub3d);
 	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 }

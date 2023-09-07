@@ -6,7 +6,7 @@
 /*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 09:28:59 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/09/07 10:23:55 by pserrano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,6 @@ void	animate_doors(t_cub3d *cub3d, t_list *doors);
 //drawing
 
 void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end);
-void	waiting_events_aux(t_cub3d *cub3d);
 void	check_mouse_move(t_cub3d *cub3d, t_player *player);
 
 #endif
