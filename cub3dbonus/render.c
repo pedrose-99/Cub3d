@@ -6,17 +6,45 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 12:08:33 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/11 13:39:15 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
+
+void	select_tex_animate(t_cub3d *cub3d)
+{
+	static int	frame;
+	static int	i;
+	int			pos;
+
+	if (frame % 20 == 0)
+	{
+		printf("Seleccionar texturas\n");
+		pos = rand() % 3;
+		printf("Pos: %d\n", pos);
+		cub3d->select_tex[0] = cub3d->textures[pos];
+		pos = rand() % 3;
+		printf("Pos: %d\n", pos);
+		cub3d->select_tex[1] = cub3d->textures[pos];
+		pos = rand() % 3;
+		printf("Pos: %d\n", pos);
+		cub3d->select_tex[2] = cub3d->textures[pos];
+		pos = rand() % 3;
+		printf("Pos: %d\n", pos);
+		cub3d->select_tex[3] = cub3d->textures[pos];
+		i++;
+		if (i == 4)
+			i = 0;
+	}
+	frame++;
+}
 
 int	render_frame(t_cub3d *cub3d)
 {
 	mlx_clear_window(cub3d->mlx_ptr, cub3d->win);
 	clear_buffer(cub3d);
+	select_tex_animate(cub3d);
 	floorcaster(cub3d);
 	raycaster(cub3d);
 	draw_minimap(cub3d);

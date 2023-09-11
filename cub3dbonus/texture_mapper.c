@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:58:03 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/06 12:07:02 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/11 13:40:44 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static t_img	select_texture(t_cub3d *cub3d,t_player *player, t_raycaster *rc)
 
 	pos_diff_x = rc->map_pos.x - player->pos.x;
 	pos_diff_y = rc->map_pos.y - player->pos.y;
-	texture = cub3d->textures[3]; // textura oeste muro
+	texture = cub3d->select_tex[3]; // textura oeste muro
 	if (pos_diff_y < 0 && rc->side == 1) // textura sur muro
-		texture = cub3d->textures[1];
+		texture = cub3d->select_tex[1];
 	else if (pos_diff_y > 0 && rc->side == 1) // textura norte muro
-		texture = cub3d->textures[0];	
+		texture = cub3d->select_tex[0];	
 	else if (pos_diff_x > 0 && rc->side == 0) // textura este muro
-		texture = cub3d->textures[2];
+		texture = cub3d->select_tex[2];
 	if (rc->impact_type == 'D') //textura puerta
 		texture = cub3d->textures[6];
 	return (texture);

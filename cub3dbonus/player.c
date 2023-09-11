@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:50:51 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 10:01:55 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:09:42 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	move_player_pos(t_cub3d *cub3d, t_player *player,
 
 	to_move.x = player->pos.x + (mult.x * player->move_speed) * sign;
 	to_move.y = player->pos.y + (mult.y * player->move_speed) * sign;
-	printf("Mover a: x %f, y %f, símbolo: %c\n", to_move.x, to_move.y,
-		cub3d->map[(int)floor(to_move.y)][(int)floor(to_move.x)]);
+	//printf("Mover a: x %f, y %f, símbolo: %c\n", to_move.x, to_move.y,
+	//	cub3d->map[(int)floor(to_move.y)][(int)floor(to_move.x)]);
 	/*map_pos.x = (int)round(to_move.x * 100) / 100;
 	map_pos.y = (int)round(to_move.y * 100) / 100;*/
 	if (cub3d->map[(int)to_move.y][(int)to_move.x] == '0')

@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/07 11:26:24 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:10:51 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	calculate_ray_line(t_raycaster *rc)
 		rc->perp_wall_dist = rc->ray_len.x - rc->step_incr.x;
 	else
 		rc->perp_wall_dist = rc->ray_len.y - rc->step_incr.y;
-	rc->line_height = (int)(WINDOW_Y / rc->perp_wall_dist);
+	rc->line_height = (int)(WINDOW_Y / rc->perp_wall_dist * 1.2);
 	rc->draw_start = -rc->line_height / 2 + WINDOW_Y / 2;
 	if (rc->draw_start < 0)
 		rc->draw_start = 0;

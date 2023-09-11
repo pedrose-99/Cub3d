@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/07 12:07:44 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/11 13:42:44 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define E_KEY 14
 # define ESC 53
 
-# define CELL_UNIT 10
+# define CELL_UNIT 20
 # define WINDOW_X 1280
 # define WINDOW_Y 720
 # define RAY_MAX_DISTANCE 100
@@ -129,6 +129,7 @@ typedef struct s_cub3d{
 	void		*win;
 	t_player	*player;
 	t_img		textures[7]; //7
+	t_img		select_tex[4];
 	int			colors[2]; //2
 	char		**map;
 	int			keys[7];
@@ -204,6 +205,8 @@ int		close_window(t_cub3d *cub3d);
 
 //render
 
+void	init_tex(t_cub3d *cub3d);
+void	select_tex_animate(cub3d);
 int		render_frame(t_cub3d *cub3d);
 int		render_loop(t_cub3d *cub3d);
 void	buffer_ceilling_floor(t_cub3d *cub3d);
