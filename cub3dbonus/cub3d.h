@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/11 13:42:44 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/09/11 13:56:06 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int		close_window(t_cub3d *cub3d);
 //render
 
 void	init_tex(t_cub3d *cub3d);
-void	select_tex_animate(cub3d);
+void	select_tex_animate(t_cub3d *cub3d);
 int		render_frame(t_cub3d *cub3d);
 int		render_loop(t_cub3d *cub3d);
 void	buffer_ceilling_floor(t_cub3d *cub3d);
