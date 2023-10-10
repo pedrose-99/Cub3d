@@ -1,8 +1,8 @@
 NAME = cub3d
 
-SRCS =  raycasting.c floorcaster.c make_map.c map.c parser.c texture_mapper.c check_char.c\
-normalize_map.c player.c keys.c render.c cub3d.c set_texture.c set_color.c utils.c main.c\
-init_raycast.c process_file.c doors.c minimap.c
+SRCS =  raycasting.c floorcaster.c make_map.c map.c texture_mapper.c check_char.c\
+normalize_map.c player.c keys.c render.c cub3d.c xpm_to_img.c utils.c main.c\
+animate_doors.c init_raycast.c doors.c minimap.c free_cub3d.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -12,7 +12,7 @@ CC		= gcc
 
 MLX =  -framework OpenGL -framework Appkit libmlx.a
 
-CCFLAGS	= -Wall -Werror -Wextra -Ilibft 
+CCFLAGS	= -Wall -Werror -Wextra -O3 -Ilibft 
 
 .c.o:
 	${CC} ${CCFLAGS} -c $< -o ${<:.c=.o} -I.

@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/24 13:45:10 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:37:37 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
 
-static void	print_errors_file(int error)
+void	print_errors_file(int error)
 {
 	if (error == 0)
 		printf("Error. Invalid file extension\n");
@@ -46,23 +45,16 @@ int	process_file(t_cub3d **cub3d, char *file)
 	cub = *cub3d;
 	if (!set_visual_data(cub, fd))
 	{
-		print_errors_file(1);
+		printf("Mal visual data\n");
 		close(fd);
 		return (1);
 	}
 	map = new_map(fd);
 	cub->map = normalize_map(map);
-	//system("leaks -q cub3d");
+	close(fd);
 	free_matrix((void **)map);
 	map = NULL;
 	if (!map_is_close(cub->map))
-	{
-		print_errors_file(2);
-		close(fd);
-		system("leaks -q cub3d");
 		return (2);
-	}
-	close(fd);
-	printf("Process file bien\n");
 	return (0);
 }

@@ -6,36 +6,24 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/11 13:39:15 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:45:30 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
 void	select_tex_animate(t_cub3d *cub3d)
 {
 	static int	frame;
 	static int	i;
-	int			pos;
 
 	if (frame % 20 == 0)
 	{
-		printf("Seleccionar texturas\n");
-		pos = rand() % 3;
-		printf("Pos: %d\n", pos);
-		cub3d->select_tex[0] = cub3d->textures[pos];
-		pos = rand() % 3;
-		printf("Pos: %d\n", pos);
-		cub3d->select_tex[1] = cub3d->textures[pos];
-		pos = rand() % 3;
-		printf("Pos: %d\n", pos);
-		cub3d->select_tex[2] = cub3d->textures[pos];
-		pos = rand() % 3;
-		printf("Pos: %d\n", pos);
-		cub3d->select_tex[3] = cub3d->textures[pos];
-		i++;
-		if (i == 4)
+		cub3d->select_tex[0] = cub3d->textures[0 + i];
+		if (i == 1)
 			i = 0;
+		else
+			i++;
 	}
 	frame++;
 }
@@ -55,40 +43,11 @@ int	render_frame(t_cub3d *cub3d)
 
 int	render_loop(t_cub3d *cub3d)
 {
-	check_mouse_move(cub3d, cub3d->player);
+	check_mouse_move(cub3d, &cub3d->player);
 	key_funcs(cub3d);
 	animate_doors(cub3d, cub3d->doors);
 	render_frame(cub3d);
 	return (0);
-}
-
-void	buffer_ceilling_floor(t_cub3d *cub3d)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < WINDOW_Y / 2)
-	{
-		x = 0;
-		while (x < WINDOW_X)
-		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[1];
-			x++;
-		}
-		y++;
-	}
-	y = WINDOW_Y / 2;
-	while (y < WINDOW_Y)
-	{
-		x = 0;
-		while (x < WINDOW_X)
-		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[0];
-			x++;
-		}
-		y++;
-	}
 }
 
 void	clear_buffer(t_cub3d *cub3d)

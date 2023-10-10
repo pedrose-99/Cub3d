@@ -6,11 +6,11 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:02:39 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/09/05 12:46:46 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:08:56 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
 static int	max_array_len_matrix(char **matrix)
 {

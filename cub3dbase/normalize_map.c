@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:02:39 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/24 12:46:20 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:30:57 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,5 @@ char	**normalize_map(char **map)
 	}
 	normalize[i] = str_same_char(' ', max + 2);
 	normalize[i + 1] = NULL;
-	print_matrix(normalize);
 	return (normalize);
 }
