@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/22 14:59:20 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:21:12 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	calculate_ray_line(t_raycaster *rc)
 	rc->draw_end = rc->line_height / 2 + WINDOW_Y / 2;
 	if (rc->draw_end >= WINDOW_Y)
 		rc->draw_end = WINDOW_Y - 1;
-	//draw_line_dda(cub3d, x, rc->draw_start, x, rc->draw_end);
 }
 
 void	cast_ray(t_cub3d *cub3d, int x)
@@ -74,7 +73,6 @@ void	cast_ray(t_cub3d *cub3d, int x)
 	if (!calculate_ray(&ray, cub3d->map))
 		return ;
 	calculate_ray_line(&ray);
-	//draw_line_dda(cub3d, x, ray.draw_start, x, ray.draw_end);
 	calculate_texture_pixel(cub3d, &ray, x);
 }
 

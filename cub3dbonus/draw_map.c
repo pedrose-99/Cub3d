@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:53:49 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 12:05:15 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:38:49 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
 void	draw_cell_unit(t_cub3d *cub3d, int color, int x, int y)
 {
@@ -58,6 +58,6 @@ void	draw_map(t_cub3d *cub3d)
 		}
 		i++;
 	}
-	draw_cell_unit(cub3d, 0x00800080, cub3d->player->pos.x * CELL_UNIT,
-		cub3d->player->pos.y * CELL_UNIT);
+	draw_cell_unit(cub3d, 0x00800080, cub3d->player.pos.x * CELL_UNIT,
+		cub3d->player.pos.y * CELL_UNIT);
 }

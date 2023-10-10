@@ -6,11 +6,11 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:27:59 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/11 12:10:51 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:48:58 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
 static void	calculate_ray_line(t_raycaster *rc)
 {
@@ -18,14 +18,13 @@ static void	calculate_ray_line(t_raycaster *rc)
 		rc->perp_wall_dist = rc->ray_len.x - rc->step_incr.x;
 	else
 		rc->perp_wall_dist = rc->ray_len.y - rc->step_incr.y;
-	rc->line_height = (int)(WINDOW_Y / rc->perp_wall_dist * 1.2);
+	rc->line_height = (int)(WINDOW_Y / rc->perp_wall_dist * 1.14);
 	rc->draw_start = -rc->line_height / 2 + WINDOW_Y / 2;
 	if (rc->draw_start < 0)
 		rc->draw_start = 0;
 	rc->draw_end = rc->line_height / 2 + WINDOW_Y / 2;
 	if (rc->draw_end >= WINDOW_Y)
 		rc->draw_end = WINDOW_Y - 1;
-	//draw_line_dda(cub3d, x, rc->draw_start, x, rc->draw_end);
 }
 
 static int	ray_inside_door(t_cub3d *cub3d, t_raycaster *rc)
@@ -37,7 +36,6 @@ static int	ray_inside_door(t_cub3d *cub3d, t_raycaster *rc)
 	calculate_wall_x(rc);
 	if (rc->wall_x < door->border)
 	{
-		//if (rc->ray_dir.x < 0 || rc->ray_dir.y < 0)
 		rc->wall_x += 1 - door->border;
 		if (door->view == 0)
 			door->view = 1;
@@ -91,27 +89,21 @@ static int	calculate_ray(t_cub3d *cub3d, t_raycaster *rc, char **map)
 	return (0);
 }
 
-void	cast_ray(t_cub3d *cub3d, int x)
-{
-	t_raycaster	ray;
-
-	ray = init_ray(cub3d, x);
-	if (!calculate_ray(cub3d, &ray, cub3d->map))
-		return ;
-	if (ray.impact_type != 'D')
-		calculate_ray_line(&ray);
-	//draw_line_dda(cub3d, x, ray.draw_start, x, ray.draw_end);
-	calculate_texture_pixel(cub3d, &ray, x);
-}
-
 void	raycaster(t_cub3d *cub3d)
 {
 	int			x;
+	t_raycaster	ray;
 
 	x = 0;
 	while (x < WINDOW_X)
 	{
-		cast_ray(cub3d, x);
+		ray = init_ray(cub3d, x);
+		if (calculate_ray(cub3d, &ray, cub3d->map))
+		{
+			if (ray.impact_type != 'D')
+				calculate_ray_line(&ray);
+			calculate_texture_pixel(cub3d, &ray, x);
+		}
 		x++;
 	}
 }

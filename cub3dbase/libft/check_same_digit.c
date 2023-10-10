@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 10:50:00 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 10:50:01 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:09:28 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,3 @@ int	check_same_digit(int *arr, int val, int len)
 	}
 	return (1);
 }
-
