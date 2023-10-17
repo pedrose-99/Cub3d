@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:02:39 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/10/04 11:30:57 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:26:38 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,22 @@ char	**normalize_map(char **map)
 	char	*aux;
 	int		max;
 	int		i;
+	int		j;
 
 	normalize = (char **)malloc(sizeof(char *) * (matrix_len(map) + 3));
 	max = max_array_len_matrix(map);
 	normalize[0] = str_same_char(' ', max + 2);
-	i = 1;
+	i = 0;
+	j = 1;
 	while (map[i])
 	{
 		aux = copy_fill_array(max, map[i], ' ');
-		normalize[i] = pad_str(aux, max);
+		normalize[j] = pad_str(aux, max);
 		free(aux);
 		i++;
+		j++;
 	}
-	normalize[i] = str_same_char(' ', max + 2);
-	normalize[i + 1] = NULL;
+	normalize[j] = str_same_char(' ', max + 2);
+	normalize[j + 1] = NULL;
 	return (normalize);
 }

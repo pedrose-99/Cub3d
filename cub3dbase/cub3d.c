@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/10/04 12:15:52 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:32:02 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,4 @@ void	free_cub3d(t_cub3d *cub3d, int start, int end)
 		(*funcs[start])(cub3d);
 		start++;
 	}
-	exit(1);
 }

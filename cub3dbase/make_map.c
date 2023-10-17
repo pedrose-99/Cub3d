@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:08 by pserrano          #+#    #+#             */
-/*   Updated: 2023/10/04 11:28:48 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:25:33 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ char	**new_map(int fd)
 	char	*line;
 
 	line = get_next_line_no_nl(fd);
+	while (!*line)
+	{
+		free(line);
+		line = get_next_line_no_nl(fd);
+	}
 	map_lst = ft_lstnew((void *)line);
 	while (line)
 	{

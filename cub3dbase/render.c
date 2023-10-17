@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/10/04 11:23:44 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:22:50 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	buffer_ceilling_floor(t_cub3d *cub3d)
 		x = 0;
 		while (x < WINDOW_X)
 		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[1];
+			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[0];
 			x++;
 		}
 		y++;
@@ -49,7 +49,7 @@ void	buffer_ceilling_floor(t_cub3d *cub3d)
 		x = 0;
 		while (x < WINDOW_X)
 		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[0];
+			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[1];
 			x++;
 		}
 		y++;

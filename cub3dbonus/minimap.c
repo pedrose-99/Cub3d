@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:53:49 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/10/04 13:58:37 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:07:51 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ static void	draw_minimap_point(int *buffer, int pos, char symbol)
 		draw_cell_unit(buffer, pos, 0x0000FF00);
 	else if (symbol == ' ')
 		draw_cell_unit(buffer, pos, 0xFFFF000);
-	else
+	else if (symbol == 'P')
 		draw_cell_unit(buffer, pos, 0x00800080);
+	else if (symbol == 'D')
+		draw_cell_unit(buffer, pos, 0x00228B22);
 }
 
 void	draw_minimap(t_cub3d *cub3d)
