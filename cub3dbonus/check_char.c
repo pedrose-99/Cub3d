@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 11:33:45 by pserrano          #+#    #+#             */
-/*   Updated: 2023/09/07 10:45:45 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:07:27 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
 int	ft_valid_char(char c)
 {
@@ -98,5 +98,3 @@ int	check_char(char **map)
 		return (1);
 	return (0);
 }
-
-

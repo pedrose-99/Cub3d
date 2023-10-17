@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:14:35 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 10:31:30 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:22:50 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	render_frame(t_cub3d *cub3d)
 {
 	mlx_clear_window(cub3d->mlx_ptr, cub3d->win);
 	clear_buffer(cub3d);
-	//draw_map(cub3d);
 	buffer_ceilling_floor(cub3d);
 	raycaster(cub3d);
 	return (0);
@@ -39,7 +38,7 @@ void	buffer_ceilling_floor(t_cub3d *cub3d)
 		x = 0;
 		while (x < WINDOW_X)
 		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[1];
+			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[0];
 			x++;
 		}
 		y++;
@@ -50,7 +49,7 @@ void	buffer_ceilling_floor(t_cub3d *cub3d)
 		x = 0;
 		while (x < WINDOW_X)
 		{
-			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[0];
+			cub3d->buffer.data[y * WINDOW_X + x] = cub3d->colors[1];
 			x++;
 		}
 		y++;

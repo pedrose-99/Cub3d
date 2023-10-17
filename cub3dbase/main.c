@@ -3,27 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/24 12:53:09 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:32:11 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-//Segmentation fault si no existe o si el mapa es incorrecto (si pones el error - 1 funciona bn)
-void	leaks(void)
-{
-	system("leaks -q cub3d");
-}
 
 int	main(int argc, char **argv)
 {
 	t_cub3d	*cub3d;
 	int		error;
 
-	atexit(leaks);
 	cub3d = NULL;
 	if (argc != 2)
 	{
@@ -33,12 +26,12 @@ int	main(int argc, char **argv)
 	error = process_file(&cub3d, argv[1]);
 	if (error != 0)
 	{
+		print_errors_file(error);
 		free_cub3d(cub3d, 0, error);
-		printf("Salir del programa\n");
+		cub3d = NULL;
 		return (1);
 	}
-	cub3d->player = set_player(cub3d->map);
-	//draw_map(cub3d);
+	set_player(&cub3d->player, cub3d->map);
 	waiting_events(cub3d);
 	mlx_loop_hook(cub3d->mlx_ptr, &render_loop, cub3d);
 	mlx_loop(cub3d->mlx_ptr);

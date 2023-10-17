@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 10:26:31 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/01 10:26:32 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:51:28 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ int	skip_char(char *str, char c, int i)
 		i++;
 	return (i);
 }
-
