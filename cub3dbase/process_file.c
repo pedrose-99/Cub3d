@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 10:45:08 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/10/17 09:10:46 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:09:41 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	process_file(t_cub3d **cub3d, char *file)
 	}
 	map = new_map(fd);
 	(*cub3d)->map = normalize_map(map);
-	print_matrix((*cub3d)->map);
 	close(fd);
 	free_matrix((void **)map);
 	map = NULL;
