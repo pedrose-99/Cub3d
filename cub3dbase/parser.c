@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:07:36 by pserrano          #+#    #+#             */
-/*   Updated: 2023/10/04 11:56:01 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:12:50 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,17 @@ int	set_visual_data(t_cub3d *cub3d, int fd)
 
 	dict = new_data_dict();
 	result = 0;
-	line = get_next_line_no_nl(fd);
-	while (line && result != 21)
+	while (result != 21)
 	{
+		line = get_next_line_no_nl(fd);
+		if (!line)
+			break ;
 		check = set_data(cub3d, line, dict);
 		free(line);
 		if (check < 0)
-		{
-			free(dict);
-			return (0);
-		}
+			break ;
 		result += check;
-		line = get_next_line_no_nl(fd);
 	}
-	free(line);
 	free(dict);
 	if (result != 21)
 		return (0);

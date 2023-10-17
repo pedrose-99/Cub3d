@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 14:59:30 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/10/04 13:50:22 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:56:12 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	cub3d = set_cub3d(argv[1]);
+	if (!cub3d)
+		return (1);
 	mlx_mouse_hide();
 	mlx_mouse_move(cub3d->win, WINDOW_X / 2, WINDOW_Y / 2);
 	render_frame(cub3d);
