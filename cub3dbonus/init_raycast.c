@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_raycast.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:37:25 by pserrano          #+#    #+#             */
-/*   Updated: 2023/08/22 13:43:47 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:40:21 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
 static void	init_ray_len_side(t_raycaster *rc)
 {
@@ -44,16 +44,16 @@ t_raycaster	init_ray(t_cub3d *cub3d, int x)
 {
 	t_raycaster	rc;
 
-	rc.origin.x = cub3d->player->pos.x;
-	rc.origin.y = cub3d->player->pos.y;
+	rc.origin.x = cub3d->player.pos.x;
+	rc.origin.y = cub3d->player.pos.y;
 	rc.map_pos.x = (int)rc.origin.x;
 	rc.map_pos.y = (int)rc.origin.y;
 	rc.camera_scale = 2.0f * x / (double)WINDOW_X - 1.0f;
-	rc.ray_dir.x = cub3d->player->dir.x
-		+ (cub3d->player->plane.x * cub3d->player->camera_plane)
+	rc.ray_dir.x = cub3d->player.dir.x
+		+ (cub3d->player.plane.x * cub3d->player.camera_plane)
 		* rc.camera_scale;
-	rc.ray_dir.y = cub3d->player->dir.y
-		+ (cub3d->player->plane.y * cub3d->player->camera_plane)
+	rc.ray_dir.y = cub3d->player.dir.y
+		+ (cub3d->player.plane.y * cub3d->player.camera_plane)
 		* rc.camera_scale;
 	if (rc.ray_dir.x == 0)
 		rc.ray_dir.x = 1e30;

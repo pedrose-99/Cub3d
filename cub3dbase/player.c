@@ -6,7 +6,7 @@
 /*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:50:51 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/22 09:55:48 by pfuentes         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:25:00 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ static int	init_player_pos(t_player *player, char **map)
 	return (val);
 }
 
-t_player	*set_player(char **map)
+void	set_player(t_player *player, char **map)
 {
-	t_player	*player;
 	int			val;
 
-	player = (t_player *)malloc(sizeof(t_player));
 	val = init_player_pos(player, map);
 	init_player_angle(player, val);
 	player->dir.x = cos(degree_to_radians(player->angle));
@@ -67,14 +65,12 @@ t_player	*set_player(char **map)
 	player->camera_plane = tan(FOV / 2.0f * (M_PI / 180.0));
 	player->plane.x = -player->dir.y * player->camera_plane;
 	player->plane.y = player->dir.x * player->camera_plane;
-	return (player);
 }
 
 void	move_player_pos(t_player *player, int sign, t_vector_d mult)
 {
 	player->pos.x += (mult.x * player->move_speed) * sign;
 	player->pos.y += (mult.y * player->move_speed) * sign;
-	printf("Pos: x %f, y %f\n", player->pos.x, player->pos.y);
 }
 
 void	move_player_angle(t_player *player, int sign)
@@ -92,11 +88,4 @@ void	move_player_angle(t_player *player, int sign)
 		- player->plane.y * sin(sign * player->rot_speed);
 	player->plane.y = old_planex * sin(sign * player->rot_speed)
 		+ player->plane.y * cos(sign * player->rot_speed);
-	/*player->angle += sign * 3;
-	if (player->angle < 0)
-		player->angle += 360;
-	else if (player->angle > 360)
-		player->angle -= 360;*/
-	printf("Dir: x %f, y %f\n", player->dir.x, player->dir.y);
-	printf("Plane: x %f, y %f\n", player->plane.x, player->plane.y);
 }

@@ -3,106 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 10:54:33 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:20:42 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:34:35 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3dbonus.h"
 
-t_cub3d	*set_cub3d(void)
+static char	**set_map(int fd)
 {
-	t_cub3d	*cub3d;
-	int		i;
+	char	**map;
+	char	**norm_map;
 
-	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
-	printf("Size of t_cub3d: %lu\n", sizeof(t_cub3d) * 8);
+	map = new_map(fd);
+	norm_map = normalize_map(map);
+	free_matrix((void **)map);
+	map = NULL;
+	if (!map_is_close(norm_map))
+	{
+		printf("Bad map format\n");
+		free_matrix((void **)norm_map);
+		return (NULL);
+	}
+	return (norm_map);
+}
+
+static void	set_textures(t_cub3d *cub3d)
+{
+	cub3d->textures[0] = xpm_to_img(cub3d, "images/northA.xpm");
+	cub3d->textures[1] = xpm_to_img(cub3d, "images/northB.xpm");
+	cub3d->textures[2] = xpm_to_img(cub3d, "images/PAPER.xpm");
+	cub3d->textures[3] = xpm_to_img(cub3d, "images/east_west.xpm");
+	cub3d->textures[4] = xpm_to_img(cub3d, "images/ceilling.xpm");
+	cub3d->textures[5] = xpm_to_img(cub3d, "images/floor.xpm");
+	cub3d->textures[6] = xpm_to_img(cub3d, "images/puertabuena.xpm");
+}
+
+static void	set_mlx(t_cub3d *cub3d)
+{
 	cub3d->mlx_ptr = mlx_init();
 	cub3d->win = mlx_new_window(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y, "cub3d");
 	cub3d->buffer.img_ptr = mlx_new_image(cub3d->mlx_ptr, WINDOW_X, WINDOW_Y);
 	cub3d->buffer.data = (int *)mlx_get_data_addr(cub3d->buffer.img_ptr,
 			&cub3d->buffer.bpp, &cub3d->buffer.size_l, &cub3d->buffer.endian);
+}
+
+static void	set_select_textures(t_cub3d *cub3d)
+{
+	cub3d->select_tex[0] = cub3d->textures[0];
+	cub3d->select_tex[1] = cub3d->textures[2];
+	cub3d->select_tex[2] = cub3d->textures[3];
+	cub3d->select_tex[3] = cub3d->textures[3];
+	cub3d->select_tex[4] = cub3d->textures[4];
+	cub3d->select_tex[5] = cub3d->textures[5];
+	cub3d->select_tex[6] = cub3d->textures[6];
+}
+
+t_cub3d	*set_cub3d(char *file)
+{
+	t_cub3d	*cub3d;
+	int		fd;
+	char	**map;
+	int		i;
+
+	fd = open(file, O_RDONLY);
+	map = set_map(fd);
+	close(fd);
+	if (!map)
+		return (NULL);
+	cub3d = (t_cub3d *)malloc(sizeof(t_cub3d));
+	cub3d->map = map;
+	set_mlx(cub3d);
+	set_textures(cub3d);
+	set_select_textures(cub3d);
+	set_player(&cub3d->player, cub3d->map);
+	cub3d->doors = set_doors_lst(cub3d->map);
 	i = 0;
-	while (i < 6)
+	while (i < 7)
 	{
 		cub3d->keys[i] = 0;
 		i++;
 	}
 	return (cub3d);
-}
-
-void	free_image(void *mlx_ptr, t_img img)
-{
-	mlx_destroy_image(mlx_ptr, img.img_ptr);
-}
-
-void	free_textures(t_cub3d *cub3d)
-{
-	int	i;
-
-	i = 0;
-	printf("Liberar texturas\n");
-	while (i < 4)
-	{
-		printf("Textura %d\n", i);
-		if (cub3d->textures[i].img_ptr)
-		{
-			printf("Libera textura\n");
-			//free_image(cub3d->mlx_ptr, cub3d->textures[i]);
-			mlx_destroy_image(cub3d->mlx_ptr, cub3d->textures[i].img_ptr);
-		}
-		i++;
-	}
-}
-
-void	free_mlx_data(t_cub3d *cub3d)
-{
-	printf("Liberar datos de cub3d\n");
-	system("leaks -q cub3d");
-	//free(cub3d->buffer.img_ptr);
-	//free(cub3d->buffer.data);
-	mlx_destroy_image(cub3d->mlx_ptr, cub3d->buffer.img_ptr);
-	mlx_destroy_window(cub3d->mlx_ptr, cub3d->win);
-	free(cub3d->mlx_ptr);
-	cub3d->mlx_ptr = NULL;
-	//free(cub3d->win);
-	//cub3d->win = NULL;
-	system("leaks -q cub3d");
-}
-
-void	free_map(t_cub3d *cub3d)
-{
-	printf("Liberar mapa\n");
-	free_matrix((void **)cub3d->map);
-	cub3d->map = NULL;
-}
-
-void	free_player(t_cub3d *cub3d)
-{
-	printf("Liberar jugador\n");
-	free(cub3d->player);
-	cub3d->player = NULL;
-}
-
-void	free_cub3d(t_cub3d *cub3d, int start, int end)
-{
-	void	(*funcs[5])(t_cub3d*);
-
-	printf("Liberar cub3d\n");
-	funcs[0] = free_textures;
-	funcs[1] = free_mlx_data;
-	funcs[2] = free_map;
-	funcs[3] = free_player;
-	funcs[4] = NULL;
-	while (funcs[start] && start < end)
-	{
-		(*funcs[start])(cub3d);
-		system("leaks -q cub3d");
-		start++;
-	}
-	printf("Liberar cub3d: %p\n", &cub3d);
-	free(cub3d);
-	cub3d = NULL;
 }

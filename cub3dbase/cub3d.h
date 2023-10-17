@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pserrano <pserrano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pfuentes <pfuentes@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:06:19 by pfuentes          #+#    #+#             */
-/*   Updated: 2023/08/23 14:15:05 by pserrano         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:08:21 by pfuentes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,24 +104,23 @@ typedef struct s_raycaster
 typedef struct s_cub3d{
 	void		*mlx_ptr;
 	void		*win;
-	t_player	*player;
-	t_img		textures[4]; //4
-	int			colors[2]; //2
+	t_player	player;
+	t_img		textures[4];
+	int			colors[2];
 	char		**map;
 	int			keys[6];
 	t_img		buffer;
 }	t_cub3d;
 
-
 //cub3d
-
-t_cub3d	*set_cub3d(void);
-void	free_cub3d(t_cub3d *cub3d, int start, int end);
-int		set_visual_data(t_cub3d *cub3d, int fd);
+t_cub3d		*set_cub3d(void);
+void		free_cub3d(t_cub3d *cub3d, int start, int end);
+int			set_visual_data(t_cub3d *cub3d, int fd);
 
 //file
 
-int		process_file(t_cub3d **cub3d, char *file);
+void		print_errors_file(int error);
+int			process_file(t_cub3d **cub3d, char *file);
 
 //map
 
@@ -130,38 +129,32 @@ char		**init_matrix(int len);
 char		**new_map(int fd);
 void		print_matrix(char **matrix);
 char		**normalize_map(char **map);
-//textures
 
-t_img	set_texture(t_cub3d *cub3d, char	*data);
+//textures
+t_img		set_texture(t_cub3d *cub3d, char	*data);
 
 //colors
-
 int			set_color(char	*data);
 
 //player
-
-t_player	*set_player(char **map);
+void		set_player(t_player *player, char **map);
 void		move_player_pos(t_player *player, int sign, t_vector_d mult);
 void		move_player_angle(t_player *player, int sign);
 
 //angles
-
-double			degree_to_radians(double degree);
+double		degree_to_radians(double degree);
 
 //raycasting
-
-void			raycaster(t_cub3d *cub3d);
-t_raycaster		init_ray(t_cub3d *cub3d, int x);
+void		raycaster(t_cub3d *cub3d);
+t_raycaster	init_ray(t_cub3d *cub3d, int x);
 
 //texturemapper
-
-void	calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
+void		calculate_texture_pixel(t_cub3d *cub3d, t_raycaster *rc, int x);
 
 //mlx
-
 t_img		xpm_to_img(t_cub3d *cub3d, char *path);
 
-//map
+//map_checker
 int			map_is_close(char **map);
 
 //check char
@@ -169,21 +162,22 @@ int			not_char_alone(char **map, int i, int j);
 int			check_char(char **map);
 
 //keys
-void	waiting_events(t_cub3d *cub3d);
-void	key_funcs(t_cub3d *cub3d);
-int		press_key(int key, t_cub3d *cub3d);
-int		release_key(int key, t_cub3d *cub3d);
-int		close_window(t_cub3d *cub3d);
+void		waiting_events(t_cub3d *cub3d);
+void		key_funcs(t_cub3d *cub3d);
+int			press_key(int key, t_cub3d *cub3d);
+int			release_key(int key, t_cub3d *cub3d);
+int			close_window(t_cub3d *cub3d);
 
 //render
 
-int		render_frame(t_cub3d *cub3d);
-int		render_loop(t_cub3d *cub3d);
-void	buffer_ceilling_floor(t_cub3d *cub3d);
-void	clear_buffer(t_cub3d *cub3d);
+int			render_frame(t_cub3d *cub3d);
+int			render_loop(t_cub3d *cub3d);
+void		buffer_ceilling_floor(t_cub3d *cub3d);
+void		clear_buffer(t_cub3d *cub3d);
 
-//drawing
-
-void	draw_line_dda(t_cub3d *cub3d, int x_start, int y_start, int x_end, int y_end);
+//utils
+char		**init_matrix(int len);
+char		**lst_to_matrix(t_list *lst);
+void		free_lst_nodes(t_list *lst);
 
 #endif
